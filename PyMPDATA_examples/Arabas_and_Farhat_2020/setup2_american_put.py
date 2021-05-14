@@ -15,7 +15,7 @@ class Settings:
     sigma = .2
     n_iters = 2
 
-    def __init__(self, *, T, C_opt, S0):
+    def __init__(self, *, T: float, C_opt: float, S0: float):
         self.T = T
         self.C_opt = C_opt
         self.S0 = S0
