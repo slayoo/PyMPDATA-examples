@@ -4,7 +4,7 @@ setup(
     name='PyMPDATA-examples',
     use_scm_version=True,
     setup_requires=['setuptools_scm'],
-    install_requires=['PyMPDATA @ git+https://github.com/atmos-cloud-sim-uj/PyMPDATA@f33d602#egg=PyMPDATA',
+    install_requires=['PyMPDATA @ git+https://github.com/atmos-cloud-sim-uj/PyMPDATA@46f6d46#egg=PyMPDATA',
                       'pystrict>=1.1',
                       'matplotlib>=3.2.1',
                       'ipywidgets>=7.5.1',

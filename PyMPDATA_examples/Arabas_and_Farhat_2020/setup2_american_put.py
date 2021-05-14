@@ -1,8 +1,10 @@
 import PyMPDATA_examples.Arabas_and_Farhat_2020.Black_Scholes_1973 as BS73
 import PyMPDATA_examples.Arabas_and_Farhat_2020.Bjerksund_and_Stensland_1993 as BS93
 import numpy as np
+from pystrict import strict
 
 
+@strict
 class Settings:
     amer = True
     l2_opt = 2.05

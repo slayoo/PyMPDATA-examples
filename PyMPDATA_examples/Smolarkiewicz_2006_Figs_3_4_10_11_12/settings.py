@@ -1,6 +1,8 @@
 import numpy as np
+from pystrict import strict
 
 
+@strict
 class Settings:
     nt = 1600
     dt = 1

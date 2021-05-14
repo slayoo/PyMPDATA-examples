@@ -1,2 +1,2 @@
-# PyMPDATA-examples
-PyMPDATA usage examples (mostly reproducing results from literature) depicting how to use PyMPDATA in Python, in particular from Jupyter notebooks
+This repository stores example files for PyMPDATA.
+See [PyMPDATA README.md](https://github.com/atmos-cloud-sim-uj/PyMPDATA/blob/master/README.md) file for details.

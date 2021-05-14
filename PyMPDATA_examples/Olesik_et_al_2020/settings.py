@@ -4,6 +4,8 @@ from scipy import integrate
 import numpy as np
 import pint
 from scipy import optimize
+from pystrict import strict
+
 
 default_nr = 64
 default_GC_max = .5
@@ -35,6 +37,7 @@ def option_string(opts):
     return opts
 
 # based on Fig. 3 from East 1957
+@strict
 class Settings:
     def __init__(self, nr=default_nr, mixing_ratios_g_kg=default_mixing_ratios_g_kg):
         si = pint.UnitRegistry()
