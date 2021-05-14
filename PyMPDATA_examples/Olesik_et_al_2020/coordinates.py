@@ -8,6 +8,7 @@ Created at 22.07.2019
 
 import numpy as np
 
+
 # TODO: add moment function
 class x_id:
     def x(self, r):
@@ -23,8 +24,6 @@ class x_id:
         return 1 / (k + 1) * x ** (k + 1)
 
 
-
-
 class x_p2:
     def x(self, r):
         return r**2
@@ -37,6 +36,7 @@ class x_p2:
 
     def moment_of_r_integral(self, x, k):
         return 2 / (k + 2) * x**((k+2)/2)
+
 
 class x_p3:
     def x(self,r):
@@ -69,9 +69,3 @@ class x_log_of_pn:
 
     def moment_of_r_integral(self, x, k):
         return self.r0**k * self.n / (k * np.log(self.base)) * self.base**(k / self.n * x)
-
-
-
-
-
-
