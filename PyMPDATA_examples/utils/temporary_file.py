@@ -1,6 +1,7 @@
 import os, sys
 import tempfile
-from .widgets import FileLink, HTML, Button
+from ipywidgets import HTML, Button
+from IPython.display import FileLink
 if 'google.colab' in sys.modules:
     from google import colab
     ABSOLUTE_PATH = '/content'

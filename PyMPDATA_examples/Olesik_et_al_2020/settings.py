@@ -36,10 +36,12 @@ def option_string(opts):
         opts = opts.replace(repl[0], repl[1])
     return opts
 
+
 # based on Fig. 3 from East 1957
 @strict
 class Settings:
-    def __init__(self, nr=default_nr, mixing_ratios_g_kg=default_mixing_ratios_g_kg):
+    def __init__(self, nr: int = default_nr,
+                 mixing_ratios_g_kg: np.ndarray = default_mixing_ratios_g_kg):
         si = pint.UnitRegistry()
         self.si = si
         self.nr = nr
