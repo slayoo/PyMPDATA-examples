@@ -6,5 +6,3 @@ OPTIONS = {
     'third_order_terms': True,
     'non_zero_mu_coeff': True
 }
-
-colors=('purple', 'teal', 'turquoise')
