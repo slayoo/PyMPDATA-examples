@@ -1,5 +1,7 @@
 import numpy as np
 import numba
+from pystrict import strict
+
 
 grid = (100, 100)
 
@@ -17,8 +19,9 @@ xc = .5 * grid[0] * dx
 yc = .5 * grid[1] * dy
 
 
+@strict
 class Settings:
-    def __init__(self, n_rotations=6):
+    def __init__(self, n_rotations: int = 6):
         self.n_rotations = n_rotations
 
     @property

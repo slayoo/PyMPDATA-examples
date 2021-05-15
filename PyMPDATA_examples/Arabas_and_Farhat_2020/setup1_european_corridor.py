@@ -1,7 +1,9 @@
 import PyMPDATA_examples.Arabas_and_Farhat_2020.Black_Scholes_1973 as BS73
 import numpy as np
+from pystrict import strict
 
 
+@strict
 class Settings:
     S0 = 55
     T = 0.5
@@ -14,7 +16,7 @@ class Settings:
     K2 = 175
     S_match = 175
 
-    def __init__(self, *, n_iters=2, l2_opt=2, C_opt=0.034):
+    def __init__(self, *, n_iters: int = 2, l2_opt: int = 2, C_opt: float = 0.034):
         self.n_iters = n_iters
         self.l2_opt = l2_opt
         self.C_opt = C_opt
