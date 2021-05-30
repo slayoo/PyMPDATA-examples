@@ -79,7 +79,7 @@ def compute_figure_data(*, nr, GC_max, psi_coord=x_id(),
                 lambda r: pdf_t(r * rh.units).magnitude,
                 midpoint_value=True,
                 r=output[coord]["grid"]['r'].magnitude
-            ) * pdf_t(rh[0]).units)   # TODO ? * coord.x (r * rh.units)
+            ) * pdf_t(rh[0]).units)
         output[coord]["analytical"] = analytical
 
     for coord, case in cases.items():
