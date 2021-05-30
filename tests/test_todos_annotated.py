@@ -52,6 +52,8 @@ def test_todos_annotated(file, gh_issues):
     if os.path.basename(file) == 'test_todos_annotated.py' or file.endswith("-checkpoint.ipynb") or ".eggs" in file:
         return
     for line in grep(file, r'.*TODO.*'):
+        if line.count('"image/png":') > 0:
+            continue
         match = re.search(r'TODO #(\d+)', line)
         if match is None:
             raise Exception(f"TODO not annotated with issue id ({line})")
