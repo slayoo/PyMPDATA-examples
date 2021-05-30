@@ -16,6 +16,6 @@ setup(
     author='https://github.com/orgs/atmos-cloud-sim-uj/people',
     license="GPL-3.0",
     packages=find_packages(include=['PyMPDATA_examples', 'PyMPDATA_examples.*']),
-    package_data={'':['*/*/*.txt']},
+    package_data={'': ['*/*/*.txt']},
     include_package_data=True
 )

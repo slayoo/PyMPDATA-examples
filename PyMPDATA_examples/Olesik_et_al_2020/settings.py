@@ -71,12 +71,9 @@ class Settings:
         return out_steps
 
     def mixing_ratio(self, pdf):
-        # TODO!!!
+        # TODO #219!!!
         xunit = self.si.micrometre
         yunit = 1 / self.si.micrometre / self.si.centimetre ** 3
-
-        # def fmgn(fun, unit):
-        #     return lambda x: fun(x * xunit).to(unit).magnitude
 
         r_min = .1 * self.si.um
         while not np.isfinite(pdf(r_min).magnitude):

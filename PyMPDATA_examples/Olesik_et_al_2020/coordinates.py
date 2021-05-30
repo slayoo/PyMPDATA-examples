@@ -1,15 +1,6 @@
-"""
-Created at 22.07.2019
-
-@author: Michael Olesik
-@author: Piotr Bartman
-@author: Sylwester Arabas
-"""
-
 import numpy as np
 
 
-# TODO: add moment function
 class x_id:
     def x(self, r):
         return r

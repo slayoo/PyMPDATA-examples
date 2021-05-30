@@ -119,7 +119,7 @@ class Simulation:
 
     @property
     def g_factor(self):
-        #TODO: return with unit?
+        #TODO #219: return with unit?
         return self._g_factor.get()
 
 
