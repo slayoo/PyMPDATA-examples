@@ -4,11 +4,13 @@ from scipy.integrate import solve_ivp
 from .formulae import si, Formulae, const
 import numpy as np
 from .arakawa_c import arakawa_c
+from typing import Optional
 
 
 @strict
 class Settings:
-    def __init__(self, dt: float, dz: float, w_1: float, t_max: float = 15 * si.minutes, nr: int = 1):
+    def __init__(self, dt: float, dz: float, w_1: float, t_max: float = 15 * si.minutes, nr: int = 1,
+                 r_min: float = np.nan, r_max: float = np.nan, p0: Optional[float] = None):
         self.dt = dt
         self.dz = dz
 
@@ -18,21 +20,14 @@ class Settings:
         self.z_max = 3000 * si.metres
         self.t_max = t_max
 
-        self.mpdata_settings = {'n_iters': 3, 'iga': True, 'fct': True, 'tot': True}
         self.qv = interp1d((0, 740, 3260), (.015, .0138, .0024))
         self._th = interp1d((0, 740, 3260), (297.9, 297.9, 312.66))
 
         # note: not in the paper, https://github.com/BShipway/KiD/blob/bad81aa6efa4b7e4743b6a1867382fc74c10a884/src/physconst.f90#L43
-        p0 = 1000 * si.hPa
+        p0 = p0 or 1000 * si.hPa
 
         self.rhod0 = Formulae.rho_d(p0, self.qv(0), self._th(0))
         self.thd = lambda z: Formulae.th_dry(self._th(z), self.qv(z))
-
-        # TEMP !!!
-        self.mpdata_settings['n_iters'] = 1
-        self.mpdata_settings['fct'] = False
-        self.mpdata_settings['iga'] = False
-        self.mpdata_settings['tot'] = False
 
         def drhod_dz(z, rhod):
             T = Formulae.T(rhod[0], self.thd(z))
@@ -53,15 +48,18 @@ class Settings:
         t_1 = 600 * si.s
         self.w = lambda t: w_1 * np.sin(np.pi * t / t_1) if t < t_1 else 0
 
-        self.r_min = 1 * si.um
-        self.r_max = 51 * si.um
+        self.r_min = r_min
+        self.r_max = r_max
         self.bin_boundaries, self.dr = np.linspace(
             self.r_min,
             self.r_max,
             self.nr + 1, retstep=True
         )
-        self.dr4 = self.bin_boundaries[1:] ** 4 - self.bin_boundaries[:-1] ** 4
-        self.dr4 = self.dr4.reshape(1, -1).T
+
+        self.dr_power = {}
+        for k in (1, 2, 3, 4):
+            self.dr_power[k] = self.bin_boundaries[1:] ** k - self.bin_boundaries[:-1] ** k
+            self.dr_power[k] = self.dr_power[k].reshape(1, -1).T
 
         self.z_vec = self.dz * arakawa_c.z_vector_coord((self.nz,))
 

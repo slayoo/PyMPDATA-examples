@@ -7,19 +7,19 @@ def convert_to(value, unit):
 
 
 class si:
-    kg = 1
-    m = 1
-    s = 1
+    kg = 1.
+    m = 1.
+    s = 1.
 
-    metres = 1
-    second = 1
+    metres = 1.
+    second = 1.
     um = 1e-6
-    hPa = 100
+    hPa = 100.
     micrometre = 1e-6
-    minutes = 60
-    km = 1000
-    dimensionless = 1
-    kelvin = 1
+    minutes = 60.
+    km = 1000.
+    dimensionless = 1.
+    kelvin = 1.
     mg = 1e-6
 
 
