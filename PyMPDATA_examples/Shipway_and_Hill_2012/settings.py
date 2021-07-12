@@ -45,8 +45,8 @@ class Settings:
 
         self.rhod = interp1d(z_points, rhod_solution.y[0])
 
-        t_1 = 600 * si.s
-        self.w = lambda t: w_1 * np.sin(np.pi * t / t_1) if t < t_1 else 0
+        self.t_1 = 600 * si.s
+        self.w = lambda t: w_1 * np.sin(np.pi * t / self.t_1) if t < self.t_1 else 0
 
         self.r_min = r_min
         self.r_max = r_max
