@@ -5,17 +5,19 @@ from .formulae import si, Formulae, const
 import numpy as np
 from .arakawa_c import arakawa_c
 from typing import Optional
+from PyMPDATA_examples.Olesik_et_al_2020.settings import ksi_1 as default_ksi_1
 
 
 @strict
 class Settings:
     def __init__(self, dt: float, dz: float, w_1: float, t_max: float = 15 * si.minutes, nr: int = 1,
-                 r_min: float = np.nan, r_max: float = np.nan, p0: Optional[float] = None):
+                 r_min: float = np.nan, r_max: float = np.nan, p0: Optional[float] = None,
+                 ksi_1: float = default_ksi_1.to_base_units().magnitude):
         self.dt = dt
         self.dz = dz
 
         self.nr = nr
-        self.ksi_1 = 100 * si.micrometre ** 2 / si.second  # TODO #221: import from Olesik?
+        self.ksi_1 = ksi_1
 
         self.z_max = 3000 * si.metres
         self.t_max = t_max
