@@ -12,14 +12,15 @@ from PyMPDATA_examples.Olesik_et_al_2020.settings import ksi_1 as default_ksi_1
 class Settings:
     def __init__(self, dt: float, dz: float, w_1: float, t_max: float = 15 * si.minutes, nr: int = 1,
                  r_min: float = np.nan, r_max: float = np.nan, p0: Optional[float] = None,
-                 ksi_1: float = default_ksi_1.to_base_units().magnitude):
+                 ksi_1: float = default_ksi_1.to_base_units().magnitude,
+                 z_max: float = 3000 * si.metres):
         self.dt = dt
         self.dz = dz
 
         self.nr = nr
         self.ksi_1 = ksi_1
 
-        self.z_max = 3000 * si.metres
+        self.z_max = z_max
         self.t_max = t_max
 
         self.qv = interp1d((0, 740, 3260), (.015, .0138, .0024))
