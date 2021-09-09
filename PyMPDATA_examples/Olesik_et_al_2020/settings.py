@@ -37,12 +37,15 @@ def option_string(opts):
     return opts
 
 
+si = pint.UnitRegistry()
+ksi_1 = 100 * si.micrometre ** 2 / si.second
+
+
 # based on Fig. 3 from East 1957
 @strict
 class Settings:
     def __init__(self, nr: int = default_nr,
                  mixing_ratios_g_kg: np.ndarray = default_mixing_ratios_g_kg):
-        si = pint.UnitRegistry()
         self.si = si
         self.nr = nr
         self.r_min = 1 * si.micrometre
@@ -50,7 +53,6 @@ class Settings:
         self.rho_w = 1 * si.kilogram / si.decimetre ** 3
         self.rho_a = 1 * si.kilogram / si.metre ** 3
         self.mixing_ratios = mixing_ratios_g_kg * si.gram / si.kilogram
-        ksi_1 = 100 * si.micrometre ** 2 / si.second
         S = 1.00075
         self.drdt = equilibrium_drop_growth.DrDt(ksi_1, S)
         self.size_distribution = East_and_Marshall_1954.SizeDistribution(si)
@@ -71,12 +73,9 @@ class Settings:
         return out_steps
 
     def mixing_ratio(self, pdf):
-        # TODO!!!
+        # TODO #219!!!
         xunit = self.si.micrometre
         yunit = 1 / self.si.micrometre / self.si.centimetre ** 3
-
-        # def fmgn(fun, unit):
-        #     return lambda x: fun(x * xunit).to(unit).magnitude
 
         r_min = .1 * self.si.um
         while not np.isfinite(pdf(r_min).magnitude):
