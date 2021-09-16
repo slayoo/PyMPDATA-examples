@@ -1,12 +1,26 @@
 from PyMPDATA_examples.Arabas_and_Farhat_2020.options import OPTIONS
-from PyMPDATA import Factories
 from PyMPDATA import ExtrapolatedBoundaryCondition
-from PyMPDATA import Options
+from PyMPDATA import Options, Solver, Stepper, ScalarField, VectorField
 import numpy as np
 import numba
 
 
 class Simulation:
+    @staticmethod
+    def _factory(*,
+                 options: Options,
+                 advectee: np.ndarray,
+                 advector: float,
+                 boundary_conditions
+                 ):
+        stepper = Stepper(options=options, n_dims=len(advectee.shape), non_unit_g_factor=False)
+        return Solver(stepper=stepper,
+                      advectee=ScalarField(advectee.astype(dtype=options.dtype), halo=options.n_halo,
+                                           boundary_conditions=boundary_conditions),
+                      advector=VectorField((np.full(advectee.shape[0] + 1, advector, dtype=options.dtype),),
+                                           halo=options.n_halo, boundary_conditions=boundary_conditions)
+                      )
+
     def __init__(self, settings):
         self.settings = settings
 
@@ -47,13 +61,13 @@ class Simulation:
 
         self.mu_coeff = (0.5 / self.l2,)
         self.solvers = {}
-        self.solvers[1] = Factories.advection_diffusion_1d(
+        self.solvers[1] = self._factory(
             advectee=settings.payoff(self.S),
             advector=self.C,
             options=Options(n_iters=1, non_zero_mu_coeff=True),
             boundary_conditions=(ExtrapolatedBoundaryCondition(),)
         )
-        self.solvers[2] = Factories.advection_diffusion_1d(
+        self.solvers[2] = self._factory(
             advectee=settings.payoff(self.S),
             advector=self.C,
             options=Options(**OPTIONS),
