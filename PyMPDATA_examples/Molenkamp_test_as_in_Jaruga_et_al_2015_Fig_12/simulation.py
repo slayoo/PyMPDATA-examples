@@ -1,13 +1,18 @@
-from PyMPDATA import Factories
 from PyMPDATA_examples.Molenkamp_test_as_in_Jaruga_et_al_2015_Fig_12.settings import Settings
-from PyMPDATA import Options
-from PyMPDATA.arakawa_c.discretisation import from_pdf_2d
+from PyMPDATA import Options, Stepper, ScalarField, PeriodicBoundaryCondition, Solver
+from PyMPDATA.arakawa_c.discretisation import from_pdf_2d, nondivergent_vector_field_2d
+from PyMPDATA.arakawa_c.discretisation import nondivergent_vector_field_2d
 
 
 class Simulation:
     def __init__(self, settings: Settings, options: Options):
         x, y, z = from_pdf_2d(settings.pdf, xrange=settings.xrange, yrange=settings.yrange, gridsize=settings.grid)
-        self.mpdata = Factories.stream_function_2d_basic(settings.grid, settings.size, settings.dt, settings.stream_function, z, options)
+        stepper = Stepper(options=options, grid=settings.grid, non_unit_g_factor=False)
+        advector = nondivergent_vector_field_2d(settings.grid, settings.size, settings.dt, settings.stream_function,
+                                                options.n_halo)
+        advectee = ScalarField(z.astype(dtype=options.dtype), halo=options.n_halo,
+                               boundary_conditions=(PeriodicBoundaryCondition(), PeriodicBoundaryCondition()))
+        self.mpdata = Solver(stepper=stepper, advectee=advectee, advector=advector)
         self.nt = settings.nt
 
     @property
