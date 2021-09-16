@@ -1,7 +1,7 @@
-from PyMPDATA.factories import Factories
+import numpy as np
 from PyMPDATA.arakawa_c.discretisation import from_cdf_1d
 from PyMPDATA_examples.Smolarkiewicz_2006_Figs_3_4_10_11_12.settings import Settings
-from PyMPDATA import Options
+from PyMPDATA import Options, Solver, Stepper, ScalarField, PeriodicBoundaryCondition, VectorField
 
 
 class Simulation:
@@ -9,10 +9,12 @@ class Simulation:
 
         x, state = from_cdf_1d(settings.cdf, settings.x_min, settings.x_max, settings.nx)
 
-        self.stepper = Factories.constant_1d(
-            state,
-            settings.C,
-            options
+        self.stepper = Solver(
+            stepper=Stepper(options=options, n_dims=len(state.shape), non_unit_g_factor=False),
+            advectee=ScalarField(state.astype(options.dtype), halo=options.n_halo,
+                                 boundary_conditions=(PeriodicBoundaryCondition(),)),
+            advector=VectorField((np.full(state.shape[0] + 1, settings.C, dtype=options.dtype),), halo=options.n_halo,
+                                 boundary_conditions=(PeriodicBoundaryCondition(),))
         )
         self.nt = settings.nt
 
