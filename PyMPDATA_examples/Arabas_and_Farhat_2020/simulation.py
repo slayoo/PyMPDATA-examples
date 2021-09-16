@@ -1,5 +1,4 @@
 from PyMPDATA_examples.Arabas_and_Farhat_2020.options import OPTIONS
-from PyMPDATA import Factories
 from PyMPDATA import ExtrapolatedBoundaryCondition
 from PyMPDATA import Options, Solver, Stepper, ScalarField, VectorField
 import numpy as np
