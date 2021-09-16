@@ -1,7 +1,7 @@
 from PyMPDATA_examples.Molenkamp_test_as_in_Jaruga_et_al_2015_Fig_12.settings import Settings
 from PyMPDATA import Options, Stepper, ScalarField, PeriodicBoundaryCondition, Solver
-from PyMPDATA.arakawa_c.discretisation import from_pdf_2d, nondivergent_vector_field_2d
-from PyMPDATA.arakawa_c.discretisation import nondivergent_vector_field_2d
+from PyMPDATA.arakawa_c.discretisation import from_pdf_2d
+from PyMPDATA_examples.utils import nondivergent_vector_field_2d
 
 
 class Simulation:
