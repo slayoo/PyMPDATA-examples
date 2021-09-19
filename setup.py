@@ -13,6 +13,7 @@ setup(
     use_scm_version=True,
     setup_requires=['setuptools_scm'],
     install_requires=['PyMPDATA',
+                      'atmos_cloud_sim_uj_utils',
                       'pystrict',
                       'matplotlib',
                       'ipywidgets',
