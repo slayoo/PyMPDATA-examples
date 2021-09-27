@@ -1,7 +1,7 @@
 from matplotlib import pyplot
 import numpy as np
-from .distributions import n_n
 import matplotlib
+from .distributions import n_n
 
 
 class Plotter:

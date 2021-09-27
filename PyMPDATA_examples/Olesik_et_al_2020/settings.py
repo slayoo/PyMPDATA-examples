@@ -1,10 +1,10 @@
-from PyMPDATA_examples.Olesik_et_al_2020.physics import equilibrium_drop_growth
-from PyMPDATA_examples.Olesik_et_al_2020.physics import East_and_Marshall_1954
 from scipy import integrate
 import numpy as np
 import pint
 from scipy import optimize
 from pystrict import strict
+from PyMPDATA_examples.Olesik_et_al_2020.physics import equilibrium_drop_growth
+from PyMPDATA_examples.Olesik_et_al_2020.physics import East_and_Marshall_1954
 
 
 default_nr = 64
@@ -73,7 +73,6 @@ class Settings:
         return out_steps
 
     def mixing_ratio(self, pdf):
-        # TODO #219!!!
         xunit = self.si.micrometre
         yunit = 1 / self.si.micrometre / self.si.centimetre ** 3
 
