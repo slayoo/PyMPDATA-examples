@@ -1,8 +1,8 @@
+import numpy as np
 from PyMPDATA import (Solver, Stepper, ScalarField, VectorField,
                       ExtrapolatedBoundaryCondition, ConstantBoundaryCondition)
 from PyMPDATA.arakawa_c.enumerations import INNER, OUTER
 from .arakawa_c import arakawa_c
-import numpy as np
 
 
 def repeat_in_r(vec, nr):
