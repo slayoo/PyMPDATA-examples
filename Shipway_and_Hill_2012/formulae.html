@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>PyMPDATA_examples.Shipway_and_Hill_2012.formulae API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>PyMPDATA_examples.Shipway_and_Hill_2012.formulae</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import numpy as np
+from scipy import constants
+
+
+def convert_to(value, unit):
+    value /= unit
+
+
+class si:
+    kg = 1.
+    m = 1.
+    s = 1.
+
+    metres = 1.
+    second = 1.
+    um = 1e-6
+    hPa = 100.
+    micrometre = 1e-6
+    minutes = 60.
+    km = 1000.
+    dimensionless = 1.
+    kelvin = 1.
+    mg = 1e-6
+
+
+class const:
+    Mv = 0.018015
+    Md = 0.028970
+    eps = Mv / Md
+    g = constants.g
+    R_str = constants.R
+    p1000 = 1000 * si.hPa
+    Rd = 287.0027
+    Rv = R_str / Mv
+    c_pd = 1005
+    c_pv = 1850
+    lv = 2.5e6
+    rho_l = 1e3 * si.kg / si.m ** 3
+    T0 = constants.zero_Celsius
+    ARM_C1 = 6.1094 * si.hPa
+    ARM_C2 = 17.625 * si.dimensionless
+    ARM_C3 = 243.04 * si.kelvin
+
+
+class Formulae:
+    @staticmethod
+    def rho_d(p, qv, theta_std):
+        return p * (1 - 1 / (1 + const.eps / qv)) / (
+                    np.power(p / const.p1000, const.Rd / const.c_pd) * const.Rd * theta_std)
+
+    @staticmethod
+    def drho_dz(g, p, T, qv, lv, dql_dz=0):
+        Rq = const.Rv / (1 / qv + 1) + const.Rd / (1 + qv)
+        cp = const.c_pv / (1 / qv + 1) + const.c_pd / (1 + qv)
+        rho = p / Rq / T
+        return (g / T * rho * (Rq / cp - 1) - p * lv / cp / T ** 2 * dql_dz) / Rq
+
+    # A14 in libcloudph++ 1.0 paper
+    @staticmethod
+    def T(rhod, thd):
+        return thd * np.power(rhod * thd / const.p1000 * const.Rd, const.Rd / const.c_pd / (1 - const.Rd / const.c_pd))
+
+    # A15 in libcloudph++ 1.0 paper
+    @staticmethod
+    def p(rhod, T, qv):
+        return rhod * (1 + qv) * (const.Rv / (1 / qv + 1) + const.Rd / (1 + qv)) * T
+
+    @staticmethod
+    def th_dry(th_std, qv):
+        return th_std * np.power(1 + qv / const.eps, const.Rd / const.c_pd)
+
+    @staticmethod
+    def pvs_Celsius(T):
+        return const.ARM_C1 * np.exp((const.ARM_C2 * T) / (T + const.ARM_C3))
+
+    @staticmethod
+    def pv(p, qv):
+        return p * qv / (qv + const.eps)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.convert_to"><code class="name flex">
+<span>def <span class="ident">convert_to</span></span>(<span>value, unit)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def convert_to(value, unit):
+    value /= unit</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae"><code class="flex name class">
+<span>class <span class="ident">Formulae</span></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Formulae:
+    @staticmethod
+    def rho_d(p, qv, theta_std):
+        return p * (1 - 1 / (1 + const.eps / qv)) / (
+                    np.power(p / const.p1000, const.Rd / const.c_pd) * const.Rd * theta_std)
+
+    @staticmethod
+    def drho_dz(g, p, T, qv, lv, dql_dz=0):
+        Rq = const.Rv / (1 / qv + 1) + const.Rd / (1 + qv)
+        cp = const.c_pv / (1 / qv + 1) + const.c_pd / (1 + qv)
+        rho = p / Rq / T
+        return (g / T * rho * (Rq / cp - 1) - p * lv / cp / T ** 2 * dql_dz) / Rq
+
+    # A14 in libcloudph++ 1.0 paper
+    @staticmethod
+    def T(rhod, thd):
+        return thd * np.power(rhod * thd / const.p1000 * const.Rd, const.Rd / const.c_pd / (1 - const.Rd / const.c_pd))
+
+    # A15 in libcloudph++ 1.0 paper
+    @staticmethod
+    def p(rhod, T, qv):
+        return rhod * (1 + qv) * (const.Rv / (1 / qv + 1) + const.Rd / (1 + qv)) * T
+
+    @staticmethod
+    def th_dry(th_std, qv):
+        return th_std * np.power(1 + qv / const.eps, const.Rd / const.c_pd)
+
+    @staticmethod
+    def pvs_Celsius(T):
+        return const.ARM_C1 * np.exp((const.ARM_C2 * T) / (T + const.ARM_C3))
+
+    @staticmethod
+    def pv(p, qv):
+        return p * qv / (qv + const.eps)</code></pre>
+</details>
+<h3>Static methods</h3>
+<dl>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.T"><code class="name flex">
+<span>def <span class="ident">T</span></span>(<span>rhod, thd)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def T(rhod, thd):
+    return thd * np.power(rhod * thd / const.p1000 * const.Rd, const.Rd / const.c_pd / (1 - const.Rd / const.c_pd))</code></pre>
+</details>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.drho_dz"><code class="name flex">
+<span>def <span class="ident">drho_dz</span></span>(<span>g, p, T, qv, lv, dql_dz=0)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def drho_dz(g, p, T, qv, lv, dql_dz=0):
+    Rq = const.Rv / (1 / qv + 1) + const.Rd / (1 + qv)
+    cp = const.c_pv / (1 / qv + 1) + const.c_pd / (1 + qv)
+    rho = p / Rq / T
+    return (g / T * rho * (Rq / cp - 1) - p * lv / cp / T ** 2 * dql_dz) / Rq</code></pre>
+</details>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.p"><code class="name flex">
+<span>def <span class="ident">p</span></span>(<span>rhod, T, qv)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def p(rhod, T, qv):
+    return rhod * (1 + qv) * (const.Rv / (1 / qv + 1) + const.Rd / (1 + qv)) * T</code></pre>
+</details>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.pv"><code class="name flex">
+<span>def <span class="ident">pv</span></span>(<span>p, qv)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def pv(p, qv):
+    return p * qv / (qv + const.eps)</code></pre>
+</details>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.pvs_Celsius"><code class="name flex">
+<span>def <span class="ident">pvs_Celsius</span></span>(<span>T)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def pvs_Celsius(T):
+    return const.ARM_C1 * np.exp((const.ARM_C2 * T) / (T + const.ARM_C3))</code></pre>
+</details>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.rho_d"><code class="name flex">
+<span>def <span class="ident">rho_d</span></span>(<span>p, qv, theta_std)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def rho_d(p, qv, theta_std):
+    return p * (1 - 1 / (1 + const.eps / qv)) / (
+                np.power(p / const.p1000, const.Rd / const.c_pd) * const.Rd * theta_std)</code></pre>
+</details>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.th_dry"><code class="name flex">
+<span>def <span class="ident">th_dry</span></span>(<span>th_std, qv)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def th_dry(th_std, qv):
+    return th_std * np.power(1 + qv / const.eps, const.Rd / const.c_pd)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const"><code class="flex name class">
+<span>class <span class="ident">const</span></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class const:
+    Mv = 0.018015
+    Md = 0.028970
+    eps = Mv / Md
+    g = constants.g
+    R_str = constants.R
+    p1000 = 1000 * si.hPa
+    Rd = 287.0027
+    Rv = R_str / Mv
+    c_pd = 1005
+    c_pv = 1850
+    lv = 2.5e6
+    rho_l = 1e3 * si.kg / si.m ** 3
+    T0 = constants.zero_Celsius
+    ARM_C1 = 6.1094 * si.hPa
+    ARM_C2 = 17.625 * si.dimensionless
+    ARM_C3 = 243.04 * si.kelvin</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.ARM_C1"><code class="name">var <span class="ident">ARM_C1</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.ARM_C2"><code class="name">var <span class="ident">ARM_C2</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.ARM_C3"><code class="name">var <span class="ident">ARM_C3</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.Md"><code class="name">var <span class="ident">Md</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.Mv"><code class="name">var <span class="ident">Mv</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.R_str"><code class="name">var <span class="ident">R_str</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.Rd"><code class="name">var <span class="ident">Rd</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.Rv"><code class="name">var <span class="ident">Rv</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.T0"><code class="name">var <span class="ident">T0</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.c_pd"><code class="name">var <span class="ident">c_pd</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.c_pv"><code class="name">var <span class="ident">c_pv</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.eps"><code class="name">var <span class="ident">eps</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.g"><code class="name">var <span class="ident">g</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.lv"><code class="name">var <span class="ident">lv</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.p1000"><code class="name">var <span class="ident">p1000</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.rho_l"><code class="name">var <span class="ident">rho_l</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si"><code class="flex name class">
+<span>class <span class="ident">si</span></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class si:
+    kg = 1.
+    m = 1.
+    s = 1.
+
+    metres = 1.
+    second = 1.
+    um = 1e-6
+    hPa = 100.
+    micrometre = 1e-6
+    minutes = 60.
+    km = 1000.
+    dimensionless = 1.
+    kelvin = 1.
+    mg = 1e-6</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.dimensionless"><code class="name">var <span class="ident">dimensionless</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.hPa"><code class="name">var <span class="ident">hPa</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.kelvin"><code class="name">var <span class="ident">kelvin</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.kg"><code class="name">var <span class="ident">kg</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.km"><code class="name">var <span class="ident">km</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.m"><code class="name">var <span class="ident">m</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.metres"><code class="name">var <span class="ident">metres</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.mg"><code class="name">var <span class="ident">mg</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.micrometre"><code class="name">var <span class="ident">micrometre</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.minutes"><code class="name">var <span class="ident">minutes</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.s"><code class="name">var <span class="ident">s</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.second"><code class="name">var <span class="ident">second</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.um"><code class="name">var <span class="ident">um</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012" href="index.html">PyMPDATA_examples.Shipway_and_Hill_2012</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.convert_to" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.convert_to">convert_to</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae">Formulae</a></code></h4>
+<ul class="two-column">
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.T" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.T">T</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.drho_dz" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.drho_dz">drho_dz</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.p" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.p">p</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.pv" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.pv">pv</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.pvs_Celsius" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.pvs_Celsius">pvs_Celsius</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.rho_d" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.rho_d">rho_d</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.th_dry" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.th_dry">th_dry</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const">const</a></code></h4>
+<ul class="two-column">
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.ARM_C1" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.ARM_C1">ARM_C1</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.ARM_C2" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.ARM_C2">ARM_C2</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.ARM_C3" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.ARM_C3">ARM_C3</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.Md" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.Md">Md</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.Mv" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.Mv">Mv</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.R_str" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.R_str">R_str</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.Rd" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.Rd">Rd</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.Rv" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.Rv">Rv</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.T0" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.T0">T0</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.c_pd" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.c_pd">c_pd</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.c_pv" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.c_pv">c_pv</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.eps" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.eps">eps</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.g" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.g">g</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.lv" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.lv">lv</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.p1000" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.p1000">p1000</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.rho_l" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.rho_l">rho_l</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si">si</a></code></h4>
+<ul class="two-column">
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.dimensionless" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.dimensionless">dimensionless</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.hPa" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.hPa">hPa</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.kelvin" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.kelvin">kelvin</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.kg" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.kg">kg</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.km" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.km">km</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.m" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.m">m</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.metres" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.metres">metres</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.mg" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.mg">mg</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.micrometre" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.micrometre">micrometre</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.minutes" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.minutes">minutes</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.s" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.s">s</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.second" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.second">second</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.um" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.um">um</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>
