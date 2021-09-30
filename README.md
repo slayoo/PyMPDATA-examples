@@ -1,3 +1,13 @@
+[![Copyright](https://img.shields.io/static/v1?label=Copyright&color=249fe2&message=Jagiellonian%20University&)](https://en.uj.edu.pl/)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
+
+[![Github Actions Build Status](https://github.com/atmos-cloud-sim-uj/PyMPDATA-examples/workflows/PyMPDATA-examples/badge.svg?branch=main)](https://github.com/atmos-cloud-sim-uj/PyMPDATA-examples/actions)    
+[![GitHub issues](https://img.shields.io/github/issues-pr/atmos-cloud-sim-uj/PyMPDATA-examples.svg?logo=github&logoColor=white)](https://github.com/atmos-cloud-sim-uj/PyMPDATA-examples/pulls?q=)
+[![GitHub issues](https://img.shields.io/github/issues-pr-closed/atmos-cloud-sim-uj/PyMPDATA-examples.svg?logo=github&logoColor=white)](https://github.com/atmos-cloud-sim-uj/PyMPDATA-examples/pulls?q=is:closed)    
+[![PyPI version](https://badge.fury.io/py/PyMPDATA-examples.svg)](https://pypi.org/project/PyMPDATA-examples)
+[![API docs](https://img.shields.io/badge/API_docs-pdoc3-blue.svg)](https://atmos-cloud-sim-uj.github.io/PyMPDATA-examples/)
+
+
 This repository stores example files for `PyMPDATA` depicting usage of `PyMPDATA` from Python via Jupyter.
 For information on the `PyMPDATA` package itself and examples of usage from Julia and Matlab, 
 see [PyMPDATA README.md](https://github.com/atmos-cloud-sim-uj/PyMPDATA/blob/master/README.md) file.
