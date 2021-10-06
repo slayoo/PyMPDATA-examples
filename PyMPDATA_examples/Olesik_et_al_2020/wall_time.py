@@ -9,8 +9,7 @@ import pathlib
 grid_layout_set = (x_log_of_pn(r0=1, base=2),)
 opt_set = default_opt_set.values()
 
-# TODO #220!
-rtol = 5
+rtol = 1.5
 
 
 def test_wall_time(n_runs=3, mrats=(10,), generate=False, print_tab=True, rtol=rtol):

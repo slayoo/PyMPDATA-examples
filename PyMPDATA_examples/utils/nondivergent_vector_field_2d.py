@@ -1,5 +1,6 @@
-from PyMPDATA import PeriodicBoundaryCondition, VectorField, ScalarField
 import numpy as np
+from PyMPDATA import VectorField, ScalarField
+from PyMPDATA.boundary_conditions import Periodic
 
 
 def nondivergent_vector_field_2d(grid, size, dt, stream_function: callable, halo):
@@ -20,7 +21,7 @@ def nondivergent_vector_field_2d(grid, size, dt, stream_function: callable, halo
     for d in range(len(GC)):
         np.testing.assert_array_less(np.abs(GC[d]), 1)
 
-    result = VectorField(GC, halo=halo, boundary_conditions=(PeriodicBoundaryCondition(), PeriodicBoundaryCondition()))
+    result = VectorField(GC, halo=halo, boundary_conditions=(Periodic(), Periodic()))
 
     # nondivergence (of velocity field, hence dt)
     assert np.amax(abs(result.div((dt, dt)).get())) < 5e-9

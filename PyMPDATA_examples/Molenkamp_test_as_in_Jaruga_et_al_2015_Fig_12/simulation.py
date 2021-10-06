@@ -1,6 +1,7 @@
 from PyMPDATA_examples.Molenkamp_test_as_in_Jaruga_et_al_2015_Fig_12.settings import Settings
-from PyMPDATA import Options, Stepper, ScalarField, PeriodicBoundaryCondition, Solver
-from PyMPDATA.arakawa_c.discretisation import from_pdf_2d
+from PyMPDATA import Options, Stepper, ScalarField, Solver
+from PyMPDATA.boundary_conditions import Periodic
+from PyMPDATA.impl.discretisation import from_pdf_2d
 from PyMPDATA_examples.utils import nondivergent_vector_field_2d
 
 
@@ -11,7 +12,7 @@ class Simulation:
         advector = nondivergent_vector_field_2d(settings.grid, settings.size, settings.dt, settings.stream_function,
                                                 options.n_halo)
         advectee = ScalarField(z.astype(dtype=options.dtype), halo=options.n_halo,
-                               boundary_conditions=(PeriodicBoundaryCondition(), PeriodicBoundaryCondition()))
+                               boundary_conditions=(Periodic(), Periodic()))
         self.mpdata = Solver(stepper=stepper, advectee=advectee, advector=advector)
         self.nt = settings.nt
 
