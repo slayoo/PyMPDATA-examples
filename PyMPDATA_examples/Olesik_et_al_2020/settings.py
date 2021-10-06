@@ -14,11 +14,11 @@ default_opt_set = {
     'a': {'n_iters': 1},
     'b': {'n_iters': 2},
     'c': {'n_iters': 2, 'infinite_gauge': True},
-    'd': {'n_iters': 2, 'infinite_gauge': True, 'flux_corrected_transport': True},
-    'e': {'n_iters': 2, 'DPDC': True, 'infinite_gauge': True, 'flux_corrected_transport': True},
+    'd': {'n_iters': 2, 'infinite_gauge': True, 'nonoscillatory': True},
+    'e': {'n_iters': 2, 'DPDC': True, 'infinite_gauge': True, 'nonoscillatory': True},
     'f': {'n_iters': 3, 'third_order_terms': True},
     'g': {'n_iters': 3},
-    'h': {'n_iters': 3, 'third_order_terms': True, 'infinite_gauge': True, 'flux_corrected_transport': True},
+    'h': {'n_iters': 3, 'third_order_terms': True, 'infinite_gauge': True, 'nonoscillatory': True},
 }
 colors = ['red', 'blue', 'crimson', 'orange', 'olive', 'navy', 'green', 'blueviolet']
 colors = {key: colors.pop(0) for key in default_opt_set.keys()}
@@ -31,7 +31,7 @@ def option_string(opts):
                 ["'", ""],
                 [": True", ""],
                 ["_", " "],
-                ["{", ""], ["}", ""], [",", ""], ["flux corrected transport", "non-oscillatory"]]
+                ["{", ""], ["}", ""], [",", ""], ["nonoscillatory", "non-oscillatory"]]
     for repl in str_repl:
         opts = opts.replace(repl[0], repl[1])
     return opts
