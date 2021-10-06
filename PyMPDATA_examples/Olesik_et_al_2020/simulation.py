@@ -122,9 +122,6 @@ class Simulation:
     def g_factor(self):
         return self._g_factor.get()
 
-
     @property
     def dp_dr(self):
         return self.psi_coord.dx_dr(self.__r)
-
-

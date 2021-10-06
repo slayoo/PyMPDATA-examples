@@ -1,5 +1,5 @@
 from PyMPDATA_examples.Arabas_and_Farhat_2020.options import OPTIONS
-from PyMPDATA import ExtrapolatedBoundaryCondition
+from PyMPDATA.boundary_conditions import Extrapolated
 from PyMPDATA import Options, Solver, Stepper, ScalarField, VectorField
 import numpy as np
 import numba
@@ -65,13 +65,13 @@ class Simulation:
             advectee=settings.payoff(self.S),
             advector=self.C,
             options=Options(n_iters=1, non_zero_mu_coeff=True),
-            boundary_conditions=(ExtrapolatedBoundaryCondition(),)
+            boundary_conditions=(Extrapolated(),)
         )
         self.solvers[2] = self._factory(
             advectee=settings.payoff(self.S),
             advector=self.C,
             options=Options(**OPTIONS),
-            boundary_conditions=(ExtrapolatedBoundaryCondition(),)
+            boundary_conditions=(Extrapolated(),)
         )
 
     def run(self, n_iters: int):
