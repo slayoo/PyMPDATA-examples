@@ -7,8 +7,8 @@ import numpy as np
 
 
 @lru_cache()
-def _make_scalar(value, at, halo, dr, dz, dtype):
-    @numba.njit()
+def _make_scalar(value, at, halo, dr, dz, dtype, jit_flags):
+    @numba.njit(**jit_flags)
     def impl(psi, n, sign):
         if sign == SIGN_RIGHT:
             return 0
@@ -19,24 +19,17 @@ def _make_scalar(value, at, halo, dr, dz, dtype):
         return result
 
     if dtype == complex:
-        @numba.njit()
+        @numba.njit(**jit_flags)
         def fill_halos_scalar(psi, n, sign):
             return complex(
                 impl((psi[META_AND_DATA_META], psi[META_AND_DATA_DATA].real), n, sign),
                 impl((psi[META_AND_DATA_META], psi[META_AND_DATA_DATA].imag), n, sign)
             )
     else:
-        @numba.njit()
+        @numba.njit(**jit_flags)
         def fill_halos_scalar(psi, n, sign):
             return impl(psi, n, sign)
     return fill_halos_scalar
-
-    # @lru_cache()
-    # def _make_vector(at):
-    #     @numba.njit()
-    #     def fill_halos(psi, n, sign):
-    #         return 0
-    #     return fill_halos
 
 class DropletActivation:
     def __init__(self, value, dr, dz):
@@ -44,8 +37,5 @@ class DropletActivation:
         self.dz = dz
         self.dr = dr
 
-    def make_scalar(self, _at, _halo, dtype):
+    def make_scalar(self, _at, _halo, dtype, jit_flags):
         return _make_scalar(self._value, _at, _halo, self.dr, self.dz, dtype)
-
-    # def make_vector(self, at, dtype):
-    #     return DropletActivation(self._value, self.dr, self.dz).make_vector(at)
