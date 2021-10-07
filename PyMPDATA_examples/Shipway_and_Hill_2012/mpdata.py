@@ -1,7 +1,7 @@
 import numpy as np
 from PyMPDATA import Solver, Stepper, ScalarField, VectorField
 from PyMPDATA.boundary_conditions import Extrapolated, Constant
-from PyMPDATA.arakawa_c.enumerations import INNER, OUTER
+from PyMPDATA.impl.enumerations import INNER, OUTER
 from .arakawa_c import arakawa_c
 
 
