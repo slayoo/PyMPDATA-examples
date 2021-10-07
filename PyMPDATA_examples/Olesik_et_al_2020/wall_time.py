@@ -65,7 +65,9 @@ def compare_refdata(data, rtol, generate=False):
     delimiter = ';'
     path = pathlib.Path(__file__).parent.joinpath("wall_time_refdata.txt")
     if generate:
-        table = np.char.array(np.concatenate([data['opts'], data['values']])).reshape(len(data['values']),2).T
+        table = np.char.array(
+            np.concatenate([data['opts'], data['values']])
+        ).reshape(2, len(data['values'])).T
         np.savetxt(path, table, delimiter=delimiter, fmt="%s")
     else:
         table = np.loadtxt(path, delimiter=delimiter, dtype=str)
