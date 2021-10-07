@@ -32,8 +32,8 @@ class DropletActivation:
         self.dz = dz
         self.dr = dr
 
-    def make_scalar(self, _at, _halo):
+    def make_scalar(self, _at, _halo, dtype):
         return _make_scalar(self._value, _at, _halo, self.dr, self.dz)
 
-    def make_vector(self, at):
+    def make_vector(self, at, dtype):
         return DropletActivation(self._value, self.dr, self.dz).make_vector(at)
