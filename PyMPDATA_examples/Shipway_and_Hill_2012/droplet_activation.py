@@ -1,6 +1,8 @@
 import numba
 from functools import lru_cache
-from PyMPDATA.impl.enumerations import SIGN_RIGHT, INVALID_HALO_VALUE, ARG_DATA, OUTER, ARG_FOCUS
+from PyMPDATA.impl.enumerations import (SIGN_RIGHT, INVALID_HALO_VALUE,
+                                        ARG_DATA, OUTER, ARG_FOCUS,
+                                        META_AND_DATA_DATA, META_AND_DATA_META)
 import numpy as np
 
 
