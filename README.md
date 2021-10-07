@@ -52,4 +52,7 @@ TOC:
 - 2D advection on a sphere (**upwind-only** setup depicting coordinate transformation based on [Williamson and Rasch 1989](https://doi.org/10.1175/1520-0493(1989)117%3C0102:TDSLTW%3E2.0.CO;2))  
   [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/atmos-cloud-sim-uj/PyMPDATA-examples.git/main?urlpath=lab/tree/PyMPDATA_examples%2FWilliamson_and_Rasch_1989_as_in_Jaruga_et_al_2015_Fig_14/demo_over_the_pole.ipynb) 
   [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/atmos-cloud-sim-uj/PyMPDATA-examples/blob/main/PyMPDATA_examples/Williamson_and_Rasch_1989_as_in_Jaruga_et_al_2015_Fig_14/demo_over_the_pole.ipynb)    
-![animation](https://github.com/atmos-cloud-sim-uj/PyMPDATA/wiki/files/sphere_upwind.gif)  
+![animation](https://github.com/atmos-cloud-sim-uj/PyMPDATA/wiki/files/sphere_upwind.gif) 
+- 3D advection (spherical signal revolving in a box, based on [Smolarkiewicz 1984](https://doi.org/10.1016/0021-9991(84)90121-9))
+  [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/atmos-cloud-sim-uj/PyMPDATA-examples.git/main?urlpath=lab/tree/PyMPDATA_examples%2FSmolarkiewicz_1984/figs_13-14.ipynb) 
+  [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/atmos-cloud-sim-uj/PyMPDATA-examples/blob/main/PyMPDATA_examples/Smolarkiewicz_1984/figs_13-14.ipynb)    
