@@ -93,7 +93,9 @@ def compare_refdata(data, rtol, generate=False):
     delimiter = &#39;;&#39;
     path = pathlib.Path(__file__).parent.joinpath(&#34;wall_time_refdata.txt&#34;)
     if generate:
-        table = np.char.array(np.concatenate([data[&#39;opts&#39;], data[&#39;values&#39;]])).reshape(len(data[&#39;values&#39;]),2).T
+        table = np.char.array(
+            np.concatenate([data[&#39;opts&#39;], data[&#39;values&#39;]])
+        ).reshape(2, len(data[&#39;values&#39;])).T
         np.savetxt(path, table, delimiter=delimiter, fmt=&#34;%s&#34;)
     else:
         table = np.loadtxt(path, delimiter=delimiter, dtype=str)
@@ -121,7 +123,9 @@ def compare_refdata(data, rtol, generate=False):
     delimiter = &#39;;&#39;
     path = pathlib.Path(__file__).parent.joinpath(&#34;wall_time_refdata.txt&#34;)
     if generate:
-        table = np.char.array(np.concatenate([data[&#39;opts&#39;], data[&#39;values&#39;]])).reshape(len(data[&#39;values&#39;]),2).T
+        table = np.char.array(
+            np.concatenate([data[&#39;opts&#39;], data[&#39;values&#39;]])
+        ).reshape(2, len(data[&#39;values&#39;])).T
         np.savetxt(path, table, delimiter=delimiter, fmt=&#34;%s&#34;)
     else:
         table = np.loadtxt(path, delimiter=delimiter, dtype=str)
