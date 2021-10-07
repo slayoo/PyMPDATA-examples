@@ -1,7 +1,7 @@
 import numpy as np
-from PyMPDATA import (Solver, Stepper, ScalarField, VectorField,
-                      ExtrapolatedBoundaryCondition, ConstantBoundaryCondition)
-from PyMPDATA.arakawa_c.enumerations import INNER, OUTER
+from PyMPDATA import Solver, Stepper, ScalarField, VectorField
+from PyMPDATA.boundary_conditions import Extrapolated, Constant
+from PyMPDATA.impl.enumerations import INNER, OUTER
 from .arakawa_c import arakawa_c
 
 
@@ -22,11 +22,11 @@ class MPDATA:
             grid = (nz, nr) if nr > 1 and k == 'ql' else (nz,)
 
             bcs_extrapol = tuple(
-                ExtrapolatedBoundaryCondition(dim=d)
+                Extrapolated(dim=d)
                 for d in ((OUTER, INNER) if k == 'ql' and nr > 1 else (INNER,))
             )
             bcs_zero = tuple(
-                ExtrapolatedBoundaryCondition(dim=d)
+                Extrapolated(dim=d)
                 for d in ((OUTER, INNER) if k == 'ql' and nr > 1 else (INNER,))
             )
 
@@ -52,14 +52,14 @@ class MPDATA:
             )
             if k == 'qv':
                 data = qv_of_zZ_at_t0(arakawa_c.z_scalar_coord(grid))
-                bcs = (ConstantBoundaryCondition(value=data[0]),)
+                bcs = (Constant(value=data[0]),)
             else:
                 data = np.zeros(grid)
                 if nr == 1:
-                    bcs = (ConstantBoundaryCondition(value=0),)
+                    bcs = (Constant(value=0),)
                 else:
                     bcs = (
-                        ConstantBoundaryCondition(value=0),
+                        Constant(value=0),
                         activation_bc
                     )
             advectee = ScalarField(

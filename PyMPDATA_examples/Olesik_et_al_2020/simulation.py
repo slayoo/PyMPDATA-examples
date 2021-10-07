@@ -1,7 +1,8 @@
 import math
 import numpy as np
-from PyMPDATA import ScalarField, VectorField, Stepper, Solver, Options, ExtrapolatedBoundaryCondition, ConstantBoundaryCondition
-from PyMPDATA.arakawa_c.discretisation import discretised_analytical_solution
+from PyMPDATA import ScalarField, VectorField, Stepper, Solver, Options
+from PyMPDATA.boundary_conditions import Constant, Extrapolated
+from PyMPDATA.impl.discretisation import discretised_analytical_solution
 
 
 class Simulation:
@@ -47,9 +48,9 @@ class Simulation:
         # CFL condition
         np.testing.assert_array_less(np.abs(GCh), 1)
 
-        g_factor = ScalarField(G.astype(dtype=opts.dtype), halo=opts.n_halo, boundary_conditions=(ExtrapolatedBoundaryCondition(),))
-        state = ScalarField(psi.astype(dtype=opts.dtype), halo=opts.n_halo, boundary_conditions=(ConstantBoundaryCondition(0),))
-        GC_field = VectorField([GCh.astype(dtype=opts.dtype)], halo=opts.n_halo, boundary_conditions=(ConstantBoundaryCondition(0),))
+        g_factor = ScalarField(G.astype(dtype=opts.dtype), halo=opts.n_halo, boundary_conditions=(Extrapolated(),))
+        state = ScalarField(psi.astype(dtype=opts.dtype), halo=opts.n_halo, boundary_conditions=(Constant(0),))
+        GC_field = VectorField([GCh.astype(dtype=opts.dtype)], halo=opts.n_halo, boundary_conditions=(Constant(0),))
         stepper = Stepper(
             options=opts,
             n_dims=1,
@@ -121,9 +122,6 @@ class Simulation:
     def g_factor(self):
         return self._g_factor.get()
 
-
     @property
     def dp_dr(self):
         return self.psi_coord.dx_dr(self.__r)
-
-

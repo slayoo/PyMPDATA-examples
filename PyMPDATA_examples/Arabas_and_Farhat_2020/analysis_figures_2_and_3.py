@@ -31,7 +31,7 @@ def convergence_in_space(num=8):
         result = {}
         for pair in data:
             for datum in pair:
-                label = f" $\lambda^2\\approx2^{{{datum['log2_l2_opt']}}}$"
+                label = f" $\\lambda^2\\approx2^{{{datum['log2_l2_opt']}}}$"
                 key = ("upwind" + label, "MPDATA" + label)[datum["n_iters"]-1]
                 if key not in result:
                     result[key] = ([], [])
