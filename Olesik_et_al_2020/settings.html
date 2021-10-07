@@ -42,11 +42,11 @@ default_opt_set = {
     &#39;a&#39;: {&#39;n_iters&#39;: 1},
     &#39;b&#39;: {&#39;n_iters&#39;: 2},
     &#39;c&#39;: {&#39;n_iters&#39;: 2, &#39;infinite_gauge&#39;: True},
-    &#39;d&#39;: {&#39;n_iters&#39;: 2, &#39;infinite_gauge&#39;: True, &#39;flux_corrected_transport&#39;: True},
-    &#39;e&#39;: {&#39;n_iters&#39;: 2, &#39;DPDC&#39;: True, &#39;infinite_gauge&#39;: True, &#39;flux_corrected_transport&#39;: True},
+    &#39;d&#39;: {&#39;n_iters&#39;: 2, &#39;infinite_gauge&#39;: True, &#39;nonoscillatory&#39;: True},
+    &#39;e&#39;: {&#39;n_iters&#39;: 2, &#39;DPDC&#39;: True, &#39;infinite_gauge&#39;: True, &#39;nonoscillatory&#39;: True},
     &#39;f&#39;: {&#39;n_iters&#39;: 3, &#39;third_order_terms&#39;: True},
     &#39;g&#39;: {&#39;n_iters&#39;: 3},
-    &#39;h&#39;: {&#39;n_iters&#39;: 3, &#39;third_order_terms&#39;: True, &#39;infinite_gauge&#39;: True, &#39;flux_corrected_transport&#39;: True},
+    &#39;h&#39;: {&#39;n_iters&#39;: 3, &#39;third_order_terms&#39;: True, &#39;infinite_gauge&#39;: True, &#39;nonoscillatory&#39;: True},
 }
 colors = [&#39;red&#39;, &#39;blue&#39;, &#39;crimson&#39;, &#39;orange&#39;, &#39;olive&#39;, &#39;navy&#39;, &#39;green&#39;, &#39;blueviolet&#39;]
 colors = {key: colors.pop(0) for key in default_opt_set.keys()}
@@ -59,7 +59,7 @@ def option_string(opts):
                 [&#34;&#39;&#34;, &#34;&#34;],
                 [&#34;: True&#34;, &#34;&#34;],
                 [&#34;_&#34;, &#34; &#34;],
-                [&#34;{&#34;, &#34;&#34;], [&#34;}&#34;, &#34;&#34;], [&#34;,&#34;, &#34;&#34;], [&#34;flux corrected transport&#34;, &#34;non-oscillatory&#34;]]
+                [&#34;{&#34;, &#34;&#34;], [&#34;}&#34;, &#34;&#34;], [&#34;,&#34;, &#34;&#34;], [&#34;nonoscillatory&#34;, &#34;non-oscillatory&#34;]]
     for repl in str_repl:
         opts = opts.replace(repl[0], repl[1])
     return opts
@@ -149,7 +149,7 @@ class Settings:
                 [&#34;&#39;&#34;, &#34;&#34;],
                 [&#34;: True&#34;, &#34;&#34;],
                 [&#34;_&#34;, &#34; &#34;],
-                [&#34;{&#34;, &#34;&#34;], [&#34;}&#34;, &#34;&#34;], [&#34;,&#34;, &#34;&#34;], [&#34;flux corrected transport&#34;, &#34;non-oscillatory&#34;]]
+                [&#34;{&#34;, &#34;&#34;], [&#34;}&#34;, &#34;&#34;], [&#34;,&#34;, &#34;&#34;], [&#34;nonoscillatory&#34;, &#34;non-oscillatory&#34;]]
     for repl in str_repl:
         opts = opts.replace(repl[0], repl[1])
     return opts</code></pre>

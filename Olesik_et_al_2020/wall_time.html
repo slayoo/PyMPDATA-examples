@@ -37,8 +37,7 @@ import pathlib
 grid_layout_set = (x_log_of_pn(r0=1, base=2),)
 opt_set = default_opt_set.values()
 
-# TODO #220!
-rtol = 5
+rtol = 1.5
 
 
 def test_wall_time(n_runs=3, mrats=(10,), generate=False, print_tab=True, rtol=rtol):
@@ -176,7 +175,7 @@ def compare_refdata(data, rtol, generate=False):
 </details>
 </dd>
 <dt id="PyMPDATA_examples.Olesik_et_al_2020.wall_time.test_wall_time"><code class="name flex">
-<span>def <span class="ident">test_wall_time</span></span>(<span>n_runs=3, mrats=(10,), generate=False, print_tab=True, rtol=5)</span>
+<span>def <span class="ident">test_wall_time</span></span>(<span>n_runs=3, mrats=(10,), generate=False, print_tab=True, rtol=1.5)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>

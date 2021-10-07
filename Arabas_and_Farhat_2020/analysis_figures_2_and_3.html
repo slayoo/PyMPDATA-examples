@@ -59,7 +59,7 @@ def convergence_in_space(num=8):
         result = {}
         for pair in data:
             for datum in pair:
-                label = f&#34; $\lambda^2\\approx2^{{{datum[&#39;log2_l2_opt&#39;]}}}$&#34;
+                label = f&#34; $\\lambda^2\\approx2^{{{datum[&#39;log2_l2_opt&#39;]}}}$&#34;
                 key = (&#34;upwind&#34; + label, &#34;MPDATA&#34; + label)[datum[&#34;n_iters&#34;]-1]
                 if key not in result:
                     result[key] = ([], [])
@@ -143,7 +143,7 @@ def error_L2_norm(solvers, settings, S, nt, n_iters: int):
         result = {}
         for pair in data:
             for datum in pair:
-                label = f&#34; $\lambda^2\\approx2^{{{datum[&#39;log2_l2_opt&#39;]}}}$&#34;
+                label = f&#34; $\\lambda^2\\approx2^{{{datum[&#39;log2_l2_opt&#39;]}}}$&#34;
                 key = (&#34;upwind&#34; + label, &#34;MPDATA&#34; + label)[datum[&#34;n_iters&#34;]-1]
                 if key not in result:
                     result[key] = ([], [])

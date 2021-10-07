@@ -34,9 +34,9 @@ from joblib import Parallel, delayed
 
 options = {
     &#39;upwind&#39;: Options(n_iters=1),
-    &#39;2+fct&#39;: Options(n_iters=2, flux_corrected_transport=True),
-    &#39;3+fct+tot&#39;: Options(n_iters=3, flux_corrected_transport=True, third_order_terms=True),
-    &#39;2+fct+iga&#39;: Options(n_iters=2, flux_corrected_transport=True, infinite_gauge=True)
+    &#39;2+fct&#39;: Options(n_iters=2, nonoscillatory=True),
+    &#39;3+fct+tot&#39;: Options(n_iters=3, nonoscillatory=True, third_order_terms=True),
+    &#39;2+fct+iga&#39;: Options(n_iters=2, nonoscillatory=True, infinite_gauge=True)
 }
 
 
