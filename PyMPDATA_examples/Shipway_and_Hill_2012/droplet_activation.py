@@ -38,4 +38,4 @@ class DropletActivation:
         self.dr = dr
 
     def make_scalar(self, _at, _halo, dtype, jit_flags):
-        return _make_scalar(self._value, _at, _halo, self.dr, self.dz, dtype)
+        return _make_scalar(self._value, _at, _halo, self.dr, self.dz, dtype, jit_flags)
