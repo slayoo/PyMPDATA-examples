@@ -57,7 +57,6 @@ class Simulation:
             if it != 0:
                 h = self.solvers['h'].advectee.get()
                 for xy, k in enumerate(('uh', 'vh')):
-                    # TODO #273: extrapolate in time
                     mask = h > s.eps
                     vel = np.where(mask, np.nan, 0)
                     np.divide(self.solvers[k].advectee.get(), h, where=mask, out=vel)
