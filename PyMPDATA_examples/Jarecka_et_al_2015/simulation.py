@@ -17,14 +17,12 @@ class Simulation:
             np.zeros((s.nx, s.ny + 1))
         ), halo, bcs)
 
-        A = 1 / s.lx0 / s.ly0
         xi, yi = np.indices(grid, dtype=float)
         xi += .5 - s.nx // 2
         yi += .5 - s.ny // 2
         x = xi * s.dx
         y = yi * s.dy
-        h0 = A * (1 - (x / s.lx0) ** 2 - (y / s.ly0) ** 2)
-        h0 = np.where(h0 > 0, h0, 0)
+        h0 = self.amplitude(x, y, s.lx0, s.ly0)
 
         advectees = {
             'h': ScalarField(h0, halo, bcs),
@@ -37,6 +35,12 @@ class Simulation:
             k: Solver(stepper, advectees[k], self.advector)
             for k in advectees
         }
+
+    @staticmethod
+    def amplitude(x, y, lx, ly):
+        A = 1 / lx / ly
+        h = A * (1 - (x / lx) ** 2 - (y / ly) ** 2)
+        return np.where(h > 0, h, 0)
 
     @staticmethod
     def interpolate(psi, axis):

@@ -1,6 +1,7 @@
 from pystrict import strict
 from PyMPDATA import Options
 
+
 @strict
 class Settings:
     def __init__(self):

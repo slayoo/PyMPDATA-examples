@@ -51,7 +51,7 @@ Each of the examples listed below can either be executed using Jupyer after down
 - 1D advection-diffusion example with animation    
   [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/atmos-cloud-sim-uj/PyMPDATA-examples.git/main?urlpath=lab/tree/PyMPDATA_examples%2Fadvection_diffusion_1d/demo.ipynb) 
   [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/atmos-cloud-sim-uj/PyMPDATA-examples/blob/main/PyMPDATA_examples/advection_diffusion_1d/demo.ipynb)    
-- 2D shallow-water equations (elliptic drop example from [Jarecka et al. 2015](https://doi.org/10.1016/j.jcp.2015.02.003))   
+- 2D shallow-water equations (3D elliptic drop spreading on 2D plane under gravity example from [Jarecka et al. 2015](https://doi.org/10.1016/j.jcp.2015.02.003))   
   - Fig 6: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/atmos-cloud-sim-uj/PyMPDATA-examples.git/main?urlpath=lab/tree/PyMPDATA_examples/Jarecka_et_al_2015/fig_6.ipynb)
   [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/atmos-cloud-sim-uj/PyMPDATA-examples/blob/main/PyMPDATA_examples/Jarecka_et_al_2015/fig_6.ipynb)
 - 2D advection on a sphere (setup depicting coordinate transformation based on [Williamson and Rasch 1989](https://doi.org/10.1175/1520-0493(1989)117%3C0102:TDSLTW%3E2.0.CO;2))  
