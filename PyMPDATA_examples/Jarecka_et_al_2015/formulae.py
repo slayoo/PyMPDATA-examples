@@ -8,6 +8,11 @@ import numba
 from scipy.integrate import odeint
 
 
+def amplitude(x, y, lx, ly):
+    A = 1 / lx / ly
+    h = A * (1 - (x / lx) ** 2 - (y / ly) ** 2)
+    return np.where(h > 0, h, 0)
+
 @numba.njit()
 def deriv(y, t):
     """
