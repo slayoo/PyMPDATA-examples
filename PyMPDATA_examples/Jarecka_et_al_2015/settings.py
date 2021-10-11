@@ -18,4 +18,4 @@ class Settings:
         self.options = Options(
             nonoscillatory=True,
             infinite_gauge=True
-        )  # TODO #273: dfl
+        )
