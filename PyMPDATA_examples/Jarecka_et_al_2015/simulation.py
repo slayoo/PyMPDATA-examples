@@ -1,6 +1,7 @@
 import numpy as np
 from PyMPDATA.boundary_conditions import Constant
 from PyMPDATA import ScalarField, VectorField, Solver, Stepper
+from PyMPDATA_examples.Jarecka_et_al_2015 import formulae
 
 
 class Simulation:
@@ -18,11 +19,11 @@ class Simulation:
         ), halo, bcs)
 
         xi, yi = np.indices(grid, dtype=float)
-        xi += .5 - s.nx // 2
-        yi += .5 - s.ny // 2
+        xi -= (s.nx-1) / 2
+        yi -= (s.ny-1) / 2
         x = xi * s.dx
         y = yi * s.dy
-        h0 = self.amplitude(x, y, s.lx0, s.ly0)
+        h0 = formulae.amplitude(x, y, s.lx0, s.ly0)
 
         advectees = {
             'h': ScalarField(h0, halo, bcs),
@@ -35,12 +36,6 @@ class Simulation:
             k: Solver(stepper, advectees[k], self.advector)
             for k in advectees
         }
-
-    @staticmethod
-    def amplitude(x, y, lx, ly):
-        A = 1 / lx / ly
-        h = A * (1 - (x / lx) ** 2 - (y / ly) ** 2)
-        return np.where(h > 0, h, 0)
 
     @staticmethod
     def interpolate(psi, axis):
@@ -63,13 +58,10 @@ class Simulation:
                 h = self.solvers['h'].advectee.get()
                 for xy, k in enumerate(('uh', 'vh')):
                     # TODO #273: extrapolate in time
-                    self.advector.get_component(xy)[idx[xy]] = self.interpolate(
-                        np.where(h > s.eps, np.divide(
-                            self.solvers[k].advectee.get(),
-                            h,
-                            where=h > s.eps
-                        ), 0), axis=xy
-                    ) * s.dt / grid_step[xy]
+                    mask = h > s.eps
+                    vel = np.where(mask, np.nan, 0)
+                    np.divide(self.solvers[k].advectee.get(), h, where=mask, out=vel)
+                    self.advector.get_component(xy)[idx[xy]] = self.interpolate(vel, axis=xy) * s.dt / grid_step[xy]
                 self.solvers['h'].advance(1)
                 assert h.ctypes.data == self.solvers['h'].advectee.get().ctypes.data
                 for xy, k in enumerate(('uh', 'vh')):
