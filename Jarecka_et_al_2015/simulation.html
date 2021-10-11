@@ -85,7 +85,6 @@ class Simulation:
             if it != 0:
                 h = self.solvers[&#39;h&#39;].advectee.get()
                 for xy, k in enumerate((&#39;uh&#39;, &#39;vh&#39;)):
-                    # TODO #273: extrapolate in time
                     mask = h &gt; s.eps
                     vel = np.where(mask, np.nan, 0)
                     np.divide(self.solvers[k].advectee.get(), h, where=mask, out=vel)
@@ -177,7 +176,6 @@ class Simulation:
             if it != 0:
                 h = self.solvers[&#39;h&#39;].advectee.get()
                 for xy, k in enumerate((&#39;uh&#39;, &#39;vh&#39;)):
-                    # TODO #273: extrapolate in time
                     mask = h &gt; s.eps
                     vel = np.where(mask, np.nan, 0)
                     np.divide(self.solvers[k].advectee.get(), h, where=mask, out=vel)
@@ -240,7 +238,6 @@ def interpolate(psi, axis):
         if it != 0:
             h = self.solvers[&#39;h&#39;].advectee.get()
             for xy, k in enumerate((&#39;uh&#39;, &#39;vh&#39;)):
-                # TODO #273: extrapolate in time
                 mask = h &gt; s.eps
                 vel = np.where(mask, np.nan, 0)
                 np.divide(self.solvers[k].advectee.get(), h, where=mask, out=vel)
