@@ -4,7 +4,7 @@ from PyMPDATA import Options
 from PyMPDATA_examples.Olesik_et_al_2020.simulation import Simulation
 from PyMPDATA_examples.Olesik_et_al_2020.physics.equilibrium_drop_growth import PdfEvolver
 from PyMPDATA_examples.utils.error_norms import L2
-from PyMPDATA.impl.discretisation import discretised_analytical_solution
+from PyMPDATA_examples.utils.discretisation import discretised_analytical_solution
 from joblib import Parallel, parallel_backend, delayed
 from copy import deepcopy
 import numpy as np
