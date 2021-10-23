@@ -2,7 +2,7 @@ import math
 import numpy as np
 from PyMPDATA import ScalarField, VectorField, Stepper, Solver, Options
 from PyMPDATA.boundary_conditions import Constant, Extrapolated
-from PyMPDATA.impl.discretisation import discretised_analytical_solution
+from PyMPDATA_examples.utils.discretisation import discretised_analytical_solution
 
 
 class Simulation:
