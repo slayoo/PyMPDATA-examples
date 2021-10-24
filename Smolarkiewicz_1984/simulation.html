@@ -32,11 +32,11 @@ from PyMPDATA.boundary_conditions import Constant
 
 
 class Simulation:
-    def __init__(self, settings, options):
+    def __init__(self, settings, options, static=True):
         bcs = tuple([Constant(0) for _ in settings.grid])
 
         advector = VectorField(
-            data=settings.advector,
+            data=[comp.astype(options.dtype) for comp in settings.advector],
             halo=options.n_halo,
             boundary_conditions=bcs
         )
@@ -47,7 +47,8 @@ class Simulation:
             boundary_conditions=bcs
         )
 
-        stepper = Stepper(options=options, grid=settings.grid)
+        args = {&#39;grid&#39;: settings.grid} if static else {&#39;n_dims&#39;: len(settings.grid)}
+        stepper = Stepper(options=options, **args)
         self.solver = Solver(stepper=stepper, advectee=advectee, advector=advector)
 
     def run(self, nt):
@@ -65,7 +66,7 @@ class Simulation:
 <dl>
 <dt id="PyMPDATA_examples.Smolarkiewicz_1984.simulation.Simulation"><code class="flex name class">
 <span>class <span class="ident">Simulation</span></span>
-<span>(</span><span>settings, options)</span>
+<span>(</span><span>settings, options, static=True)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -74,11 +75,11 @@ class Simulation:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Simulation:
-    def __init__(self, settings, options):
+    def __init__(self, settings, options, static=True):
         bcs = tuple([Constant(0) for _ in settings.grid])
 
         advector = VectorField(
-            data=settings.advector,
+            data=[comp.astype(options.dtype) for comp in settings.advector],
             halo=options.n_halo,
             boundary_conditions=bcs
         )
@@ -89,7 +90,8 @@ class Simulation:
             boundary_conditions=bcs
         )
 
-        stepper = Stepper(options=options, grid=settings.grid)
+        args = {&#39;grid&#39;: settings.grid} if static else {&#39;n_dims&#39;: len(settings.grid)}
+        stepper = Stepper(options=options, **args)
         self.solver = Solver(stepper=stepper, advectee=advectee, advector=advector)
 
     def run(self, nt):
