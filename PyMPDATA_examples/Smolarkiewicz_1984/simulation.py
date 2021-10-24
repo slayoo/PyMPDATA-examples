@@ -4,11 +4,11 @@ from PyMPDATA.boundary_conditions import Constant
 
 
 class Simulation:
-    def __init__(self, settings, options):
+    def __init__(self, settings, options, static=True):
         bcs = tuple([Constant(0) for _ in settings.grid])
 
         advector = VectorField(
-            data=settings.advector,
+            data=[comp.astype(options.dtype) for comp in settings.advector],
             halo=options.n_halo,
             boundary_conditions=bcs
         )
@@ -19,7 +19,8 @@ class Simulation:
             boundary_conditions=bcs
         )
 
-        stepper = Stepper(options=options, grid=settings.grid)
+        args = {'grid': settings.grid} if static else {'n_dims': len(settings.grid)}
+        stepper = Stepper(options=options, **args)
         self.solver = Solver(stepper=stepper, advectee=advectee, advector=advector)
 
     def run(self, nt):
