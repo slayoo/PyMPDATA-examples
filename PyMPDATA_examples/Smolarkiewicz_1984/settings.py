@@ -37,7 +37,6 @@ class Settings:
             elif letter == 'z':
                 data[index] = (-((i+.5) * self.dx - self.xc) + ((j+.5) * self.dy - self.yc)) / self.dz
             data[index] *= self.omega / np.sqrt(3) * self.dt
-
         return data
 
     @property
@@ -48,5 +47,4 @@ class Settings:
             ((j+.5) * self.dy - self.y0) ** 2 +
             ((k+.5) * self.dz - self.z0) ** 2
         )
-        data = np.where(dist - pow(self.r, 2) <= 0, self.h, 0)
-        return data
+        return np.where(dist - pow(self.r, 2) <= 0, self.h, 0)
