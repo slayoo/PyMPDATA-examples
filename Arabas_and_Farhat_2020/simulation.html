@@ -26,11 +26,11 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from PyMPDATA_examples.Arabas_and_Farhat_2020.options import OPTIONS
+<pre><code class="python">import numpy as np
+import numba
+from PyMPDATA_examples.Arabas_and_Farhat_2020.options import OPTIONS
 from PyMPDATA.boundary_conditions import Extrapolated
 from PyMPDATA import Options, Solver, Stepper, ScalarField, VectorField
-import numpy as np
-import numba
 
 
 class Simulation:
@@ -111,12 +111,16 @@ class Simulation:
             r = self.settings.r
             dt = self.dt
 
-            @numba.njit(**self.solvers[n_iters].options.jit_flags)
-            def post_step(psi, it):
-                t = T - (it + 1) * dt
-                psi += np.maximum(psi, f_T / np.exp(r * t)) - psi
+            @numba.experimental.jitclass([])
+            class PostStep:
+                def __init__(self):
+                    pass
 
-            self.solvers[n_iters].advance(self.nt, self.mu_coeff, post_step)
+                def __call__(self, psi, step):
+                    t = T - (step + 1) * dt
+                    psi += np.maximum(psi, f_T / np.exp(r * t)) - psi
+
+            self.solvers[n_iters].advance(self.nt, self.mu_coeff, PostStep())
         else:
             self.solvers[n_iters].advance(self.nt, self.mu_coeff)
 
@@ -223,12 +227,16 @@ class Simulation:
             r = self.settings.r
             dt = self.dt
 
-            @numba.njit(**self.solvers[n_iters].options.jit_flags)
-            def post_step(psi, it):
-                t = T - (it + 1) * dt
-                psi += np.maximum(psi, f_T / np.exp(r * t)) - psi
+            @numba.experimental.jitclass([])
+            class PostStep:
+                def __init__(self):
+                    pass
 
-            self.solvers[n_iters].advance(self.nt, self.mu_coeff, post_step)
+                def __call__(self, psi, step):
+                    t = T - (step + 1) * dt
+                    psi += np.maximum(psi, f_T / np.exp(r * t)) - psi
+
+            self.solvers[n_iters].advance(self.nt, self.mu_coeff, PostStep())
         else:
             self.solvers[n_iters].advance(self.nt, self.mu_coeff)
 
@@ -257,12 +265,16 @@ class Simulation:
         r = self.settings.r
         dt = self.dt
 
-        @numba.njit(**self.solvers[n_iters].options.jit_flags)
-        def post_step(psi, it):
-            t = T - (it + 1) * dt
-            psi += np.maximum(psi, f_T / np.exp(r * t)) - psi
+        @numba.experimental.jitclass([])
+        class PostStep:
+            def __init__(self):
+                pass
 
-        self.solvers[n_iters].advance(self.nt, self.mu_coeff, post_step)
+            def __call__(self, psi, step):
+                t = T - (step + 1) * dt
+                psi += np.maximum(psi, f_T / np.exp(r * t)) - psi
+
+        self.solvers[n_iters].advance(self.nt, self.mu_coeff, PostStep())
     else:
         self.solvers[n_iters].advance(self.nt, self.mu_coeff)
 
