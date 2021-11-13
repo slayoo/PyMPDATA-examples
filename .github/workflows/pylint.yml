@@ -31,4 +31,4 @@ jobs:
     - name: Analysing notebook code with pyling
       run: |
         # TODO #299
-        nbqa pylint --disable=fixme, $(git ls-files '*.ipynb')
+        nbqa pylint --disable=fixme,duplicate-code,wrong-import-position,wrong-import-order,ungrouped-imports,invalid-name,trailing-whitespace,missing-module-docstring,line-too-long,missing-function-docstring,unused-import,redefined-outer-name,unused-variable,too-many-arguments,no-member,too-many-locals,cell-var-from-loop,missing-class-docstring,too-few-public-methods $(git ls-files '*.ipynb')
