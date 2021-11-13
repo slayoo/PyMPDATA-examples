@@ -9,21 +9,21 @@ from fastcore.net import ExceptionsHTTP
 
 # https://stackoverflow.com/questions/7012921/recursive-grep-using-python
 def findfiles(path, regex):
-    regObj = re.compile(regex)
+    reg_obj = re.compile(regex)
     res = []
-    for root, dirs, fnames in os.walk(path):
+    for root, _, fnames in os.walk(path):
         for fname in fnames:
-            if regObj.match(fname):
+            if reg_obj.match(fname):
                 res.append(os.path.join(root, fname))
     return res
 
 
 def grep(filepath, regex):
-    regObj = re.compile(regex)
+    reg_obj = re.compile(regex)
     res = []
     with open(filepath, encoding="utf8") as f:
         for line in f:
-            if regObj.match(line):
+            if reg_obj.match(line):
                 res.append(line)
     return res
 
@@ -48,7 +48,7 @@ def gh_issues():
     return res
 
 
-def test_todos_annotated(file, gh_issues):
+def test_todos_annotated(file, gh_issues):  # pylint: disable=redefined-outer-name
     if os.path.basename(file) == 'test_todos_annotated.py' or file.endswith("-checkpoint.ipynb") or ".eggs" in file:
         return
     for line in grep(file, r'.*TODO.*'):

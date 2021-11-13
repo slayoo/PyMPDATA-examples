@@ -8,7 +8,7 @@ from PyMPDATA.boundary_conditions import Periodic
 class Simulation:
     def __init__(self, settings: Settings, options: Options):
 
-        x, state = from_cdf_1d(settings.cdf, settings.x_min, settings.x_max, settings.nx)
+        _, state = from_cdf_1d(settings.cdf, settings.x_min, settings.x_max, settings.nx)
 
         self.stepper = Solver(
             stepper=Stepper(options=options, n_dims=len(state.shape), non_unit_g_factor=False),

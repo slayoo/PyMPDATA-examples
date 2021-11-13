@@ -2,49 +2,61 @@ import numpy as np
 
 
 class x_id:
-    def x(self, r):
+    @staticmethod
+    def x(r):
         return r
 
-    def r(self, x):
+    @staticmethod
+    def r(x):
         return x
 
-    def dx_dr(self, r):
+    @staticmethod
+    def dx_dr(r):
         return r**0
 
-    def moment_of_r_integral(self, x, k):
+    @staticmethod
+    def moment_of_r_integral(x, k):
         return 1 / (k + 1) * x ** (k + 1)
 
 
 class x_p2:
-    def x(self, r):
+    @staticmethod
+    def x(r):
         return r**2
 
-    def r(self, x):
+    @staticmethod
+    def r(x):
         return np.sqrt(np.where(x < 0, 1e10, x))
 
-    def dx_dr(self, r):
+    @staticmethod
+    def dx_dr(r):
         return 2*r
 
-    def moment_of_r_integral(self, x, k):
+    @staticmethod
+    def moment_of_r_integral(x, k):
         return 2 / (k + 2) * x**((k+2)/2)
 
 
 class x_p3:
-    def x(self,r):
+    @staticmethod
+    def x(r):
         return r**3
 
-    def r(self, x):
+    @staticmethod
+    def r(x):
         return np.power(x, 1/3)
 
-    def dx_dr(self, r):
+    @staticmethod
+    def dx_dr(r):
         return 3*r**2
 
-    def moment_of_r_integral(self, x, k):
+    @staticmethod
+    def moment_of_r_integral(x, k):
         return 3 / (k + 3) * x**((k+3)/3)
 
 
 class x_log_of_pn:
-    def __init__(self, r0 = 1, base = np.e, n = 3):
+    def __init__(self, r0=1, base=np.e, n=3):
         self.r0 = r0
         self.base = base
         self.n = n

@@ -1,13 +1,13 @@
-from PyMPDATA_examples.Olesik_et_al_2020.coordinates import x_id, x_log_of_pn, x_p2
-from PyMPDATA_examples.Olesik_et_al_2020.settings import Settings, default_mixing_ratios_g_kg
+from copy import deepcopy
+from joblib import Parallel, parallel_backend, delayed
+import numpy as np
 from PyMPDATA import Options
 from PyMPDATA_examples.Olesik_et_al_2020.simulation import Simulation
 from PyMPDATA_examples.Olesik_et_al_2020.physics.equilibrium_drop_growth import PdfEvolver
 from PyMPDATA_examples.utils.error_norms import L2
 from PyMPDATA_examples.utils.discretisation import discretised_analytical_solution
-from joblib import Parallel, parallel_backend, delayed
-from copy import deepcopy
-import numpy as np
+from PyMPDATA_examples.Olesik_et_al_2020.coordinates import x_id, x_log_of_pn, x_p2
+from PyMPDATA_examples.Olesik_et_al_2020.settings import Settings, default_mixing_ratios_g_kg
 
 
 def analysis(settings, grid_layout, psi_coord, options_dict, GC_max):
@@ -76,7 +76,7 @@ def compute_figure_data(*, nr, GC_max, psi_coord=x_id(),
             rh = output[coord]["grid"]['rh']
             analytical.append(discretised_analytical_solution(
                 rh.magnitude,
-                lambda r: pdf_t(r * rh.units).magnitude,
+                lambda r, pdf_t=pdf_t, rh=rh: pdf_t(r * rh.units).magnitude,
                 midpoint_value=True,
                 r=output[coord]["grid"]['r'].magnitude
             ) * pdf_t(rh[0]).units)
@@ -119,8 +119,7 @@ def rel_disp(r, psi, psi_coord):
     mom0 = 0
     mom1 = 0
     mom2 = 0
-    for i in range(len(psi)):
-        psi_i = psi[i]
+    for i, psi_i in enumerate(psi):
         dp_i = psi_coord.moment_of_r_integral(psi_coord.x(r[i+1]), 0) - psi_coord.moment_of_r_integral(psi_coord.x(r[i]), 0)
         A_i = psi_coord.moment_of_r_integral(psi_coord.x(r[i+1]), 1) - psi_coord.moment_of_r_integral(psi_coord.x(r[i]), 1)
         B_i = psi_coord.moment_of_r_integral(psi_coord.x(r[i+1]), 2) - psi_coord.moment_of_r_integral(psi_coord.x(r[i]), 2)
@@ -139,11 +138,14 @@ def rel_disp(r, psi, psi_coord):
 def third_moment(r, psi, psi_coord, normalised=True):
     mom0 = 0
     mom3 = 0
-    for i in range(len(psi)):
-        dp_i = psi_coord.moment_of_r_integral(psi_coord.x(r[i+1]), 0) - psi_coord.moment_of_r_integral(psi_coord.x(r[i]), 0)
-        integral_i = psi_coord.moment_of_r_integral(psi_coord.x(r[i+1]), 3) - psi_coord.moment_of_r_integral(psi_coord.x(r[i]), 3)
-        bin_mom0 = psi[i] * dp_i
-        bin_mom3 = psi[i] * integral_i
+    for i, psi_i in enumerate(psi):
+        dp_i = (psi_coord.moment_of_r_integral(psi_coord.x(r[i+1]), 0) -
+                psi_coord.moment_of_r_integral(psi_coord.x(r[i]), 0))
+        integral_i = (
+                psi_coord.moment_of_r_integral(psi_coord.x(r[i+1]), 3) -
+                psi_coord.moment_of_r_integral(psi_coord.x(r[i]), 3))
+        bin_mom0 = psi_i * dp_i
+        bin_mom3 = psi_i * integral_i
         mom0 += bin_mom0
         mom3 += bin_mom3
     if normalised:

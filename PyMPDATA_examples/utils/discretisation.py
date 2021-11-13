@@ -37,4 +37,3 @@ def discretised_analytical_solution(rh, pdf_t, midpoint_value=False, r=None):
             dcdf, _ = integrate.quad(pdf_t, rh[i], rh[i + 1])
             output[i] = dcdf / (rh[i + 1] - rh[i])
     return output
-

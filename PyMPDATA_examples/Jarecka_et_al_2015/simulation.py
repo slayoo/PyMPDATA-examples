@@ -1,6 +1,6 @@
 import numpy as np
-from PyMPDATA.boundary_conditions import Constant
 from PyMPDATA import ScalarField, VectorField, Solver, Stepper
+from PyMPDATA.boundary_conditions import Constant
 from PyMPDATA_examples.Jarecka_et_al_2015 import formulae
 
 
@@ -33,8 +33,8 @@ class Simulation:
 
         stepper = Stepper(options=s.options, grid=grid)
         self.solvers = {
-            k: Solver(stepper, advectees[k], self.advector)
-            for k in advectees
+            k: Solver(stepper, v, self.advector)
+            for k, v in advectees.items()
         }
 
     @staticmethod

@@ -12,7 +12,7 @@ def plot_output(times, output, settings, return_data=True):
 
     data = {}
     cuts = ('x', 'y')
-    fig, axs = pylab.subplots(
+    _, axs = pylab.subplots(
         nrows=len(times),
         ncols=len(cuts),
         figsize=(9, 9),
@@ -78,8 +78,10 @@ def plot_output(times, output, settings, return_data=True):
             axs[i_t, i_cut].set_ylabel('h')
             axs[i_t, i_cut].set_title(f"t={t}", y=1.0, pad=-14, x=0.075)
             axs[i_t, i_cut].grid()
+
     legend_props = {'frameon': False, 'fontsize': 'small'}
-    axs[i_t, i_cut].legend(loc='lower right', **legend_props)
+    axs[-1, -1].legend(loc='lower right', **legend_props)
     twin.legend(loc='lower center', **legend_props)
     if return_data:
         return data
+    return None

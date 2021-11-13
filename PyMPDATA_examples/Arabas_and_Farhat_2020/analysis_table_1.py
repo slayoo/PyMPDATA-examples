@@ -35,4 +35,3 @@ def table_1_data():
             for S0 in (80, 90, 100, 110, 120)
         )
         return result
-

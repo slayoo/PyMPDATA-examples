@@ -5,7 +5,7 @@ from PyMPDATA.boundary_conditions import Constant
 
 class Simulation:
     def __init__(self, settings, options, static=True):
-        bcs = tuple([Constant(0) for _ in settings.grid])
+        bcs = tuple(Constant(0) for _ in settings.grid)
 
         advector = VectorField(
             data=[comp.astype(options.dtype) for comp in settings.advector],

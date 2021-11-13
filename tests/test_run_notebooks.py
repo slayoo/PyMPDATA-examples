@@ -16,7 +16,7 @@ from nbconvert.preprocessors import ExecutePreprocessor
 def findfiles(path, regex):
     regObj = re.compile(regex)
     res = []
-    for root, dirs, fnames in os.walk(path):
+    for root, _, fnames in os.walk(path):
         for fname in fnames:
             if regObj.match(fname):
                 res.append(os.path.join(root, fname))
@@ -28,7 +28,7 @@ def notebook_filename(request):
     return request.param
 
 
-def test_run_notebooks(notebook_filename, tmp_path):
+def test_run_notebooks(notebook_filename, tmp_path):  # pylint: disable=redefined-outer-name
     with open(notebook_filename, encoding="utf8") as f:
         nb = nbformat.read(f, as_version=4)
         ep = ExecutePreprocessor(timeout=15*60, kernel_name='python3')
