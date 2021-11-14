@@ -1,10 +1,11 @@
-from PyMPDATA_examples.Olesik_et_al_2020.physics.East_and_Marshall_1954 import SizeDistribution
-from PyMPDATA_examples.utils.discretisation import discretised_analytical_solution
-from PyMPDATA_examples.Olesik_et_al_2020.coordinates import x_id, x_log_of_pn, x_p2
 import pint
+from scipy import integrate
 from matplotlib import pyplot
 import numpy as np
 import pytest
+from PyMPDATA_examples.Olesik_et_al_2020.physics.East_and_Marshall_1954 import SizeDistribution
+from PyMPDATA_examples.utils.discretisation import discretised_analytical_solution
+from PyMPDATA_examples.Olesik_et_al_2020.coordinates import x_id, x_log_of_pn, x_p2
 
 
 def diff(x):
@@ -43,10 +44,9 @@ def test_size_distribution(grid, coord, plot=False):
 
     # Assert
     totalpdf = np.sum(numpdfy * (diff(x)))
-    from scipy import integrate
     integratedpdf, _ = integrate.quad(pdf_t, x[0].magnitude, x[-1].magnitude)
     print(totalpdf, integratedpdf)
-    np.testing.assert_array_almost_equal(totalpdf.magnitude, integratedpdf)
+    np.testing.assert_array_almost_equal(totalpdf.magnitude, integratedpdf)  # pylint: disable=no-member
 
 
 def test_quad_vs_midpoint():

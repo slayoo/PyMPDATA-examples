@@ -9,10 +9,10 @@ import pathlib
 grid_layout_set = (x_log_of_pn(r0=1, base=2),)
 opt_set = default_opt_set.values()
 
-rtol = 1.5
+RTOL = 1.5
 
 
-def test_wall_time(n_runs=3, mrats=(10,), generate=False, print_tab=True, rtol=rtol):
+def test_wall_time(n_runs=3, mrats=(10,), generate=False, print_tab=True, rtol=RTOL):
     settings = Settings(nr=default_nr * 10, mixing_ratios_g_kg=np.array(mrats))
     table_data = {"opts": [], "values": []}
     for grid in grid_layout_set:
@@ -56,7 +56,11 @@ def make_textable(data, generate=False, print_tab=False):
     latex_table = latex_start + latex_data + latex_end
     if print_tab:
         print(latex_table)
-    with open(pathlib.Path(__file__).parent.joinpath("wall_time_textable.txt"), "w+" if generate else "r") as f:
+    with open(
+        pathlib.Path(__file__).parent.joinpath("wall_time_textable.txt"),
+        "w+" if generate else "r",
+        encoding='utf-8'
+    ) as f:
         if generate:
             f.write(latex_table)
 

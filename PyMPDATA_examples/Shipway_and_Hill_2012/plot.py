@@ -2,12 +2,11 @@ from .formulae import convert_to, si
 import numpy as np
 from matplotlib import pyplot, pylab
 import matplotlib
-from scipy import interpolate
 
 
-def plot(var, mult, label, output, range=None, threshold=None, cmap='copper', rasterized=False, figsize=None):
+def plot(var, mult, label, output, rng=None, threshold=None, cmap='copper', rasterized=False, figsize=None):
     lines = {3: ':', 6: '--', 9: '-', 12: '-.'}
-    fctr = 50 # rebin by fctr in time dimension (https://gist.github.com/zonca/1348792)
+    fctr = 50  # rebin by fctr in time dimension (https://gist.github.com/zonca/1348792)
 
     dt = (output['t'][1] - output['t'][0]) * fctr
     dz = output['z'][1] - output['z'][0]
@@ -32,15 +31,15 @@ def plot(var, mult, label, output, range=None, threshold=None, cmap='copper', ra
 
     if threshold is not None:
         data[data < threshold] = np.nan
-    mesh = ax1.pcolormesh(tgrid/si.minutes, zgrid,
+    mesh = ax1.pcolormesh(tgrid / si.minutes, zgrid,
                           data,
                           cmap=cmap, rasterized=rasterized,
-                          vmin=None if range is None else range[0],
-                          vmax=None if range is None else range[1]
-    )
+                          vmin=None if rng is None else rng[0],
+                          vmax=None if rng is None else rng[1]
+                          )
 
     ax1.set_xlabel('time [min]')
-    ax1.set_xticks([k for k in lines.keys()])
+    ax1.set_xticks(list(lines.keys()))
     ax1.set_ylabel('z [km]')
     ax1.grid()
 
@@ -50,8 +49,8 @@ def plot(var, mult, label, output, range=None, threshold=None, cmap='copper', ra
     ax2 = fig.add_subplot(gs[:-1, 3:], sharey=ax1)
     ax2.set_xlabel(label)
     ax2.grid()
-    if range is not None:
-        ax2.set_xlim(range)
+    if rng is not None:
+        ax2.set_xlim(rng)
 
     last_t = -1
     for i, t in enumerate(output['t']):

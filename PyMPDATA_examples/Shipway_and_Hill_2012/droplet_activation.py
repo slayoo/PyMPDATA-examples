@@ -1,15 +1,15 @@
 import numba
 from functools import lru_cache
-from PyMPDATA.impl.enumerations import (SIGN_RIGHT, INVALID_HALO_VALUE,
+from PyMPDATA.impl.enumerations import (SIGN_RIGHT,
                                         ARG_DATA, OUTER, ARG_FOCUS,
                                         META_AND_DATA_DATA, META_AND_DATA_META)
 import numpy as np
 
 
 @lru_cache()
-def _make_scalar(value, at, halo, dr, dz, dtype, jit_flags):
+def _make_scalar(value, _, halo, __, ___, dtype, jit_flags):
     @numba.njit(**jit_flags)
-    def impl(psi, n, sign):
+    def impl(psi, ____, sign):
         if sign == SIGN_RIGHT:
             return 0
         z = psi[ARG_FOCUS][OUTER]
@@ -30,6 +30,7 @@ def _make_scalar(value, at, halo, dr, dz, dtype, jit_flags):
         def fill_halos_scalar(psi, n, sign):
             return impl(psi, n, sign)
     return fill_halos_scalar
+
 
 class DropletActivation:
     def __init__(self, value, dr, dz):

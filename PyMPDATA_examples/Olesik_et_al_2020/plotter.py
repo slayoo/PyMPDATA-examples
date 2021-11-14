@@ -1,7 +1,22 @@
 from matplotlib import pyplot
 import numpy as np
 import matplotlib
-from .distributions import n_n
+
+
+def to_n_n(y, _, __):
+    return y
+
+
+def to_n_s(y, r1, r2):
+    return y * (r2 ** 2 + r1 ** 2 + r1 * r2) * 4 / 3 * np.pi
+
+
+def to_n_v(y, r1, r2):
+    return y * (r2 + r1) * (r2 ** 2 + r1 ** 2) / 4 * 4 / 3 * np.pi
+
+
+def from_n_n(n_n, _):
+    return 1 * n_n
 
 
 class Plotter:
@@ -83,14 +98,13 @@ class Plotter:
 
         # number distribution
         if 'n' in self.plots:
-            self._plot('n', x, n_n.to_n_n(y, r1, r2), fill=fill, lbl=lbl, color=color, linewidth=linewidth)
+            self._plot('n', x, to_n_n(y, r1, r2), fill=fill, lbl=lbl, color=color, linewidth=linewidth)
 
         # normalised mass distribution
         if 'm' in self.plots:
-            self._plot('m', x, n_n.to_n_v(y, r1, r2) * self.settings.rho_w / self.settings.rho_a / mnorm, fill=fill, color=color, linewidth=linewidth, lbl=lbl)
+            self._plot('m', x, to_n_v(y, r1, r2) * self.settings.rho_w / self.settings.rho_a / mnorm, fill=fill, color=color, linewidth=linewidth, lbl=lbl)
 
     def xlim(self, plot):
         self.axs[self.plots.index(plot)].set_xlim(
             (0, self.settings.r_max.magnitude)
         )
-

@@ -12,7 +12,3 @@ class SizeDistribution:
                 (self.n0 * self.si.micrometre) / r *
                 np.exp(-self.kappa * (np.log10(r / (7 * self.si.micrometre)) ** 2)) *
                 (1 / self.si.micrometre))
-
-
-
-

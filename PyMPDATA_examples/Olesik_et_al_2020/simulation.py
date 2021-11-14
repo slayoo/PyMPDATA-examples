@@ -93,7 +93,7 @@ class Simulation:
             opts
         )
 
-        self.out_steps = tuple([math.ceil(t/dt) for t in settings.out_times])
+        self.out_steps = tuple(math.ceil(t/dt) for t in settings.out_times)
         self.dt = dt * self.__t_unit
 
     def step(self, nt):

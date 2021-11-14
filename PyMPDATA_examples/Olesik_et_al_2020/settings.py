@@ -1,7 +1,7 @@
-from scipy import integrate
 import numpy as np
 import pint
 from scipy import optimize
+from scipy import integrate
 from pystrict import strict
 from PyMPDATA_examples.Olesik_et_al_2020.physics import equilibrium_drop_growth
 from PyMPDATA_examples.Olesik_et_al_2020.physics import East_and_Marshall_1954
@@ -21,7 +21,7 @@ default_opt_set = {
     'h': {'n_iters': 3, 'third_order_terms': True, 'infinite_gauge': True, 'nonoscillatory': True},
 }
 colors = ['red', 'blue', 'crimson', 'orange', 'olive', 'navy', 'green', 'blueviolet']
-colors = {key: colors.pop(0) for key in default_opt_set.keys()}
+colors = {key: colors.pop(0) for key in default_opt_set}
 
 
 def option_string(opts):
@@ -64,10 +64,10 @@ class Settings:
     def find_out_steps(self):
         out_steps = []
         for mr in self.mixing_ratios:
-            def findroot(ti):
+            t_unit = self.si.second
+            def findroot(ti, mr=mr, t_unit=t_unit):
                 return (mr - self.mixing_ratio(
                     equilibrium_drop_growth.PdfEvolver(self.pdf, self.drdt, ti * t_unit))).magnitude
-            t_unit = self.si.second
             t = optimize.brentq(findroot, 0, (1 * self.si.hour).to(t_unit).magnitude)
             out_steps.append(t)
         return out_steps
@@ -93,6 +93,3 @@ class Settings:
 
     def pdf(self, r):
         return self.C * self.size_distribution.pdf(r)
-
-    def cdf(self, r):
-        return self.C * self.size_distribution.cdf(r)
