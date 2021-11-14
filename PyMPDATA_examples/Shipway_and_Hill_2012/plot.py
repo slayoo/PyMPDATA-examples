@@ -39,7 +39,7 @@ def plot(var, mult, label, output, rng=None, threshold=None, cmap='copper', rast
                           )
 
     ax1.set_xlabel('time [min]')
-    ax1.set_xticks(list(lines.keys))
+    ax1.set_xticks(list(lines.keys()))
     ax1.set_ylabel('z [km]')
     ax1.grid()
 

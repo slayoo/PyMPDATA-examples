@@ -64,10 +64,10 @@ class Settings:
     def find_out_steps(self):
         out_steps = []
         for mr in self.mixing_ratios:
+            t_unit = self.si.second
             def findroot(ti, mr=mr, t_unit=t_unit):
                 return (mr - self.mixing_ratio(
                     equilibrium_drop_growth.PdfEvolver(self.pdf, self.drdt, ti * t_unit))).magnitude
-            t_unit = self.si.second
             t = optimize.brentq(findroot, 0, (1 * self.si.hour).to(t_unit).magnitude)
             out_steps.append(t)
         return out_steps
