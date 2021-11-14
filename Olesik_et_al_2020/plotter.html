@@ -29,7 +29,22 @@
 <pre><code class="python">from matplotlib import pyplot
 import numpy as np
 import matplotlib
-from .distributions import n_n
+
+
+def to_n_n(y, _, __):
+    return y
+
+
+def to_n_s(y, r1, r2):
+    return y * (r2 ** 2 + r1 ** 2 + r1 * r2) * 4 / 3 * np.pi
+
+
+def to_n_v(y, r1, r2):
+    return y * (r2 + r1) * (r2 ** 2 + r1 ** 2) / 4 * 4 / 3 * np.pi
+
+
+def from_n_n(n_n, _):
+    return 1 * n_n
 
 
 class Plotter:
@@ -111,11 +126,11 @@ class Plotter:
 
         # number distribution
         if &#39;n&#39; in self.plots:
-            self._plot(&#39;n&#39;, x, n_n.to_n_n(y, r1, r2), fill=fill, lbl=lbl, color=color, linewidth=linewidth)
+            self._plot(&#39;n&#39;, x, to_n_n(y, r1, r2), fill=fill, lbl=lbl, color=color, linewidth=linewidth)
 
         # normalised mass distribution
         if &#39;m&#39; in self.plots:
-            self._plot(&#39;m&#39;, x, n_n.to_n_v(y, r1, r2) * self.settings.rho_w / self.settings.rho_a / mnorm, fill=fill, color=color, linewidth=linewidth, lbl=lbl)
+            self._plot(&#39;m&#39;, x, to_n_v(y, r1, r2) * self.settings.rho_w / self.settings.rho_a / mnorm, fill=fill, color=color, linewidth=linewidth, lbl=lbl)
 
     def xlim(self, plot):
         self.axs[self.plots.index(plot)].set_xlim(
@@ -128,6 +143,61 @@ class Plotter:
 <section>
 </section>
 <section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="PyMPDATA_examples.Olesik_et_al_2020.plotter.from_n_n"><code class="name flex">
+<span>def <span class="ident">from_n_n</span></span>(<span>n_n, _)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def from_n_n(n_n, _):
+    return 1 * n_n</code></pre>
+</details>
+</dd>
+<dt id="PyMPDATA_examples.Olesik_et_al_2020.plotter.to_n_n"><code class="name flex">
+<span>def <span class="ident">to_n_n</span></span>(<span>y, _, __)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_n_n(y, _, __):
+    return y</code></pre>
+</details>
+</dd>
+<dt id="PyMPDATA_examples.Olesik_et_al_2020.plotter.to_n_s"><code class="name flex">
+<span>def <span class="ident">to_n_s</span></span>(<span>y, r1, r2)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_n_s(y, r1, r2):
+    return y * (r2 ** 2 + r1 ** 2 + r1 * r2) * 4 / 3 * np.pi</code></pre>
+</details>
+</dd>
+<dt id="PyMPDATA_examples.Olesik_et_al_2020.plotter.to_n_v"><code class="name flex">
+<span>def <span class="ident">to_n_v</span></span>(<span>y, r1, r2)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_n_v(y, r1, r2):
+    return y * (r2 + r1) * (r2 ** 2 + r1 ** 2) / 4 * 4 / 3 * np.pi</code></pre>
+</details>
+</dd>
+</dl>
 </section>
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
@@ -221,11 +291,11 @@ class Plotter:
 
         # number distribution
         if &#39;n&#39; in self.plots:
-            self._plot(&#39;n&#39;, x, n_n.to_n_n(y, r1, r2), fill=fill, lbl=lbl, color=color, linewidth=linewidth)
+            self._plot(&#39;n&#39;, x, to_n_n(y, r1, r2), fill=fill, lbl=lbl, color=color, linewidth=linewidth)
 
         # normalised mass distribution
         if &#39;m&#39; in self.plots:
-            self._plot(&#39;m&#39;, x, n_n.to_n_v(y, r1, r2) * self.settings.rho_w / self.settings.rho_a / mnorm, fill=fill, color=color, linewidth=linewidth, lbl=lbl)
+            self._plot(&#39;m&#39;, x, to_n_v(y, r1, r2) * self.settings.rho_w / self.settings.rho_a / mnorm, fill=fill, color=color, linewidth=linewidth, lbl=lbl)
 
     def xlim(self, plot):
         self.axs[self.plots.index(plot)].set_xlim(
@@ -278,11 +348,11 @@ class Plotter:
 
     # number distribution
     if &#39;n&#39; in self.plots:
-        self._plot(&#39;n&#39;, x, n_n.to_n_n(y, r1, r2), fill=fill, lbl=lbl, color=color, linewidth=linewidth)
+        self._plot(&#39;n&#39;, x, to_n_n(y, r1, r2), fill=fill, lbl=lbl, color=color, linewidth=linewidth)
 
     # normalised mass distribution
     if &#39;m&#39; in self.plots:
-        self._plot(&#39;m&#39;, x, n_n.to_n_v(y, r1, r2) * self.settings.rho_w / self.settings.rho_a / mnorm, fill=fill, color=color, linewidth=linewidth, lbl=lbl)</code></pre>
+        self._plot(&#39;m&#39;, x, to_n_v(y, r1, r2) * self.settings.rho_w / self.settings.rho_a / mnorm, fill=fill, color=color, linewidth=linewidth, lbl=lbl)</code></pre>
 </details>
 </dd>
 <dt id="PyMPDATA_examples.Olesik_et_al_2020.plotter.Plotter.xlim"><code class="name flex">
@@ -314,6 +384,14 @@ class Plotter:
 <li><h3>Super-module</h3>
 <ul>
 <li><code><a title="PyMPDATA_examples.Olesik_et_al_2020" href="index.html">PyMPDATA_examples.Olesik_et_al_2020</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="PyMPDATA_examples.Olesik_et_al_2020.plotter.from_n_n" href="#PyMPDATA_examples.Olesik_et_al_2020.plotter.from_n_n">from_n_n</a></code></li>
+<li><code><a title="PyMPDATA_examples.Olesik_et_al_2020.plotter.to_n_n" href="#PyMPDATA_examples.Olesik_et_al_2020.plotter.to_n_n">to_n_n</a></code></li>
+<li><code><a title="PyMPDATA_examples.Olesik_et_al_2020.plotter.to_n_s" href="#PyMPDATA_examples.Olesik_et_al_2020.plotter.to_n_s">to_n_s</a></code></li>
+<li><code><a title="PyMPDATA_examples.Olesik_et_al_2020.plotter.to_n_v" href="#PyMPDATA_examples.Olesik_et_al_2020.plotter.to_n_v">to_n_v</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>

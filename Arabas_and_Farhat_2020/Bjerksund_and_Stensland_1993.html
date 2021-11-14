@@ -34,7 +34,7 @@ def _phi(S: [np.ndarray, float], gamma: float, H: float, I: float, r: float, b: 
     lmbd = (-r + gamma * b + .5 * gamma * (gamma - 1) * var) * T
     d = -(np.log(S / H) + (b + (gamma - .5) * var) * T) / np.sqrt(var * T)
     kappa = 2 * b / var + (2 * gamma - 1)
-    return np.exp(lmbd) * np.power(S, gamma) *(BS._N(d) - pow((I / S), kappa) * BS._N(d - 2 * np.log(I / S) / np.sqrt(var * T)))
+    return np.exp(lmbd) * np.power(S, gamma) *(BS.N(d) - pow((I / S), kappa) * BS.N(d - 2 * np.log(I / S) / np.sqrt(var * T)))
 
 
 def c_amer(S: [np.ndarray, float], K: [float, np.ndarray], T: float, r: float, b: float, sgma: float):

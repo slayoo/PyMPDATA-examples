@@ -27,23 +27,23 @@
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">import numpy as np
-import scipy.special as sp
+from scipy.special import erf  # pylint: disable=no-name-in-module
 
 
-def _N(x: float):
-    return (1 + sp.erf(x / np.sqrt(2))) / 2
+def N(x: float):
+    return (1 + erf(x / np.sqrt(2))) / 2
 
 
 def c_euro(S: np.ndarray, K: float, T: float, r: float, b: float, sgma: float):
     d1 = (np.log(S / K) + (b + sgma * sgma / 2) * T) / sgma / np.sqrt(T)
     d2 = d1 - sgma * np.sqrt(T)
-    return S * np.exp(b - r) * _N(d1) - K * np.exp(-r * T) * _N(d2)
+    return S * np.exp(b - r) * N(d1) - K * np.exp(-r * T) * N(d2)
 
 
 def p_euro(S: np.ndarray, K: float, T: float, r: float, b: float, sgma: float):
     d1 = (np.log(S / K) + (b + sgma * sgma / 2) * T) / sgma / np.sqrt(T)
     d2 = d1 - sgma * np.sqrt(T)
-    return K * np.exp(-r * T) * _N(-d2) - S * np.exp((b - r) * T) * _N(-d1)</code></pre>
+    return K * np.exp(-r * T) * N(-d2) - S * np.exp((b - r) * T) * N(-d1)</code></pre>
 </details>
 </section>
 <section>
@@ -53,6 +53,19 @@ def p_euro(S: np.ndarray, K: float, T: float, r: float, b: float, sgma: float):
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
+<dt id="PyMPDATA_examples.Arabas_and_Farhat_2020.Black_Scholes_1973.N"><code class="name flex">
+<span>def <span class="ident">N</span></span>(<span>x: float)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def N(x: float):
+    return (1 + erf(x / np.sqrt(2))) / 2</code></pre>
+</details>
+</dd>
 <dt id="PyMPDATA_examples.Arabas_and_Farhat_2020.Black_Scholes_1973.c_euro"><code class="name flex">
 <span>def <span class="ident">c_euro</span></span>(<span>S: numpy.ndarray, K: float, T: float, r: float, b: float, sgma: float)</span>
 </code></dt>
@@ -65,7 +78,7 @@ def p_euro(S: np.ndarray, K: float, T: float, r: float, b: float, sgma: float):
 <pre><code class="python">def c_euro(S: np.ndarray, K: float, T: float, r: float, b: float, sgma: float):
     d1 = (np.log(S / K) + (b + sgma * sgma / 2) * T) / sgma / np.sqrt(T)
     d2 = d1 - sgma * np.sqrt(T)
-    return S * np.exp(b - r) * _N(d1) - K * np.exp(-r * T) * _N(d2)</code></pre>
+    return S * np.exp(b - r) * N(d1) - K * np.exp(-r * T) * N(d2)</code></pre>
 </details>
 </dd>
 <dt id="PyMPDATA_examples.Arabas_and_Farhat_2020.Black_Scholes_1973.p_euro"><code class="name flex">
@@ -80,7 +93,7 @@ def p_euro(S: np.ndarray, K: float, T: float, r: float, b: float, sgma: float):
 <pre><code class="python">def p_euro(S: np.ndarray, K: float, T: float, r: float, b: float, sgma: float):
     d1 = (np.log(S / K) + (b + sgma * sgma / 2) * T) / sgma / np.sqrt(T)
     d2 = d1 - sgma * np.sqrt(T)
-    return K * np.exp(-r * T) * _N(-d2) - S * np.exp((b - r) * T) * _N(-d1)</code></pre>
+    return K * np.exp(-r * T) * N(-d2) - S * np.exp((b - r) * T) * N(-d1)</code></pre>
 </details>
 </dd>
 </dl>
@@ -101,6 +114,7 @@ def p_euro(S: np.ndarray, K: float, T: float, r: float, b: float, sgma: float):
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
+<li><code><a title="PyMPDATA_examples.Arabas_and_Farhat_2020.Black_Scholes_1973.N" href="#PyMPDATA_examples.Arabas_and_Farhat_2020.Black_Scholes_1973.N">N</a></code></li>
 <li><code><a title="PyMPDATA_examples.Arabas_and_Farhat_2020.Black_Scholes_1973.c_euro" href="#PyMPDATA_examples.Arabas_and_Farhat_2020.Black_Scholes_1973.c_euro">c_euro</a></code></li>
 <li><code><a title="PyMPDATA_examples.Arabas_and_Farhat_2020.Black_Scholes_1973.p_euro" href="#PyMPDATA_examples.Arabas_and_Farhat_2020.Black_Scholes_1973.p_euro">p_euro</a></code></li>
 </ul>

@@ -26,10 +26,10 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from scipy import integrate
-import numpy as np
+<pre><code class="python">import numpy as np
 import pint
 from scipy import optimize
+from scipy import integrate
 from pystrict import strict
 from PyMPDATA_examples.Olesik_et_al_2020.physics import equilibrium_drop_growth
 from PyMPDATA_examples.Olesik_et_al_2020.physics import East_and_Marshall_1954
@@ -49,7 +49,7 @@ default_opt_set = {
     &#39;h&#39;: {&#39;n_iters&#39;: 3, &#39;third_order_terms&#39;: True, &#39;infinite_gauge&#39;: True, &#39;nonoscillatory&#39;: True},
 }
 colors = [&#39;red&#39;, &#39;blue&#39;, &#39;crimson&#39;, &#39;orange&#39;, &#39;olive&#39;, &#39;navy&#39;, &#39;green&#39;, &#39;blueviolet&#39;]
-colors = {key: colors.pop(0) for key in default_opt_set.keys()}
+colors = {key: colors.pop(0) for key in default_opt_set}
 
 
 def option_string(opts):
@@ -92,10 +92,10 @@ class Settings:
     def find_out_steps(self):
         out_steps = []
         for mr in self.mixing_ratios:
-            def findroot(ti):
+            t_unit = self.si.second
+            def findroot(ti, mr=mr, t_unit=t_unit):
                 return (mr - self.mixing_ratio(
                     equilibrium_drop_growth.PdfEvolver(self.pdf, self.drdt, ti * t_unit))).magnitude
-            t_unit = self.si.second
             t = optimize.brentq(findroot, 0, (1 * self.si.hour).to(t_unit).magnitude)
             out_steps.append(t)
         return out_steps
@@ -120,10 +120,7 @@ class Settings:
         return (I * 4 / 3 * np.pi * self.rho_w / self.rho_a).to(self.si.gram / self.si.kilogram)
 
     def pdf(self, r):
-        return self.C * self.size_distribution.pdf(r)
-
-    def cdf(self, r):
-        return self.C * self.size_distribution.cdf(r)</code></pre>
+        return self.C * self.size_distribution.pdf(r)</code></pre>
 </details>
 </section>
 <section>
@@ -196,10 +193,10 @@ class Settings:
     def find_out_steps(self):
         out_steps = []
         for mr in self.mixing_ratios:
-            def findroot(ti):
+            t_unit = self.si.second
+            def findroot(ti, mr=mr, t_unit=t_unit):
                 return (mr - self.mixing_ratio(
                     equilibrium_drop_growth.PdfEvolver(self.pdf, self.drdt, ti * t_unit))).magnitude
-            t_unit = self.si.second
             t = optimize.brentq(findroot, 0, (1 * self.si.hour).to(t_unit).magnitude)
             out_steps.append(t)
         return out_steps
@@ -224,26 +221,10 @@ class Settings:
         return (I * 4 / 3 * np.pi * self.rho_w / self.rho_a).to(self.si.gram / self.si.kilogram)
 
     def pdf(self, r):
-        return self.C * self.size_distribution.pdf(r)
-
-    def cdf(self, r):
-        return self.C * self.size_distribution.cdf(r)</code></pre>
+        return self.C * self.size_distribution.pdf(r)</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
-<dt id="PyMPDATA_examples.Olesik_et_al_2020.settings.Settings.cdf"><code class="name flex">
-<span>def <span class="ident">cdf</span></span>(<span>self, r)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def cdf(self, r):
-    return self.C * self.size_distribution.cdf(r)</code></pre>
-</details>
-</dd>
 <dt id="PyMPDATA_examples.Olesik_et_al_2020.settings.Settings.find_out_steps"><code class="name flex">
 <span>def <span class="ident">find_out_steps</span></span>(<span>self)</span>
 </code></dt>
@@ -256,10 +237,10 @@ class Settings:
 <pre><code class="python">def find_out_steps(self):
     out_steps = []
     for mr in self.mixing_ratios:
-        def findroot(ti):
+        t_unit = self.si.second
+        def findroot(ti, mr=mr, t_unit=t_unit):
             return (mr - self.mixing_ratio(
                 equilibrium_drop_growth.PdfEvolver(self.pdf, self.drdt, ti * t_unit))).magnitude
-        t_unit = self.si.second
         t = optimize.brentq(findroot, 0, (1 * self.si.hour).to(t_unit).magnitude)
         out_steps.append(t)
     return out_steps</code></pre>
@@ -333,7 +314,6 @@ class Settings:
 <li>
 <h4><code><a title="PyMPDATA_examples.Olesik_et_al_2020.settings.Settings" href="#PyMPDATA_examples.Olesik_et_al_2020.settings.Settings">Settings</a></code></h4>
 <ul class="">
-<li><code><a title="PyMPDATA_examples.Olesik_et_al_2020.settings.Settings.cdf" href="#PyMPDATA_examples.Olesik_et_al_2020.settings.Settings.cdf">cdf</a></code></li>
 <li><code><a title="PyMPDATA_examples.Olesik_et_al_2020.settings.Settings.find_out_steps" href="#PyMPDATA_examples.Olesik_et_al_2020.settings.Settings.find_out_steps">find_out_steps</a></code></li>
 <li><code><a title="PyMPDATA_examples.Olesik_et_al_2020.settings.Settings.mixing_ratio" href="#PyMPDATA_examples.Olesik_et_al_2020.settings.Settings.mixing_ratio">mixing_ratio</a></code></li>
 <li><code><a title="PyMPDATA_examples.Olesik_et_al_2020.settings.Settings.pdf" href="#PyMPDATA_examples.Olesik_et_al_2020.settings.Settings.pdf">pdf</a></code></li>

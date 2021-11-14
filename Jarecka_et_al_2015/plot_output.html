@@ -40,7 +40,7 @@ def plot_output(times, output, settings, return_data=True):
 
     data = {}
     cuts = (&#39;x&#39;, &#39;y&#39;)
-    fig, axs = pylab.subplots(
+    _, axs = pylab.subplots(
         nrows=len(times),
         ncols=len(cuts),
         figsize=(9, 9),
@@ -106,11 +106,13 @@ def plot_output(times, output, settings, return_data=True):
             axs[i_t, i_cut].set_ylabel(&#39;h&#39;)
             axs[i_t, i_cut].set_title(f&#34;t={t}&#34;, y=1.0, pad=-14, x=0.075)
             axs[i_t, i_cut].grid()
+
     legend_props = {&#39;frameon&#39;: False, &#39;fontsize&#39;: &#39;small&#39;}
-    axs[i_t, i_cut].legend(loc=&#39;lower right&#39;, **legend_props)
+    axs[-1, -1].legend(loc=&#39;lower right&#39;, **legend_props)
     twin.legend(loc=&#39;lower center&#39;, **legend_props)
     if return_data:
-        return data</code></pre>
+        return data
+    return None</code></pre>
 </details>
 </section>
 <section>
@@ -138,7 +140,7 @@ def plot_output(times, output, settings, return_data=True):
 
     data = {}
     cuts = (&#39;x&#39;, &#39;y&#39;)
-    fig, axs = pylab.subplots(
+    _, axs = pylab.subplots(
         nrows=len(times),
         ncols=len(cuts),
         figsize=(9, 9),
@@ -204,11 +206,13 @@ def plot_output(times, output, settings, return_data=True):
             axs[i_t, i_cut].set_ylabel(&#39;h&#39;)
             axs[i_t, i_cut].set_title(f&#34;t={t}&#34;, y=1.0, pad=-14, x=0.075)
             axs[i_t, i_cut].grid()
+
     legend_props = {&#39;frameon&#39;: False, &#39;fontsize&#39;: &#39;small&#39;}
-    axs[i_t, i_cut].legend(loc=&#39;lower right&#39;, **legend_props)
+    axs[-1, -1].legend(loc=&#39;lower right&#39;, **legend_props)
     twin.legend(loc=&#39;lower center&#39;, **legend_props)
     if return_data:
-        return data</code></pre>
+        return data
+    return None</code></pre>
 </details>
 </dd>
 </dl>
