@@ -95,7 +95,9 @@ class MPDATA:
                 halo=self.options.n_halo,
                 boundary_conditions=bcs
             )
-            self._solvers[k] = Solver(stepper=stepper, advectee=advectee, advector=advector, g_factor=g_factor)
+            self._solvers[k] = Solver(
+                stepper=stepper, advectee=advectee, advector=advector, g_factor=g_factor
+            )
 
     def __getitem__(self, k):
         return self._solvers[k]</code></pre>
@@ -194,7 +196,9 @@ class MPDATA:
                 halo=self.options.n_halo,
                 boundary_conditions=bcs
             )
-            self._solvers[k] = Solver(stepper=stepper, advectee=advectee, advector=advector, g_factor=g_factor)
+            self._solvers[k] = Solver(
+                stepper=stepper, advectee=advectee, advector=advector, g_factor=g_factor
+            )
 
     def __getitem__(self, k):
         return self._solvers[k]</code></pre>

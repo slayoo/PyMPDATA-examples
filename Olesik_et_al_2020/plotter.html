@@ -74,9 +74,11 @@ class Plotter:
         self.settings.si.setup_matplotlib()
 
         if &#39;n&#39; in plots:
-            self.axs[plots.index(&#39;n&#39;)].yaxis.set_units(1 / self.settings.si.micrometre / self.settings.si.centimetre ** 3)
+            self.axs[plots.index(&#39;n&#39;)].yaxis.set_units(
+                1 / self.settings.si.micrometre / self.settings.si.centimetre ** 3)
         if &#39;m&#39; in plots:
-            self.axs[plots.index(&#39;m&#39;)].yaxis.set_units(1 / self.settings.si.micrometre)
+            self.axs[plots.index(&#39;m&#39;)].yaxis.set_units(
+                1 / self.settings.si.micrometre)
 
         for i in range(len(plots)):
             self.axs[i].xaxis.set_units(self.settings.si.micrometre)
@@ -114,7 +116,8 @@ class Plotter:
             )
         self.xlim(index)
 
-    def pdf_histogram(self, x, y, bin_boundaries, label, mnorm, color=&#39;black&#39;, linewidth = 1, fill=True):
+    def pdf_histogram(self, x, y,
+                      bin_boundaries, label, mnorm, color=&#39;black&#39;, linewidth = 1, fill=True):
         r1 = bin_boundaries[:-1]
         r2 = bin_boundaries[1:]
 
@@ -126,11 +129,14 @@ class Plotter:
 
         # number distribution
         if &#39;n&#39; in self.plots:
-            self._plot(&#39;n&#39;, x, to_n_n(y, r1, r2), fill=fill, lbl=lbl, color=color, linewidth=linewidth)
+            self._plot(&#39;n&#39;, x, to_n_n(y, r1, r2),
+                       fill=fill, lbl=lbl, color=color, linewidth=linewidth)
 
         # normalised mass distribution
         if &#39;m&#39; in self.plots:
-            self._plot(&#39;m&#39;, x, to_n_v(y, r1, r2) * self.settings.rho_w / self.settings.rho_a / mnorm, fill=fill, color=color, linewidth=linewidth, lbl=lbl)
+            self._plot(&#39;m&#39;, x,
+                       to_n_v(y, r1, r2) * self.settings.rho_w / self.settings.rho_a / mnorm,
+                       fill=fill, color=color, linewidth=linewidth, lbl=lbl)
 
     def xlim(self, plot):
         self.axs[self.plots.index(plot)].set_xlim(
@@ -239,9 +245,11 @@ class Plotter:
         self.settings.si.setup_matplotlib()
 
         if &#39;n&#39; in plots:
-            self.axs[plots.index(&#39;n&#39;)].yaxis.set_units(1 / self.settings.si.micrometre / self.settings.si.centimetre ** 3)
+            self.axs[plots.index(&#39;n&#39;)].yaxis.set_units(
+                1 / self.settings.si.micrometre / self.settings.si.centimetre ** 3)
         if &#39;m&#39; in plots:
-            self.axs[plots.index(&#39;m&#39;)].yaxis.set_units(1 / self.settings.si.micrometre)
+            self.axs[plots.index(&#39;m&#39;)].yaxis.set_units(
+                1 / self.settings.si.micrometre)
 
         for i in range(len(plots)):
             self.axs[i].xaxis.set_units(self.settings.si.micrometre)
@@ -279,7 +287,8 @@ class Plotter:
             )
         self.xlim(index)
 
-    def pdf_histogram(self, x, y, bin_boundaries, label, mnorm, color=&#39;black&#39;, linewidth = 1, fill=True):
+    def pdf_histogram(self, x, y,
+                      bin_boundaries, label, mnorm, color=&#39;black&#39;, linewidth = 1, fill=True):
         r1 = bin_boundaries[:-1]
         r2 = bin_boundaries[1:]
 
@@ -291,11 +300,14 @@ class Plotter:
 
         # number distribution
         if &#39;n&#39; in self.plots:
-            self._plot(&#39;n&#39;, x, to_n_n(y, r1, r2), fill=fill, lbl=lbl, color=color, linewidth=linewidth)
+            self._plot(&#39;n&#39;, x, to_n_n(y, r1, r2),
+                       fill=fill, lbl=lbl, color=color, linewidth=linewidth)
 
         # normalised mass distribution
         if &#39;m&#39; in self.plots:
-            self._plot(&#39;m&#39;, x, to_n_v(y, r1, r2) * self.settings.rho_w / self.settings.rho_a / mnorm, fill=fill, color=color, linewidth=linewidth, lbl=lbl)
+            self._plot(&#39;m&#39;, x,
+                       to_n_v(y, r1, r2) * self.settings.rho_w / self.settings.rho_a / mnorm,
+                       fill=fill, color=color, linewidth=linewidth, lbl=lbl)
 
     def xlim(self, plot):
         self.axs[self.plots.index(plot)].set_xlim(
@@ -336,7 +348,8 @@ class Plotter:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def pdf_histogram(self, x, y, bin_boundaries, label, mnorm, color=&#39;black&#39;, linewidth = 1, fill=True):
+<pre><code class="python">def pdf_histogram(self, x, y,
+                  bin_boundaries, label, mnorm, color=&#39;black&#39;, linewidth = 1, fill=True):
     r1 = bin_boundaries[:-1]
     r2 = bin_boundaries[1:]
 
@@ -348,11 +361,14 @@ class Plotter:
 
     # number distribution
     if &#39;n&#39; in self.plots:
-        self._plot(&#39;n&#39;, x, to_n_n(y, r1, r2), fill=fill, lbl=lbl, color=color, linewidth=linewidth)
+        self._plot(&#39;n&#39;, x, to_n_n(y, r1, r2),
+                   fill=fill, lbl=lbl, color=color, linewidth=linewidth)
 
     # normalised mass distribution
     if &#39;m&#39; in self.plots:
-        self._plot(&#39;m&#39;, x, to_n_v(y, r1, r2) * self.settings.rho_w / self.settings.rho_a / mnorm, fill=fill, color=color, linewidth=linewidth, lbl=lbl)</code></pre>
+        self._plot(&#39;m&#39;, x,
+                   to_n_v(y, r1, r2) * self.settings.rho_w / self.settings.rho_a / mnorm,
+                   fill=fill, color=color, linewidth=linewidth, lbl=lbl)</code></pre>
 </details>
 </dd>
 <dt id="PyMPDATA_examples.Olesik_et_al_2020.plotter.Plotter.xlim"><code class="name flex">

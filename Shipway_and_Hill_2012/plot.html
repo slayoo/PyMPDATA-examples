@@ -26,13 +26,14 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from .formulae import convert_to, si
-import numpy as np
+<pre><code class="python">import numpy as np
 from matplotlib import pyplot, pylab
 import matplotlib
+from .formulae import convert_to, si
 
 
-def plot(var, mult, label, output, rng=None, threshold=None, cmap=&#39;copper&#39;, rasterized=False, figsize=None):
+def plot(var, mult, label, output,
+         rng=None, threshold=None, cmap=&#39;copper&#39;, rasterized=False, figsize=None):
     lines = {3: &#39;:&#39;, 6: &#39;--&#39;, 9: &#39;-&#39;, 12: &#39;-.&#39;}
     fctr = 50  # rebin by fctr in time dimension (https://gist.github.com/zonca/1348792)
 
@@ -150,7 +151,8 @@ def plot_3d(psi, settings, options, r_min, r_max, max_height):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def plot(var, mult, label, output, rng=None, threshold=None, cmap=&#39;copper&#39;, rasterized=False, figsize=None):
+<pre><code class="python">def plot(var, mult, label, output,
+         rng=None, threshold=None, cmap=&#39;copper&#39;, rasterized=False, figsize=None):
     lines = {3: &#39;:&#39;, 6: &#39;--&#39;, 9: &#39;-&#39;, 12: &#39;-.&#39;}
     fctr = 50  # rebin by fctr in time dimension (https://gist.github.com/zonca/1348792)
 

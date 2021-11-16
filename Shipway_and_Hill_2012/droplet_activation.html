@@ -26,12 +26,12 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">import numba
-from functools import lru_cache
+<pre><code class="python">from functools import lru_cache
+import numpy as np
+import numba
 from PyMPDATA.impl.enumerations import (SIGN_RIGHT,
                                         ARG_DATA, OUTER, ARG_FOCUS,
                                         META_AND_DATA_DATA, META_AND_DATA_META)
-import numpy as np
 
 
 @lru_cache()

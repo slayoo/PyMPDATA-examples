@@ -86,7 +86,10 @@ class Formulae:
     # A14 in libcloudph++ 1.0 paper
     @staticmethod
     def T(rhod, thd):
-        return thd * np.power(rhod * thd / const.p1000 * const.Rd, const.Rd / const.c_pd / (1 - const.Rd / const.c_pd))
+        return thd * np.power(
+            rhod * thd / const.p1000 * const.Rd,
+            const.Rd / const.c_pd / (1 - const.Rd / const.c_pd)
+        )
 
     # A15 in libcloudph++ 1.0 paper
     @staticmethod
@@ -156,7 +159,10 @@ class Formulae:
     # A14 in libcloudph++ 1.0 paper
     @staticmethod
     def T(rhod, thd):
-        return thd * np.power(rhod * thd / const.p1000 * const.Rd, const.Rd / const.c_pd / (1 - const.Rd / const.c_pd))
+        return thd * np.power(
+            rhod * thd / const.p1000 * const.Rd,
+            const.Rd / const.c_pd / (1 - const.Rd / const.c_pd)
+        )
 
     # A15 in libcloudph++ 1.0 paper
     @staticmethod
@@ -188,7 +194,10 @@ class Formulae:
 </summary>
 <pre><code class="python">@staticmethod
 def T(rhod, thd):
-    return thd * np.power(rhod * thd / const.p1000 * const.Rd, const.Rd / const.c_pd / (1 - const.Rd / const.c_pd))</code></pre>
+    return thd * np.power(
+        rhod * thd / const.p1000 * const.Rd,
+        const.Rd / const.c_pd / (1 - const.Rd / const.c_pd)
+    )</code></pre>
 </details>
 </dd>
 <dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.drho_dz"><code class="name flex">

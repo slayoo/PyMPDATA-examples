@@ -27,8 +27,8 @@
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">from copy import deepcopy
-from joblib import Parallel, parallel_backend, delayed
 import numpy as np
+from joblib import Parallel, parallel_backend, delayed
 from PyMPDATA import Options
 from PyMPDATA_examples.Olesik_et_al_2020.simulation import Simulation
 from PyMPDATA_examples.Olesik_et_al_2020.physics.equilibrium_drop_growth import PdfEvolver
@@ -94,7 +94,9 @@ def compute_figure_data(*, nr, GC_max, psi_coord=x_id(),
                 dx = data.pop(&#39;dx&#39;)
 
                 if &#39;grid&#39; not in output[coord]:
-                    output[coord][&#34;grid&#34;] = {&#39;rh&#39;: rh, &#39;r&#39;: r, &#39;dx&#39;: dx, &#39;dt&#39;: case.dt, &#39;out_steps&#39;: case.out_steps}
+                    output[coord][&#34;grid&#34;] = {
+                        &#39;rh&#39;: rh, &#39;r&#39;: r, &#39;dx&#39;: dx, &#39;dt&#39;: case.dt, &#39;out_steps&#39;: case.out_steps
+                    }
                 output[coord][&#34;numerical&#34;][opts] = data[&#39;n&#39;]
 
     for coord, case in cases.items():
@@ -115,7 +117,11 @@ def compute_figure_data(*, nr, GC_max, psi_coord=x_id(),
         analytical = output[coord][&#34;analytical&#34;]
         for opts in output[coord][&#34;numerical&#34;]:
             numerical = output[coord][&#34;numerical&#34;][opts]
-            error_L2[opts] = L2(numerical[-1].magnitude, analytical[-1].magnitude, case.out_steps[-1])
+            error_L2[opts] = L2(
+                numerical[-1].magnitude,
+                analytical[-1].magnitude,
+                case.out_steps[-1]
+            )
         output[coord][&#34;error_L2&#34;] = error_L2
 
     for coord, case in cases.items():
@@ -148,9 +154,18 @@ def rel_disp(r, psi, psi_coord):
     mom1 = 0
     mom2 = 0
     for i, psi_i in enumerate(psi):
-        dp_i = psi_coord.moment_of_r_integral(psi_coord.x(r[i+1]), 0) - psi_coord.moment_of_r_integral(psi_coord.x(r[i]), 0)
-        A_i = psi_coord.moment_of_r_integral(psi_coord.x(r[i+1]), 1) - psi_coord.moment_of_r_integral(psi_coord.x(r[i]), 1)
-        B_i = psi_coord.moment_of_r_integral(psi_coord.x(r[i+1]), 2) - psi_coord.moment_of_r_integral(psi_coord.x(r[i]), 2)
+        dp_i = (
+            psi_coord.moment_of_r_integral(psi_coord.x(r[i+1]), 0) -
+            psi_coord.moment_of_r_integral(psi_coord.x(r[i]), 0)
+        )
+        A_i = (
+            psi_coord.moment_of_r_integral(psi_coord.x(r[i+1]), 1) -
+            psi_coord.moment_of_r_integral(psi_coord.x(r[i]), 1)
+        )
+        B_i = (
+            psi_coord.moment_of_r_integral(psi_coord.x(r[i+1]), 2) -
+            psi_coord.moment_of_r_integral(psi_coord.x(r[i]), 2)
+        )
         bin_mom0 = psi_i * dp_i
         bin_mom1 = psi_i * A_i
         bin_mom2 = psi_i * B_i
@@ -266,7 +281,9 @@ def third_moment(r, psi, psi_coord, normalised=True):
                 dx = data.pop(&#39;dx&#39;)
 
                 if &#39;grid&#39; not in output[coord]:
-                    output[coord][&#34;grid&#34;] = {&#39;rh&#39;: rh, &#39;r&#39;: r, &#39;dx&#39;: dx, &#39;dt&#39;: case.dt, &#39;out_steps&#39;: case.out_steps}
+                    output[coord][&#34;grid&#34;] = {
+                        &#39;rh&#39;: rh, &#39;r&#39;: r, &#39;dx&#39;: dx, &#39;dt&#39;: case.dt, &#39;out_steps&#39;: case.out_steps
+                    }
                 output[coord][&#34;numerical&#34;][opts] = data[&#39;n&#39;]
 
     for coord, case in cases.items():
@@ -287,7 +304,11 @@ def third_moment(r, psi, psi_coord, normalised=True):
         analytical = output[coord][&#34;analytical&#34;]
         for opts in output[coord][&#34;numerical&#34;]:
             numerical = output[coord][&#34;numerical&#34;][opts]
-            error_L2[opts] = L2(numerical[-1].magnitude, analytical[-1].magnitude, case.out_steps[-1])
+            error_L2[opts] = L2(
+                numerical[-1].magnitude,
+                analytical[-1].magnitude,
+                case.out_steps[-1]
+            )
         output[coord][&#34;error_L2&#34;] = error_L2
 
     for coord, case in cases.items():
@@ -313,9 +334,18 @@ def third_moment(r, psi, psi_coord, normalised=True):
     mom1 = 0
     mom2 = 0
     for i, psi_i in enumerate(psi):
-        dp_i = psi_coord.moment_of_r_integral(psi_coord.x(r[i+1]), 0) - psi_coord.moment_of_r_integral(psi_coord.x(r[i]), 0)
-        A_i = psi_coord.moment_of_r_integral(psi_coord.x(r[i+1]), 1) - psi_coord.moment_of_r_integral(psi_coord.x(r[i]), 1)
-        B_i = psi_coord.moment_of_r_integral(psi_coord.x(r[i+1]), 2) - psi_coord.moment_of_r_integral(psi_coord.x(r[i]), 2)
+        dp_i = (
+            psi_coord.moment_of_r_integral(psi_coord.x(r[i+1]), 0) -
+            psi_coord.moment_of_r_integral(psi_coord.x(r[i]), 0)
+        )
+        A_i = (
+            psi_coord.moment_of_r_integral(psi_coord.x(r[i+1]), 1) -
+            psi_coord.moment_of_r_integral(psi_coord.x(r[i]), 1)
+        )
+        B_i = (
+            psi_coord.moment_of_r_integral(psi_coord.x(r[i+1]), 2) -
+            psi_coord.moment_of_r_integral(psi_coord.x(r[i]), 2)
+        )
         bin_mom0 = psi_i * dp_i
         bin_mom1 = psi_i * A_i
         bin_mom2 = psi_i * B_i
