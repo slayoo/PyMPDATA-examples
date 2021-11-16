@@ -1,9 +1,11 @@
-from PyMPDATA_examples.Olesik_et_al_2020.settings import Settings, default_nr, default_GC_max, default_opt_set
+import pathlib
+import numpy as np
+from PyMPDATA import Options
+from PyMPDATA_examples.Olesik_et_al_2020.settings import (
+    Settings, default_nr, default_GC_max, default_opt_set
+)
 from PyMPDATA_examples.Olesik_et_al_2020.coordinates import x_id, x_log_of_pn
 from PyMPDATA_examples.Olesik_et_al_2020.simulation import Simulation
-from PyMPDATA import Options
-import numpy as np
-import pathlib
 
 
 grid_layout_set = (x_log_of_pn(r0=1, base=2),)
@@ -36,7 +38,9 @@ def test_wall_time(n_runs=3, mrats=(10,), generate=False, print_tab=True, rtol=R
 
 def make_data(settings, grid, opts):
     options = Options(**opts)
-    simulation = Simulation(settings=settings, grid_layout=grid, psi_coord=x_id(), opts=options, GC_max=default_GC_max)
+    simulation = Simulation(
+        settings=settings, grid_layout=grid, psi_coord=x_id(),
+        opts=options, GC_max=default_GC_max)
     result = {"wall_time": []}
     last_step = 0
     for n_steps in simulation.out_steps:
@@ -75,5 +79,7 @@ def compare_refdata(data, rtol, generate=False):
         np.savetxt(path, table, delimiter=delimiter, fmt="%s")
     else:
         table = np.loadtxt(path, delimiter=delimiter, dtype=str)
-        np.testing.assert_allclose(actual=data['values'], desired=np.array(table[:,1].astype(float)), rtol=rtol)
+        np.testing.assert_allclose(
+            actual=data['values'],
+            desired=np.array(table[:,1].astype(float)), rtol=rtol)
         np.testing.assert_array_equal(data['opts'], table[:,0])

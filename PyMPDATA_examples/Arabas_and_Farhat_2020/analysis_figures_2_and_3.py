@@ -1,8 +1,8 @@
+import numpy as np
+from joblib import Parallel, delayed, parallel_backend
 from PyMPDATA_examples.Arabas_and_Farhat_2020.simulation import Simulation
 from PyMPDATA_examples.Arabas_and_Farhat_2020.setup1_european_corridor import Settings
 from PyMPDATA_examples.utils.error_norms import L2
-from joblib import Parallel, delayed, parallel_backend
-import numpy as np
 
 
 
@@ -16,7 +16,8 @@ def compute(simulation):
             "log2_C_opt": np.log2(simulation.settings.C_opt),
             "log2_l2": np.log2(simulation.l2),
             "log2_l2_opt": np.log2(simulation.settings.l2_opt),
-            "err2": error_L2_norm(simulation.solvers, simulation.settings, simulation.S, simulation.nt, n_iters)
+            "err2": error_L2_norm(
+                simulation.solvers, simulation.settings, simulation.S, simulation.nt, n_iters)
         })
     return output
 

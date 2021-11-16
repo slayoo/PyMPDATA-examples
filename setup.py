@@ -11,7 +11,8 @@ def get_long_description():
 
 setup(
     name='PyMPDATA-examples',
-    description='PyMPDATA usage examples reproducing results from literature and depicting how to use PyMPDATA in Python from Jupyter notebooks',
+    description='PyMPDATA usage examples reproducing results from literature'
+                ' and depicting how to use PyMPDATA in Python from Jupyter notebooks',
     use_scm_version=True,
     setup_requires=['setuptools_scm'],
     install_requires=['PyMPDATA',

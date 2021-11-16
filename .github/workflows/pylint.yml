@@ -27,7 +27,7 @@ jobs:
     - name: Analysing the code with pylint
       run: |
         # TODO #299
-        pylint --disable=fixme,too-many-locals,too-many-branches,duplicate-code,wrong-import-order,invalid-name,wrong-import-position,missing-function-docstring,missing-module-docstring,too-many-arguments,trailing-whitespace,line-too-long,missing-class-docstring,too-few-public-methods,too-many-instance-attributes $(git ls-files '*.py')
+        pylint --disable=fixme,too-many-locals,too-many-branches,duplicate-code,invalid-name,missing-function-docstring,missing-module-docstring,too-many-arguments,missing-class-docstring,too-few-public-methods,too-many-instance-attributes $(git ls-files '*.py')
     - name: Analysing notebook code with pyling
       run: |
         # TODO #299

@@ -60,7 +60,8 @@ class Simulation:
                     mask = h > s.eps
                     vel = np.where(mask, np.nan, 0)
                     np.divide(self.solvers[k].advectee.get(), h, where=mask, out=vel)
-                    self.advector.get_component(xy)[idx[xy]] = self.interpolate(vel, axis=xy) * s.dt / grid_step[xy]
+                    self.advector.get_component(xy)[idx[xy]] = \
+                        self.interpolate(vel, axis=xy) * s.dt / grid_step[xy]
                 self.solvers['h'].advance(1)
                 assert h.ctypes.data == self.solvers['h'].advectee.get().ctypes.data
                 for xy, k in enumerate(('uh', 'vh')):

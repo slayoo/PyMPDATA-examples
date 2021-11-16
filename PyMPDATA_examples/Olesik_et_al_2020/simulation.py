@@ -7,7 +7,9 @@ from PyMPDATA_examples.utils.discretisation import discretised_analytical_soluti
 
 class Simulation:
     @staticmethod
-    def make_condensational_growth_solver(nr, r_min, r_max, GC_max, grid_layout, psi_coord, pdf_of_r, drdt_of_r, opts: Options):
+    def make_condensational_growth_solver(nr, r_min, r_max,
+                                          GC_max, grid_layout, psi_coord,
+                                          pdf_of_r, drdt_of_r, opts: Options):
         # psi = psi(p)
         dp_dr = psi_coord.dx_dr
         dx_dr = grid_layout.dx_dr
@@ -48,9 +50,18 @@ class Simulation:
         # CFL condition
         np.testing.assert_array_less(np.abs(GCh), 1)
 
-        g_factor = ScalarField(G.astype(dtype=opts.dtype), halo=opts.n_halo, boundary_conditions=(Extrapolated(),))
-        state = ScalarField(psi.astype(dtype=opts.dtype), halo=opts.n_halo, boundary_conditions=(Constant(0),))
-        GC_field = VectorField([GCh.astype(dtype=opts.dtype)], halo=opts.n_halo, boundary_conditions=(Constant(0),))
+        g_factor = ScalarField(
+            G.astype(dtype=opts.dtype),
+            halo=opts.n_halo,
+            boundary_conditions=(Extrapolated(),))
+        state = ScalarField(
+            psi.astype(dtype=opts.dtype),
+            halo=opts.n_halo,
+            boundary_conditions=(Constant(0),))
+        GC_field = VectorField(
+            [GCh.astype(dtype=opts.dtype)],
+            halo=opts.n_halo,
+            boundary_conditions=(Constant(0),))
         stepper = Stepper(
             options=opts,
             n_dims=1,
@@ -81,17 +92,20 @@ class Simulation:
         self.__p_unit = psi_coord.x(self.__r_unit)
         self.__n_of_r_unit = self.settings.si.centimetres ** -3 / self.settings.si.micrometre
 
-        self.solver, self.__r, self.__rh, self.dx, dt, self._g_factor = Simulation.make_condensational_growth_solver(
-            self.settings.nr,
-            self.__mgn(self.settings.r_min, self.__r_unit),
-            self.__mgn(self.settings.r_max, self.__r_unit),
-            GC_max,
-            grid_layout,
-            psi_coord,
-            lambda r: self.__mgn(self.settings.pdf(r * self.__r_unit), self.__n_of_r_unit),
-            lambda r: self.__mgn(self.settings.drdt(r * self.__r_unit), self.__r_unit / self.__t_unit),
-            opts
-        )
+        self.solver, self.__r, self.__rh, self.dx, dt, self._g_factor = \
+            Simulation.make_condensational_growth_solver(
+                self.settings.nr,
+                self.__mgn(self.settings.r_min, self.__r_unit),
+                self.__mgn(self.settings.r_max, self.__r_unit),
+                GC_max,
+                grid_layout,
+                psi_coord,
+                lambda r: self.__mgn(
+                    self.settings.pdf(r * self.__r_unit), self.__n_of_r_unit),
+                lambda r: self.__mgn(
+                    self.settings.drdt(r * self.__r_unit), self.__r_unit / self.__t_unit),
+                opts
+            )
 
         self.out_steps = tuple(math.ceil(t/dt) for t in settings.out_times)
         self.dt = dt * self.__t_unit

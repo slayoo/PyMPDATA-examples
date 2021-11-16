@@ -21,13 +21,15 @@ def plot_output(times, output, settings, return_data=True):
     momenta = {'x': 'uh', 'y': 'vh'}
     for i_cut, cut in enumerate(cuts):
         if cut == 'x':
-            idx = (slice(None, None), slice(settings.nx // 2, settings.nx // 2 + 1))
-            coord = settings.dx * (np.linspace(-settings.nx // 2, settings.nx // 2, settings.nx) + .5)
+            n = settings.nx
+            idx = (slice(None, None), slice(n // 2, n // 2 + 1))
+            coord = settings.dx * (np.linspace(-n // 2, n // 2, n) + .5)
             x = coord
             y = 0
         else:
-            idx = (slice(settings.ny // 2, settings.ny // 2 + 1), slice(None, None))
-            coord = settings.dy * (np.linspace(-settings.ny // 2, settings.ny // 2, settings.ny) + .5)
+            n = settings.ny
+            idx = (slice(n // 2, n // 2 + 1), slice(None, None))
+            coord = settings.dy * (np.linspace(-n // 2, n // 2, n) + .5)
             x = 0
             y = coord
         for i_t, t in enumerate(times):
@@ -60,7 +62,8 @@ def plot_output(times, output, settings, return_data=True):
             )
             datum['q_h_analytic'] = np.where(
                 datum['h_analytic'] > settings.eps,
-                datum['coord'] / lambdas_analytic[i_t, 0 + 2 * i_cut] * lambdas_analytic[i_t, 1 + 2 * i_cut],
+                datum['coord'] / lambdas_analytic[i_t, 0 + 2 * i_cut] \
+                    * lambdas_analytic[i_t, 1 + 2 * i_cut],
                 0)
             twin.plot(
                 datum['coord'],

@@ -1,15 +1,20 @@
-import PyMPDATA_examples.Arabas_and_Farhat_2020.Black_Scholes_1973 as BS
 import numpy as np
+import PyMPDATA_examples.Arabas_and_Farhat_2020.Black_Scholes_1973 as BS
 
 
-def _phi(S: [np.ndarray, float], gamma: float, H: float, I: float, r: float, b: float, var: float, T: float):
+def _phi(S: [np.ndarray, float], gamma: float, H: float, I: float, r: float,
+         b: float, var: float, T: float):
     lmbd = (-r + gamma * b + .5 * gamma * (gamma - 1) * var) * T
     d = -(np.log(S / H) + (b + (gamma - .5) * var) * T) / np.sqrt(var * T)
     kappa = 2 * b / var + (2 * gamma - 1)
-    return np.exp(lmbd) * np.power(S, gamma) *(BS.N(d) - pow((I / S), kappa) * BS.N(d - 2 * np.log(I / S) / np.sqrt(var * T)))
+    return (np.exp(lmbd)
+        * np.power(S, gamma)
+        * (BS.N(d) - pow((I / S), kappa) * BS.N(d - 2 * np.log(I / S) / np.sqrt(var * T)))
+    )
 
 
-def c_amer(S: [np.ndarray, float], K: [float, np.ndarray], T: float, r: float, b: float, sgma: float):
+def c_amer(S: [np.ndarray, float], K: [float, np.ndarray], T: float, r: float,
+           b: float, sgma: float):
     if b >= r:
         return BS.c_euro(S, K=K, T=T, r=r, b=b, sgma=sgma)
 
