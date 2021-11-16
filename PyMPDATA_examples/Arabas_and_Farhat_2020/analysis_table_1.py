@@ -1,8 +1,8 @@
+import numpy as np
+from joblib import Parallel, delayed, parallel_backend
 from PyMPDATA_examples.Arabas_and_Farhat_2020.simulation import Simulation
 from PyMPDATA_examples.Arabas_and_Farhat_2020.setup2_american_put import Settings
 from PyMPDATA_examples.Arabas_and_Farhat_2020.analysis_figures_2_and_3 import error_L2_norm
-import numpy as np
-from joblib import Parallel, delayed, parallel_backend
 
 
 def compute_row(simulations):
@@ -16,7 +16,10 @@ def compute_row(simulations):
     for simulation in simulations:
         f = simulation.run(n_iters=2)
         row.append(
-            error_L2_norm(simulation.solvers, simulation.settings, simulation.S, simulation.nt, n_iters=2))
+            error_L2_norm(
+                simulation.solvers, simulation.settings, simulation.S, simulation.nt, n_iters=2
+            )
+        )
         np.testing.assert_almost_equal(simulation.S[simulation.ix_match], S0)
     row.append(f[simulations[-1].ix_match])
     row.append(simulations[0].settings.analytical_solution(S0))

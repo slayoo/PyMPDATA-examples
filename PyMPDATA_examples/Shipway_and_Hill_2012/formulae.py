@@ -58,7 +58,10 @@ class Formulae:
     # A14 in libcloudph++ 1.0 paper
     @staticmethod
     def T(rhod, thd):
-        return thd * np.power(rhod * thd / const.p1000 * const.Rd, const.Rd / const.c_pd / (1 - const.Rd / const.c_pd))
+        return thd * np.power(
+            rhod * thd / const.p1000 * const.Rd,
+            const.Rd / const.c_pd / (1 - const.Rd / const.c_pd)
+        )
 
     # A15 in libcloudph++ 1.0 paper
     @staticmethod

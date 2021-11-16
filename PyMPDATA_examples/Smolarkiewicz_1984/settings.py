@@ -31,11 +31,14 @@ class Settings:
         for index, letter in enumerate(('x', 'y', 'z')):
             i, j, k = np.indices((g + (gi == index) for gi, g in enumerate(self.grid)))
             if letter == 'x':
-                data[index] = (-((j+.5) * self.dy - self.yc) + ((k+.5) * self.dz - self.zc)) / self.dx
+                data[index] = (-((j+.5) * self.dy - self.yc) + ((k+.5) * self.dz - self.zc))\
+                              / self.dx
             elif letter == 'y':
-                data[index] = (+((i+.5) * self.dx - self.xc) - ((k+.5) * self.dz - self.zc)) / self.dy
+                data[index] = (+((i+.5) * self.dx - self.xc) - ((k+.5) * self.dz - self.zc))\
+                              / self.dy
             elif letter == 'z':
-                data[index] = (-((i+.5) * self.dx - self.xc) + ((j+.5) * self.dy - self.yc)) / self.dz
+                data[index] = (-((i+.5) * self.dx - self.xc) + ((j+.5) * self.dy - self.yc))\
+                              / self.dz
             data[index] *= self.omega / np.sqrt(3) * self.dt
         return data
 

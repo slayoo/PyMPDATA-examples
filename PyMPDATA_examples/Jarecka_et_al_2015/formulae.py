@@ -25,7 +25,8 @@ def deriv(y, _):
 def d2_el_lamb_lamb_t_evol(times, lamb_x0, lamb_y0):
     """
     solving coupled nonlinear second-order ODEs - eq. 7  (Jarecka, Jaruga, Smolarkiewicz)
-    returning array with first dim denoting time, second dim: [lambda_x, dot{lambda_x}, lambda_y, dot{lambda_y}
+    returning array with first dim denoting time, second dim:
+    [lambda_x, dot{lambda_x}, lambda_y, dot{lambda_y}
     """
     assert times[0] == 0
     yinit = np.array([lamb_x0, 0., lamb_y0, 0.])  # initial values (dot_lamb = 0.)

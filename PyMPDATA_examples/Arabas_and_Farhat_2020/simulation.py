@@ -1,8 +1,8 @@
 import numpy as np
 import numba
-from PyMPDATA_examples.Arabas_and_Farhat_2020.options import OPTIONS
 from PyMPDATA.boundary_conditions import Extrapolated
 from PyMPDATA import Options, Solver, Stepper, ScalarField, VectorField
+from PyMPDATA_examples.Arabas_and_Farhat_2020.options import OPTIONS
 
 
 class Simulation:
@@ -14,12 +14,19 @@ class Simulation:
                  boundary_conditions
                  ):
         stepper = Stepper(options=options, n_dims=len(advectee.shape), non_unit_g_factor=False)
-        return Solver(stepper=stepper,
-                      advectee=ScalarField(advectee.astype(dtype=options.dtype), halo=options.n_halo,
-                                           boundary_conditions=boundary_conditions),
-                      advector=VectorField((np.full(advectee.shape[0] + 1, advector, dtype=options.dtype),),
-                                           halo=options.n_halo, boundary_conditions=boundary_conditions)
-                      )
+        return Solver(
+            stepper=stepper,
+            advectee=ScalarField(
+              advectee.astype(dtype=options.dtype),
+              halo=options.n_halo,
+              boundary_conditions=boundary_conditions
+            ),
+            advector=VectorField(
+              (np.full(advectee.shape[0] + 1, advector, dtype=options.dtype),),
+              halo=options.n_halo,
+              boundary_conditions=boundary_conditions
+)
+        )
 
     def __init__(self, settings):
         self.settings = settings
@@ -27,21 +34,21 @@ class Simulation:
         sigma2 = pow(settings.sigma, 2)
         dx_opt = abs(settings.C_opt / (.5 * sigma2 - settings.r) * settings.l2_opt * sigma2)
         dt_opt = pow(dx_opt, 2) / sigma2 / settings.l2_opt
-    
+
         # adjusting dt so that nt is integer
         self.dt = settings.T
         self.nt = 0
         while self.dt > dt_opt:
             self.nt += 1
             self.dt = settings.T / self.nt
-    
+
         # adjusting dx to match requested l^2
         dx = np.sqrt(settings.l2_opt * self.dt) * settings.sigma
 
         # calculating actual u number and lambda
         self.C = - (.5 * sigma2 - settings.r) * (-self.dt) / dx
         self.l2 = dx * dx / sigma2 / self.dt
-    
+
         # adjusting nx and setting S_beg, S_end
         S_beg = settings.S_match
         self.nx = 1
@@ -50,7 +57,7 @@ class Simulation:
             S_beg = np.exp(np.log(settings.S_match) - self.nx * dx)
 
         self.ix_match = self.nx
-    
+
         S_end = settings.S_match
         while S_end < settings.S_max:
             self.nx += 1

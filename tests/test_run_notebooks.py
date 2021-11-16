@@ -1,15 +1,16 @@
+# pylint: disable=wrong-import-position
 # https://bugs.python.org/issue37373
 import sys
 if sys.platform == 'win32' and sys.version_info[:2] >= (3, 7):
     import asyncio
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-import nbformat
-import pytest
 import pathlib
 import re
 import os
+import nbformat
 from nbconvert.preprocessors import ExecutePreprocessor
+import pytest
 
 
 # https://stackoverflow.com/questions/7012921/recursive-grep-using-python

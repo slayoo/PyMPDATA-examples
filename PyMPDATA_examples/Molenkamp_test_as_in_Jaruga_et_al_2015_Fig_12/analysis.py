@@ -1,7 +1,7 @@
+from joblib import Parallel, delayed
+from PyMPDATA import Options
 from PyMPDATA_examples.Molenkamp_test_as_in_Jaruga_et_al_2015_Fig_12.simulation import Simulation
 from PyMPDATA_examples.Molenkamp_test_as_in_Jaruga_et_al_2015_Fig_12.settings import Settings
-from PyMPDATA import Options
-from joblib import Parallel, delayed
 
 
 options = {

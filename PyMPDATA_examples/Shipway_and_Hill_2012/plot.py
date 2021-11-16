@@ -1,10 +1,11 @@
-from .formulae import convert_to, si
 import numpy as np
 from matplotlib import pyplot, pylab
 import matplotlib
+from .formulae import convert_to, si
 
 
-def plot(var, mult, label, output, rng=None, threshold=None, cmap='copper', rasterized=False, figsize=None):
+def plot(var, mult, label, output,
+         rng=None, threshold=None, cmap='copper', rasterized=False, figsize=None):
     lines = {3: ':', 6: '--', 9: '-', 12: '-.'}
     fctr = 50  # rebin by fctr in time dimension (https://gist.github.com/zonca/1348792)
 

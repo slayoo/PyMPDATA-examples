@@ -1,6 +1,6 @@
 from copy import deepcopy
-from joblib import Parallel, parallel_backend, delayed
 import numpy as np
+from joblib import Parallel, parallel_backend, delayed
 from PyMPDATA import Options
 from PyMPDATA_examples.Olesik_et_al_2020.simulation import Simulation
 from PyMPDATA_examples.Olesik_et_al_2020.physics.equilibrium_drop_growth import PdfEvolver
@@ -66,7 +66,9 @@ def compute_figure_data(*, nr, GC_max, psi_coord=x_id(),
                 dx = data.pop('dx')
 
                 if 'grid' not in output[coord]:
-                    output[coord]["grid"] = {'rh': rh, 'r': r, 'dx': dx, 'dt': case.dt, 'out_steps': case.out_steps}
+                    output[coord]["grid"] = {
+                        'rh': rh, 'r': r, 'dx': dx, 'dt': case.dt, 'out_steps': case.out_steps
+                    }
                 output[coord]["numerical"][opts] = data['n']
 
     for coord, case in cases.items():
@@ -87,7 +89,11 @@ def compute_figure_data(*, nr, GC_max, psi_coord=x_id(),
         analytical = output[coord]["analytical"]
         for opts in output[coord]["numerical"]:
             numerical = output[coord]["numerical"][opts]
-            error_L2[opts] = L2(numerical[-1].magnitude, analytical[-1].magnitude, case.out_steps[-1])
+            error_L2[opts] = L2(
+                numerical[-1].magnitude,
+                analytical[-1].magnitude,
+                case.out_steps[-1]
+            )
         output[coord]["error_L2"] = error_L2
 
     for coord, case in cases.items():
@@ -120,9 +126,18 @@ def rel_disp(r, psi, psi_coord):
     mom1 = 0
     mom2 = 0
     for i, psi_i in enumerate(psi):
-        dp_i = psi_coord.moment_of_r_integral(psi_coord.x(r[i+1]), 0) - psi_coord.moment_of_r_integral(psi_coord.x(r[i]), 0)
-        A_i = psi_coord.moment_of_r_integral(psi_coord.x(r[i+1]), 1) - psi_coord.moment_of_r_integral(psi_coord.x(r[i]), 1)
-        B_i = psi_coord.moment_of_r_integral(psi_coord.x(r[i+1]), 2) - psi_coord.moment_of_r_integral(psi_coord.x(r[i]), 2)
+        dp_i = (
+            psi_coord.moment_of_r_integral(psi_coord.x(r[i+1]), 0) -
+            psi_coord.moment_of_r_integral(psi_coord.x(r[i]), 0)
+        )
+        A_i = (
+            psi_coord.moment_of_r_integral(psi_coord.x(r[i+1]), 1) -
+            psi_coord.moment_of_r_integral(psi_coord.x(r[i]), 1)
+        )
+        B_i = (
+            psi_coord.moment_of_r_integral(psi_coord.x(r[i+1]), 2) -
+            psi_coord.moment_of_r_integral(psi_coord.x(r[i]), 2)
+        )
         bin_mom0 = psi_i * dp_i
         bin_mom1 = psi_i * A_i
         bin_mom2 = psi_i * B_i
