@@ -92,6 +92,7 @@ class Simulation:
 
             @numba.experimental.jitclass([])
             class PostStep:
+                # pylint: disable=too-few-public-methods
                 def __init__(self):
                     pass
 

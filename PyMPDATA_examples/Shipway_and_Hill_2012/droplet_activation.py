@@ -32,6 +32,7 @@ def _make_scalar(value, _, halo, __, ___, dtype, jit_flags):
     return fill_halos_scalar
 
 
+# pylint: disable=too-few-public-methods
 class DropletActivation:
     def __init__(self, value, dr, dz):
         self._value = value / dz / dr

@@ -8,7 +8,7 @@ class Simulation:
         bcs = tuple(Constant(0) for _ in settings.grid)
 
         advector = VectorField(
-            data=[comp.astype(options.dtype) for comp in settings.advector],
+            data=tuple(comp.astype(options.dtype) for comp in settings.advector),
             halo=options.n_halo,
             boundary_conditions=bcs
         )
@@ -25,3 +25,7 @@ class Simulation:
 
     def run(self, nt):
         _ = self.solver.advance(nt)
+
+    @property
+    def advectee(self):
+        return self.solver.advectee

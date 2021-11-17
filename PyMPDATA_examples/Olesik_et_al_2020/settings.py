@@ -3,9 +3,7 @@ import pint
 from scipy import optimize
 from scipy import integrate
 from pystrict import strict
-from PyMPDATA_examples.Olesik_et_al_2020.physics import equilibrium_drop_growth
-from PyMPDATA_examples.Olesik_et_al_2020.physics import East_and_Marshall_1954
-
+from PyMPDATA_examples.Olesik_et_al_2020 import equilibrium_drop_growth, East_and_Marshall_1954
 
 default_nr = 64
 default_GC_max = .5

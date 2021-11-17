@@ -13,6 +13,7 @@ class DrDt:
         return self.ksi * np.log(r2/r1) / (r2 - r1)
 
 
+# pylint: disable=too-few-public-methods
 class PdfEvolver:
     """ eq. 7.32 in Rogers and Yau 1989 """
     def __init__(self, pdf, drdt: DrDt, t):
