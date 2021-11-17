@@ -1,9 +1,10 @@
+from collections import namedtuple
 from copy import deepcopy
 import numpy as np
 from joblib import Parallel, parallel_backend, delayed
 from PyMPDATA import Options
 from PyMPDATA_examples.Olesik_et_al_2020.simulation import Simulation
-from PyMPDATA_examples.Olesik_et_al_2020.physics.equilibrium_drop_growth import PdfEvolver
+from PyMPDATA_examples.Olesik_et_al_2020.equilibrium_drop_growth import PdfEvolver
 from PyMPDATA_examples.utils.error_norms import L2
 from PyMPDATA_examples.utils.discretisation import discretised_analytical_solution
 from PyMPDATA_examples.Olesik_et_al_2020.coordinates import x_id, x_log_of_pn, x_p2
@@ -50,8 +51,8 @@ def compute_figure_data(*, nr, GC_max, psi_coord=x_id(),
     cases = {}
     for result in results:
         case = Case(result)
-        if case.grid_layour_str not in cases:
-            cases[case.grid_layour_str] = case
+        if case.grid_layout_str not in cases:
+            cases[case.grid_layout_str] = case
 
 
     output = {}
@@ -105,20 +106,15 @@ def compute_figure_data(*, nr, GC_max, psi_coord=x_id(),
     return output, settings
 
 
-class Result:
-    def __init__(self, *, dt, out_steps, grid_layout_str, option_str, result):
-        self.dt = dt
-        self.option_str = option_str
-        self.result = result
-        self.out_steps = out_steps
-        self.grid_layout_str = grid_layout_str
+Result = namedtuple("Result", ('dt', 'out_steps', 'grid_layout_str', 'option_str', 'result'))
 
 
-class Case:
-    def __init__(self, result: Result):
-        self.dt = result.dt
-        self.out_steps = result.out_steps
-        self.grid_layour_str = result.grid_layout_str
+def Case(result: Result):
+    return namedtuple("Case", ('dt', 'out_steps', 'grid_layout_str'))(
+        dt=result.dt,
+        out_steps=result.out_steps,
+        grid_layout_str=result.grid_layout_str
+    )
 
 
 def rel_disp(r, psi, psi_coord):

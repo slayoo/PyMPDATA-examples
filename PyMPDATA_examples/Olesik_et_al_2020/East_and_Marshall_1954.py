@@ -1,6 +1,7 @@
 import numpy as np
 
 
+# pylint: disable=too-few-public-methods
 class SizeDistribution:
     def __init__(self, si):
         self.si = si

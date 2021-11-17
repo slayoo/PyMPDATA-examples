@@ -5,11 +5,8 @@ from PyMPDATA.impl.enumerations import INNER, OUTER
 from .arakawa_c import arakawa_c
 
 
-def repeat_in_r(vec, nr):
-    return np.repeat(vec.reshape(-1,1), nr, axis=1).squeeze()
-
-
 class MPDATA:
+    # pylint: disable=too-few-public-methods
     def __init__(self, nz, dt, qv_of_zZ_at_t0, g_factor_of_zZ, nr, options, activation_bc):
         self.t = 0
         self.dt = dt
@@ -34,7 +31,7 @@ class MPDATA:
 
             data = g_factor_of_zZ(arakawa_c.z_scalar_coord(grid))
             if nr > 1 and k == 'ql':
-                data = repeat_in_r(data, nr)
+                data = np.repeat(data.reshape(-1, 1), nr, axis=1).squeeze()
             g_factor = ScalarField(
                 data=data,
                 halo=self.options.n_halo,

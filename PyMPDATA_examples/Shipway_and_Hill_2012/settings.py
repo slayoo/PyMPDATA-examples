@@ -4,7 +4,8 @@ from scipy.interpolate import interp1d
 from scipy.integrate import solve_ivp
 import numpy as np
 from PyMPDATA_examples.Olesik_et_al_2020.settings import ksi_1 as default_ksi_1
-from .formulae import si, Formulae, const
+from . import formulae
+from .formulae import si, const
 from .arakawa_c import arakawa_c
 
 
@@ -31,13 +32,13 @@ class Settings:
         # https://github.com/BShipway/KiD/tree/master/src/physconst.f90#L43
         p0 = p0 or 1000 * si.hPa
 
-        self.rhod0 = Formulae.rho_d(p0, self.qv(0), self._th(0))
-        self.thd = lambda z: Formulae.th_dry(self._th(z), self.qv(z))
+        self.rhod0 = formulae.rho_d(p0, self.qv(0), self._th(0))
+        self.thd = lambda z: formulae.th_dry(self._th(z), self.qv(z))
 
         def drhod_dz(z, rhod):
-            T = Formulae.T(rhod[0], self.thd(z))
-            p = Formulae.p(rhod[0], T, self.qv(z))
-            return Formulae.drho_dz(const.g, p, T, self.qv(z), const.lv)
+            T = formulae.temperature(rhod[0], self.thd(z))
+            p = formulae.pressure(rhod[0], T, self.qv(z))
+            return formulae.drho_dz(const.g, p, T, self.qv(z), const.lv)
 
         z_points = np.arange(0, self.z_max + self.dz / 2, self.dz / 2)
         rhod_solution = solve_ivp(
