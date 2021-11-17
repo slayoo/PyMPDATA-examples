@@ -33,11 +33,8 @@ from PyMPDATA.impl.enumerations import INNER, OUTER
 from .arakawa_c import arakawa_c
 
 
-def repeat_in_r(vec, nr):
-    return np.repeat(vec.reshape(-1,1), nr, axis=1).squeeze()
-
-
 class MPDATA:
+    # pylint: disable=too-few-public-methods
     def __init__(self, nz, dt, qv_of_zZ_at_t0, g_factor_of_zZ, nr, options, activation_bc):
         self.t = 0
         self.dt = dt
@@ -62,7 +59,7 @@ class MPDATA:
 
             data = g_factor_of_zZ(arakawa_c.z_scalar_coord(grid))
             if nr &gt; 1 and k == &#39;ql&#39;:
-                data = repeat_in_r(data, nr)
+                data = np.repeat(data.reshape(-1, 1), nr, axis=1).squeeze()
             g_factor = ScalarField(
                 data=data,
                 halo=self.options.n_halo,
@@ -108,22 +105,6 @@ class MPDATA:
 <section>
 </section>
 <section>
-<h2 class="section-title" id="header-functions">Functions</h2>
-<dl>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.mpdata.repeat_in_r"><code class="name flex">
-<span>def <span class="ident">repeat_in_r</span></span>(<span>vec, nr)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def repeat_in_r(vec, nr):
-    return np.repeat(vec.reshape(-1,1), nr, axis=1).squeeze()</code></pre>
-</details>
-</dd>
-</dl>
 </section>
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
@@ -139,6 +120,7 @@ class MPDATA:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class MPDATA:
+    # pylint: disable=too-few-public-methods
     def __init__(self, nz, dt, qv_of_zZ_at_t0, g_factor_of_zZ, nr, options, activation_bc):
         self.t = 0
         self.dt = dt
@@ -163,7 +145,7 @@ class MPDATA:
 
             data = g_factor_of_zZ(arakawa_c.z_scalar_coord(grid))
             if nr &gt; 1 and k == &#39;ql&#39;:
-                data = repeat_in_r(data, nr)
+                data = np.repeat(data.reshape(-1, 1), nr, axis=1).squeeze()
             g_factor = ScalarField(
                 data=data,
                 halo=self.options.n_halo,
@@ -216,11 +198,6 @@ class MPDATA:
 <li><h3>Super-module</h3>
 <ul>
 <li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012" href="index.html">PyMPDATA_examples.Shipway_and_Hill_2012</a></code></li>
-</ul>
-</li>
-<li><h3><a href="#header-functions">Functions</a></h3>
-<ul class="">
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.mpdata.repeat_in_r" href="#PyMPDATA_examples.Shipway_and_Hill_2012.mpdata.repeat_in_r">repeat_in_r</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>

@@ -26,12 +26,13 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from copy import deepcopy
+<pre><code class="python">from collections import namedtuple
+from copy import deepcopy
 import numpy as np
 from joblib import Parallel, parallel_backend, delayed
 from PyMPDATA import Options
 from PyMPDATA_examples.Olesik_et_al_2020.simulation import Simulation
-from PyMPDATA_examples.Olesik_et_al_2020.physics.equilibrium_drop_growth import PdfEvolver
+from PyMPDATA_examples.Olesik_et_al_2020.equilibrium_drop_growth import PdfEvolver
 from PyMPDATA_examples.utils.error_norms import L2
 from PyMPDATA_examples.utils.discretisation import discretised_analytical_solution
 from PyMPDATA_examples.Olesik_et_al_2020.coordinates import x_id, x_log_of_pn, x_p2
@@ -78,8 +79,8 @@ def compute_figure_data(*, nr, GC_max, psi_coord=x_id(),
     cases = {}
     for result in results:
         case = Case(result)
-        if case.grid_layour_str not in cases:
-            cases[case.grid_layour_str] = case
+        if case.grid_layout_str not in cases:
+            cases[case.grid_layout_str] = case
 
 
     output = {}
@@ -133,20 +134,15 @@ def compute_figure_data(*, nr, GC_max, psi_coord=x_id(),
     return output, settings
 
 
-class Result:
-    def __init__(self, *, dt, out_steps, grid_layout_str, option_str, result):
-        self.dt = dt
-        self.option_str = option_str
-        self.result = result
-        self.out_steps = out_steps
-        self.grid_layout_str = grid_layout_str
+Result = namedtuple(&#34;Result&#34;, (&#39;dt&#39;, &#39;out_steps&#39;, &#39;grid_layout_str&#39;, &#39;option_str&#39;, &#39;result&#39;))
 
 
-class Case:
-    def __init__(self, result: Result):
-        self.dt = result.dt
-        self.out_steps = result.out_steps
-        self.grid_layour_str = result.grid_layout_str
+def Case(result: Result):
+    return namedtuple(&#34;Case&#34;, (&#39;dt&#39;, &#39;out_steps&#39;, &#39;grid_layout_str&#39;))(
+        dt=result.dt,
+        out_steps=result.out_steps,
+        grid_layout_str=result.grid_layout_str
+    )
 
 
 def rel_disp(r, psi, psi_coord):
@@ -203,6 +199,23 @@ def third_moment(r, psi, psi_coord, normalised=True):
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
+<dt id="PyMPDATA_examples.Olesik_et_al_2020.analysis.Case"><code class="name flex">
+<span>def <span class="ident">Case</span></span>(<span>result: <a title="PyMPDATA_examples.Olesik_et_al_2020.analysis.Result" href="#PyMPDATA_examples.Olesik_et_al_2020.analysis.Result">Result</a>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def Case(result: Result):
+    return namedtuple(&#34;Case&#34;, (&#39;dt&#39;, &#39;out_steps&#39;, &#39;grid_layout_str&#39;))(
+        dt=result.dt,
+        out_steps=result.out_steps,
+        grid_layout_str=result.grid_layout_str
+    )</code></pre>
+</details>
+</dd>
 <dt id="PyMPDATA_examples.Olesik_et_al_2020.analysis.analysis"><code class="name flex">
 <span>def <span class="ident">analysis</span></span>(<span>settings, grid_layout, psi_coord, options_dict, GC_max)</span>
 </code></dt>
@@ -265,8 +278,8 @@ def third_moment(r, psi, psi_coord, normalised=True):
     cases = {}
     for result in results:
         case = Case(result)
-        if case.grid_layour_str not in cases:
-            cases[case.grid_layour_str] = case
+        if case.grid_layout_str not in cases:
+            cases[case.grid_layout_str] = case
 
 
     output = {}
@@ -390,41 +403,39 @@ def third_moment(r, psi, psi_coord, normalised=True):
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="PyMPDATA_examples.Olesik_et_al_2020.analysis.Case"><code class="flex name class">
-<span>class <span class="ident">Case</span></span>
-<span>(</span><span>result: <a title="PyMPDATA_examples.Olesik_et_al_2020.analysis.Result" href="#PyMPDATA_examples.Olesik_et_al_2020.analysis.Result">Result</a>)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class Case:
-    def __init__(self, result: Result):
-        self.dt = result.dt
-        self.out_steps = result.out_steps
-        self.grid_layour_str = result.grid_layout_str</code></pre>
-</details>
-</dd>
 <dt id="PyMPDATA_examples.Olesik_et_al_2020.analysis.Result"><code class="flex name class">
 <span>class <span class="ident">Result</span></span>
-<span>(</span><span>*, dt, out_steps, grid_layout_str, option_str, result)</span>
+<span>(</span><span>dt, out_steps, grid_layout_str, option_str, result)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class Result:
-    def __init__(self, *, dt, out_steps, grid_layout_str, option_str, result):
-        self.dt = dt
-        self.option_str = option_str
-        self.result = result
-        self.out_steps = out_steps
-        self.grid_layout_str = grid_layout_str</code></pre>
-</details>
+<div class="desc"><p>Result(dt, out_steps, grid_layout_str, option_str, result)</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.tuple</li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="PyMPDATA_examples.Olesik_et_al_2020.analysis.Result.dt"><code class="name">var <span class="ident">dt</span></code></dt>
+<dd>
+<div class="desc"><p>Alias for field number 0</p></div>
+</dd>
+<dt id="PyMPDATA_examples.Olesik_et_al_2020.analysis.Result.grid_layout_str"><code class="name">var <span class="ident">grid_layout_str</span></code></dt>
+<dd>
+<div class="desc"><p>Alias for field number 2</p></div>
+</dd>
+<dt id="PyMPDATA_examples.Olesik_et_al_2020.analysis.Result.option_str"><code class="name">var <span class="ident">option_str</span></code></dt>
+<dd>
+<div class="desc"><p>Alias for field number 3</p></div>
+</dd>
+<dt id="PyMPDATA_examples.Olesik_et_al_2020.analysis.Result.out_steps"><code class="name">var <span class="ident">out_steps</span></code></dt>
+<dd>
+<div class="desc"><p>Alias for field number 1</p></div>
+</dd>
+<dt id="PyMPDATA_examples.Olesik_et_al_2020.analysis.Result.result"><code class="name">var <span class="ident">result</span></code></dt>
+<dd>
+<div class="desc"><p>Alias for field number 4</p></div>
+</dd>
+</dl>
 </dd>
 </dl>
 </section>
@@ -442,6 +453,7 @@ def third_moment(r, psi, psi_coord, normalised=True):
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
+<li><code><a title="PyMPDATA_examples.Olesik_et_al_2020.analysis.Case" href="#PyMPDATA_examples.Olesik_et_al_2020.analysis.Case">Case</a></code></li>
 <li><code><a title="PyMPDATA_examples.Olesik_et_al_2020.analysis.analysis" href="#PyMPDATA_examples.Olesik_et_al_2020.analysis.analysis">analysis</a></code></li>
 <li><code><a title="PyMPDATA_examples.Olesik_et_al_2020.analysis.compute_figure_data" href="#PyMPDATA_examples.Olesik_et_al_2020.analysis.compute_figure_data">compute_figure_data</a></code></li>
 <li><code><a title="PyMPDATA_examples.Olesik_et_al_2020.analysis.rel_disp" href="#PyMPDATA_examples.Olesik_et_al_2020.analysis.rel_disp">rel_disp</a></code></li>
@@ -451,10 +463,14 @@ def third_moment(r, psi, psi_coord, normalised=True):
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="PyMPDATA_examples.Olesik_et_al_2020.analysis.Case" href="#PyMPDATA_examples.Olesik_et_al_2020.analysis.Case">Case</a></code></h4>
-</li>
-<li>
 <h4><code><a title="PyMPDATA_examples.Olesik_et_al_2020.analysis.Result" href="#PyMPDATA_examples.Olesik_et_al_2020.analysis.Result">Result</a></code></h4>
+<ul class="">
+<li><code><a title="PyMPDATA_examples.Olesik_et_al_2020.analysis.Result.dt" href="#PyMPDATA_examples.Olesik_et_al_2020.analysis.Result.dt">dt</a></code></li>
+<li><code><a title="PyMPDATA_examples.Olesik_et_al_2020.analysis.Result.grid_layout_str" href="#PyMPDATA_examples.Olesik_et_al_2020.analysis.Result.grid_layout_str">grid_layout_str</a></code></li>
+<li><code><a title="PyMPDATA_examples.Olesik_et_al_2020.analysis.Result.option_str" href="#PyMPDATA_examples.Olesik_et_al_2020.analysis.Result.option_str">option_str</a></code></li>
+<li><code><a title="PyMPDATA_examples.Olesik_et_al_2020.analysis.Result.out_steps" href="#PyMPDATA_examples.Olesik_et_al_2020.analysis.Result.out_steps">out_steps</a></code></li>
+<li><code><a title="PyMPDATA_examples.Olesik_et_al_2020.analysis.Result.result" href="#PyMPDATA_examples.Olesik_et_al_2020.analysis.Result.result">result</a></code></li>
+</ul>
 </li>
 </ul>
 </li>

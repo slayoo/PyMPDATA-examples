@@ -39,14 +39,20 @@ class Settings:
         self.nx = 401
         self.ny = 401
         self.eps = 1e-7
-        self.nt = int(7 / self.dt)
-        self.outfreq = int(1 / self.dt)
         self.lx0 = 2
         self.ly0 = 1
         self.options = Options(
             nonoscillatory=True,
             infinite_gauge=True
-        )</code></pre>
+        )
+
+    @property
+    def nt(self):
+        return int(7 / self.dt)
+
+    @property
+    def outfreq(self):
+        return int(1 / self.dt)</code></pre>
 </details>
 </section>
 <section>
@@ -76,15 +82,48 @@ class Settings:
         self.nx = 401
         self.ny = 401
         self.eps = 1e-7
-        self.nt = int(7 / self.dt)
-        self.outfreq = int(1 / self.dt)
         self.lx0 = 2
         self.ly0 = 1
         self.options = Options(
             nonoscillatory=True,
             infinite_gauge=True
-        )</code></pre>
+        )
+
+    @property
+    def nt(self):
+        return int(7 / self.dt)
+
+    @property
+    def outfreq(self):
+        return int(1 / self.dt)</code></pre>
 </details>
+<h3>Instance variables</h3>
+<dl>
+<dt id="PyMPDATA_examples.Jarecka_et_al_2015.settings.Settings.nt"><code class="name">var <span class="ident">nt</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def nt(self):
+    return int(7 / self.dt)</code></pre>
+</details>
+</dd>
+<dt id="PyMPDATA_examples.Jarecka_et_al_2015.settings.Settings.outfreq"><code class="name">var <span class="ident">outfreq</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def outfreq(self):
+    return int(1 / self.dt)</code></pre>
+</details>
+</dd>
+</dl>
 </dd>
 </dl>
 </section>
@@ -104,6 +143,10 @@ class Settings:
 <ul>
 <li>
 <h4><code><a title="PyMPDATA_examples.Jarecka_et_al_2015.settings.Settings" href="#PyMPDATA_examples.Jarecka_et_al_2015.settings.Settings">Settings</a></code></h4>
+<ul class="">
+<li><code><a title="PyMPDATA_examples.Jarecka_et_al_2015.settings.Settings.nt" href="#PyMPDATA_examples.Jarecka_et_al_2015.settings.Settings.nt">nt</a></code></li>
+<li><code><a title="PyMPDATA_examples.Jarecka_et_al_2015.settings.Settings.outfreq" href="#PyMPDATA_examples.Jarecka_et_al_2015.settings.Settings.outfreq">outfreq</a></code></li>
+</ul>
 </li>
 </ul>
 </li>

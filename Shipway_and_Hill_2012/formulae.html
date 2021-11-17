@@ -26,7 +26,8 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">import numpy as np
+<pre><code class="python">from collections import namedtuple
+import numpy as np
 from scipy import constants
 
 
@@ -34,79 +35,85 @@ def convert_to(value, unit):
     value /= unit
 
 
-class si:
-    kg = 1.
-    m = 1.
-    s = 1.
+si = namedtuple(
+    &#39;si&#39;,
+    (&#39;kg&#39;, &#39;m&#39;, &#39;s&#39;, &#39;metres&#39;, &#39;second&#39;, &#39;um&#39;, &#39;hPa&#39;, &#39;micrometre&#39;,
+     &#39;minutes&#39;, &#39;km&#39;, &#39;dimensionless&#39;, &#39;kelvin&#39;, &#39;mg&#39;)
+)(
+    kg=1.,
+    m=1.,
+    s=1.,
+    metres=1.,
+    second=1.,
+    um=1e-6,
+    hPa=100.,
+    micrometre=1e-6,
+    minutes=60.,
+    km=1000.,
+    dimensionless=1.,
+    kelvin=1.,
+    mg=1e-6
+)
 
-    metres = 1.
-    second = 1.
-    um = 1e-6
-    hPa = 100.
-    micrometre = 1e-6
-    minutes = 60.
-    km = 1000.
-    dimensionless = 1.
-    kelvin = 1.
-    mg = 1e-6
+_Mv = 0.018015
+_Md = 0.028970
+
+const = namedtuple(
+    &#39;const&#39;,
+    (&#39;eps&#39;, &#39;g&#39;, &#39;p1000&#39;, &#39;Rd&#39;, &#39;Rv&#39;, &#39;c_pd&#39;, &#39;c_pv&#39;, &#39;lv&#39;,
+     &#39;rho_l&#39;, &#39;T0&#39;, &#39;ARM_C1&#39;, &#39;ARM_C2&#39;, &#39;ARM_C3&#39;)
+)(
+    eps=_Mv / _Md,
+    g=constants.g,
+    p1000=1000 * si.hPa,
+    Rd=287.0027,
+    Rv=constants.R / _Mv,
+    c_pd=1005,
+    c_pv=1850,
+    lv=2.5e6,
+    rho_l=1e3 * si.kg / si.m**3,
+    T0=constants.zero_Celsius,
+    ARM_C1=6.1094 * si.hPa,
+    ARM_C2=17.625 * si.dimensionless,
+    ARM_C3=243.04 * si.kelvin,
+)
 
 
-class const:
-    Mv = 0.018015
-    Md = 0.028970
-    eps = Mv / Md
-    g = constants.g
-    R_str = constants.R
-    p1000 = 1000 * si.hPa
-    Rd = 287.0027
-    Rv = R_str / Mv
-    c_pd = 1005
-    c_pv = 1850
-    lv = 2.5e6
-    rho_l = 1e3 * si.kg / si.m ** 3
-    T0 = constants.zero_Celsius
-    ARM_C1 = 6.1094 * si.hPa
-    ARM_C2 = 17.625 * si.dimensionless
-    ARM_C3 = 243.04 * si.kelvin
+def rho_d(p, qv, theta_std):
+    return p * (1 - 1 / (1 + const.eps / qv)) / (
+                np.power(p / const.p1000, const.Rd / const.c_pd) * const.Rd * theta_std)
 
 
-class Formulae:
-    @staticmethod
-    def rho_d(p, qv, theta_std):
-        return p * (1 - 1 / (1 + const.eps / qv)) / (
-                    np.power(p / const.p1000, const.Rd / const.c_pd) * const.Rd * theta_std)
+def drho_dz(g, p, T, qv, lv, dql_dz=0):
+    Rq = const.Rv / (1 / qv + 1) + const.Rd / (1 + qv)
+    cp = const.c_pv / (1 / qv + 1) + const.c_pd / (1 + qv)
+    rho = p / Rq / T
+    return (g / T * rho * (Rq / cp - 1) - p * lv / cp / T ** 2 * dql_dz) / Rq
 
-    @staticmethod
-    def drho_dz(g, p, T, qv, lv, dql_dz=0):
-        Rq = const.Rv / (1 / qv + 1) + const.Rd / (1 + qv)
-        cp = const.c_pv / (1 / qv + 1) + const.c_pd / (1 + qv)
-        rho = p / Rq / T
-        return (g / T * rho * (Rq / cp - 1) - p * lv / cp / T ** 2 * dql_dz) / Rq
 
-    # A14 in libcloudph++ 1.0 paper
-    @staticmethod
-    def T(rhod, thd):
-        return thd * np.power(
-            rhod * thd / const.p1000 * const.Rd,
-            const.Rd / const.c_pd / (1 - const.Rd / const.c_pd)
-        )
+# A14 in libcloudph++ 1.0 paper
+def temperature(rhod, thd):
+    return thd * np.power(
+        rhod * thd / const.p1000 * const.Rd,
+        const.Rd / const.c_pd / (1 - const.Rd / const.c_pd)
+    )
 
-    # A15 in libcloudph++ 1.0 paper
-    @staticmethod
-    def p(rhod, T, qv):
-        return rhod * (1 + qv) * (const.Rv / (1 / qv + 1) + const.Rd / (1 + qv)) * T
 
-    @staticmethod
-    def th_dry(th_std, qv):
-        return th_std * np.power(1 + qv / const.eps, const.Rd / const.c_pd)
+# A15 in libcloudph++ 1.0 paper
+def pressure(rhod, T, qv):
+    return rhod * (1 + qv) * (const.Rv / (1 / qv + 1) + const.Rd / (1 + qv)) * T
 
-    @staticmethod
-    def pvs_Celsius(T):
-        return const.ARM_C1 * np.exp((const.ARM_C2 * T) / (T + const.ARM_C3))
 
-    @staticmethod
-    def pv(p, qv):
-        return p * qv / (qv + const.eps)</code></pre>
+def th_dry(th_std, qv):
+    return th_std * np.power(1 + qv / const.eps, const.Rd / const.c_pd)
+
+
+def pvs_Celsius(T):
+    return const.ARM_C1 * np.exp((const.ARM_C2 * T) / (T + const.ARM_C3))
+
+
+def pv(p, qv):
+    return p * qv / (qv + const.eps)</code></pre>
 </details>
 </section>
 <section>
@@ -129,78 +136,7 @@ class Formulae:
     value /= unit</code></pre>
 </details>
 </dd>
-</dl>
-</section>
-<section>
-<h2 class="section-title" id="header-classes">Classes</h2>
-<dl>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae"><code class="flex name class">
-<span>class <span class="ident">Formulae</span></span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class Formulae:
-    @staticmethod
-    def rho_d(p, qv, theta_std):
-        return p * (1 - 1 / (1 + const.eps / qv)) / (
-                    np.power(p / const.p1000, const.Rd / const.c_pd) * const.Rd * theta_std)
-
-    @staticmethod
-    def drho_dz(g, p, T, qv, lv, dql_dz=0):
-        Rq = const.Rv / (1 / qv + 1) + const.Rd / (1 + qv)
-        cp = const.c_pv / (1 / qv + 1) + const.c_pd / (1 + qv)
-        rho = p / Rq / T
-        return (g / T * rho * (Rq / cp - 1) - p * lv / cp / T ** 2 * dql_dz) / Rq
-
-    # A14 in libcloudph++ 1.0 paper
-    @staticmethod
-    def T(rhod, thd):
-        return thd * np.power(
-            rhod * thd / const.p1000 * const.Rd,
-            const.Rd / const.c_pd / (1 - const.Rd / const.c_pd)
-        )
-
-    # A15 in libcloudph++ 1.0 paper
-    @staticmethod
-    def p(rhod, T, qv):
-        return rhod * (1 + qv) * (const.Rv / (1 / qv + 1) + const.Rd / (1 + qv)) * T
-
-    @staticmethod
-    def th_dry(th_std, qv):
-        return th_std * np.power(1 + qv / const.eps, const.Rd / const.c_pd)
-
-    @staticmethod
-    def pvs_Celsius(T):
-        return const.ARM_C1 * np.exp((const.ARM_C2 * T) / (T + const.ARM_C3))
-
-    @staticmethod
-    def pv(p, qv):
-        return p * qv / (qv + const.eps)</code></pre>
-</details>
-<h3>Static methods</h3>
-<dl>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.T"><code class="name flex">
-<span>def <span class="ident">T</span></span>(<span>rhod, thd)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def T(rhod, thd):
-    return thd * np.power(
-        rhod * thd / const.p1000 * const.Rd,
-        const.Rd / const.c_pd / (1 - const.Rd / const.c_pd)
-    )</code></pre>
-</details>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.drho_dz"><code class="name flex">
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.drho_dz"><code class="name flex">
 <span>def <span class="ident">drho_dz</span></span>(<span>g, p, T, qv, lv, dql_dz=0)</span>
 </code></dt>
 <dd>
@@ -209,16 +145,15 @@ def T(rhod, thd):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">@staticmethod
-def drho_dz(g, p, T, qv, lv, dql_dz=0):
+<pre><code class="python">def drho_dz(g, p, T, qv, lv, dql_dz=0):
     Rq = const.Rv / (1 / qv + 1) + const.Rd / (1 + qv)
     cp = const.c_pv / (1 / qv + 1) + const.c_pd / (1 + qv)
     rho = p / Rq / T
     return (g / T * rho * (Rq / cp - 1) - p * lv / cp / T ** 2 * dql_dz) / Rq</code></pre>
 </details>
 </dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.p"><code class="name flex">
-<span>def <span class="ident">p</span></span>(<span>rhod, T, qv)</span>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.pressure"><code class="name flex">
+<span>def <span class="ident">pressure</span></span>(<span>rhod, T, qv)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -226,12 +161,11 @@ def drho_dz(g, p, T, qv, lv, dql_dz=0):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">@staticmethod
-def p(rhod, T, qv):
+<pre><code class="python">def pressure(rhod, T, qv):
     return rhod * (1 + qv) * (const.Rv / (1 / qv + 1) + const.Rd / (1 + qv)) * T</code></pre>
 </details>
 </dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.pv"><code class="name flex">
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.pv"><code class="name flex">
 <span>def <span class="ident">pv</span></span>(<span>p, qv)</span>
 </code></dt>
 <dd>
@@ -240,12 +174,11 @@ def p(rhod, T, qv):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">@staticmethod
-def pv(p, qv):
+<pre><code class="python">def pv(p, qv):
     return p * qv / (qv + const.eps)</code></pre>
 </details>
 </dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.pvs_Celsius"><code class="name flex">
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.pvs_Celsius"><code class="name flex">
 <span>def <span class="ident">pvs_Celsius</span></span>(<span>T)</span>
 </code></dt>
 <dd>
@@ -254,12 +187,11 @@ def pv(p, qv):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">@staticmethod
-def pvs_Celsius(T):
+<pre><code class="python">def pvs_Celsius(T):
     return const.ARM_C1 * np.exp((const.ARM_C2 * T) / (T + const.ARM_C3))</code></pre>
 </details>
 </dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.rho_d"><code class="name flex">
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.rho_d"><code class="name flex">
 <span>def <span class="ident">rho_d</span></span>(<span>p, qv, theta_std)</span>
 </code></dt>
 <dd>
@@ -268,13 +200,28 @@ def pvs_Celsius(T):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">@staticmethod
-def rho_d(p, qv, theta_std):
+<pre><code class="python">def rho_d(p, qv, theta_std):
     return p * (1 - 1 / (1 + const.eps / qv)) / (
                 np.power(p / const.p1000, const.Rd / const.c_pd) * const.Rd * theta_std)</code></pre>
 </details>
 </dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.th_dry"><code class="name flex">
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.temperature"><code class="name flex">
+<span>def <span class="ident">temperature</span></span>(<span>rhod, thd)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def temperature(rhod, thd):
+    return thd * np.power(
+        rhod * thd / const.p1000 * const.Rd,
+        const.Rd / const.c_pd / (1 - const.Rd / const.c_pd)
+    )</code></pre>
+</details>
+</dd>
+<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.th_dry"><code class="name flex">
 <span>def <span class="ident">th_dry</span></span>(<span>th_std, qv)</span>
 </code></dt>
 <dd>
@@ -283,190 +230,13 @@ def rho_d(p, qv, theta_std):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">@staticmethod
-def th_dry(th_std, qv):
+<pre><code class="python">def th_dry(th_std, qv):
     return th_std * np.power(1 + qv / const.eps, const.Rd / const.c_pd)</code></pre>
 </details>
 </dd>
 </dl>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const"><code class="flex name class">
-<span>class <span class="ident">const</span></span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class const:
-    Mv = 0.018015
-    Md = 0.028970
-    eps = Mv / Md
-    g = constants.g
-    R_str = constants.R
-    p1000 = 1000 * si.hPa
-    Rd = 287.0027
-    Rv = R_str / Mv
-    c_pd = 1005
-    c_pv = 1850
-    lv = 2.5e6
-    rho_l = 1e3 * si.kg / si.m ** 3
-    T0 = constants.zero_Celsius
-    ARM_C1 = 6.1094 * si.hPa
-    ARM_C2 = 17.625 * si.dimensionless
-    ARM_C3 = 243.04 * si.kelvin</code></pre>
-</details>
-<h3>Class variables</h3>
-<dl>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.ARM_C1"><code class="name">var <span class="ident">ARM_C1</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.ARM_C2"><code class="name">var <span class="ident">ARM_C2</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.ARM_C3"><code class="name">var <span class="ident">ARM_C3</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.Md"><code class="name">var <span class="ident">Md</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.Mv"><code class="name">var <span class="ident">Mv</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.R_str"><code class="name">var <span class="ident">R_str</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.Rd"><code class="name">var <span class="ident">Rd</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.Rv"><code class="name">var <span class="ident">Rv</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.T0"><code class="name">var <span class="ident">T0</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.c_pd"><code class="name">var <span class="ident">c_pd</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.c_pv"><code class="name">var <span class="ident">c_pv</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.eps"><code class="name">var <span class="ident">eps</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.g"><code class="name">var <span class="ident">g</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.lv"><code class="name">var <span class="ident">lv</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.p1000"><code class="name">var <span class="ident">p1000</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.rho_l"><code class="name">var <span class="ident">rho_l</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-</dl>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si"><code class="flex name class">
-<span>class <span class="ident">si</span></span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class si:
-    kg = 1.
-    m = 1.
-    s = 1.
-
-    metres = 1.
-    second = 1.
-    um = 1e-6
-    hPa = 100.
-    micrometre = 1e-6
-    minutes = 60.
-    km = 1000.
-    dimensionless = 1.
-    kelvin = 1.
-    mg = 1e-6</code></pre>
-</details>
-<h3>Class variables</h3>
-<dl>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.dimensionless"><code class="name">var <span class="ident">dimensionless</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.hPa"><code class="name">var <span class="ident">hPa</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.kelvin"><code class="name">var <span class="ident">kelvin</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.kg"><code class="name">var <span class="ident">kg</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.km"><code class="name">var <span class="ident">km</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.m"><code class="name">var <span class="ident">m</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.metres"><code class="name">var <span class="ident">metres</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.mg"><code class="name">var <span class="ident">mg</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.micrometre"><code class="name">var <span class="ident">micrometre</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.minutes"><code class="name">var <span class="ident">minutes</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.s"><code class="name">var <span class="ident">s</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.second"><code class="name">var <span class="ident">second</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.um"><code class="name">var <span class="ident">um</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-</dl>
-</dd>
-</dl>
+</section>
+<section>
 </section>
 </article>
 <nav id="sidebar">
@@ -481,63 +251,15 @@ def th_dry(th_std, qv):
 </ul>
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
-<ul class="">
+<ul class="two-column">
 <li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.convert_to" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.convert_to">convert_to</a></code></li>
-</ul>
-</li>
-<li><h3><a href="#header-classes">Classes</a></h3>
-<ul>
-<li>
-<h4><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae">Formulae</a></code></h4>
-<ul class="two-column">
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.T" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.T">T</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.drho_dz" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.drho_dz">drho_dz</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.p" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.p">p</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.pv" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.pv">pv</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.pvs_Celsius" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.pvs_Celsius">pvs_Celsius</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.rho_d" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.rho_d">rho_d</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.th_dry" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.Formulae.th_dry">th_dry</a></code></li>
-</ul>
-</li>
-<li>
-<h4><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const">const</a></code></h4>
-<ul class="two-column">
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.ARM_C1" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.ARM_C1">ARM_C1</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.ARM_C2" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.ARM_C2">ARM_C2</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.ARM_C3" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.ARM_C3">ARM_C3</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.Md" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.Md">Md</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.Mv" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.Mv">Mv</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.R_str" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.R_str">R_str</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.Rd" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.Rd">Rd</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.Rv" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.Rv">Rv</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.T0" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.T0">T0</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.c_pd" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.c_pd">c_pd</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.c_pv" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.c_pv">c_pv</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.eps" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.eps">eps</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.g" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.g">g</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.lv" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.lv">lv</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.p1000" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.p1000">p1000</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.rho_l" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.const.rho_l">rho_l</a></code></li>
-</ul>
-</li>
-<li>
-<h4><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si">si</a></code></h4>
-<ul class="two-column">
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.dimensionless" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.dimensionless">dimensionless</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.hPa" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.hPa">hPa</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.kelvin" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.kelvin">kelvin</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.kg" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.kg">kg</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.km" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.km">km</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.m" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.m">m</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.metres" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.metres">metres</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.mg" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.mg">mg</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.micrometre" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.micrometre">micrometre</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.minutes" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.minutes">minutes</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.s" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.s">s</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.second" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.second">second</a></code></li>
-<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.um" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.si.um">um</a></code></li>
-</ul>
-</li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.drho_dz" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.drho_dz">drho_dz</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.pressure" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.pressure">pressure</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.pv" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.pv">pv</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.pvs_Celsius" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.pvs_Celsius">pvs_Celsius</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.rho_d" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.rho_d">rho_d</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.temperature" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.temperature">temperature</a></code></li>
+<li><code><a title="PyMPDATA_examples.Shipway_and_Hill_2012.formulae.th_dry" href="#PyMPDATA_examples.Shipway_and_Hill_2012.formulae.th_dry">th_dry</a></code></li>
 </ul>
 </li>
 </ul>
