@@ -27,8 +27,10 @@ jobs:
     - name: Analysing the code with pylint
       run: |
         # TODO #299
-        pylint --disable=fixme,too-many-locals,too-many-branches,duplicate-code,invalid-name,missing-function-docstring,missing-module-docstring,too-many-arguments,missing-class-docstring,too-many-instance-attributes $(git ls-files '*.py')
+        pylint --disable=fixme,\
+                         too-many-locals,too-many-branches,duplicate-code,invalid-name,missing-function-docstring,missing-module-docstring,too-many-arguments,missing-class-docstring,too-many-instance-attributes $(git ls-files '*.py')
     - name: Analysing notebook code with pyling
       run: |
         # TODO #299
-        nbqa pylint --disable=fixme,duplicate-code,wrong-import-position,wrong-import-order,ungrouped-imports,invalid-name,trailing-whitespace,missing-module-docstring,line-too-long,missing-function-docstring,unused-import,redefined-outer-name,unused-variable,too-many-arguments,no-member,too-many-locals,cell-var-from-loop,missing-class-docstring,too-few-public-methods $(git ls-files '*.ipynb')
+        nbqa pylint --disable=fixme,trailing-whitespace,wrong-import-position,ungrouped-imports,\
+                              duplicate-code,invalid-name,missing-module-docstring,line-too-long,missing-function-docstring,redefined-outer-name,too-many-arguments,no-member,too-many-locals,cell-var-from-loop,missing-class-docstring $(git ls-files '*.ipynb')
