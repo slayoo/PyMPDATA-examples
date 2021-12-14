@@ -106,7 +106,8 @@ def compute_figure_data(*, nr, GC_max, psi_coord=x_id(),
     return output, settings
 
 
-Result = namedtuple("Result", ('dt', 'out_steps', 'grid_layout_str', 'option_str', 'result'))
+class Result(namedtuple("Result", ('dt', 'out_steps', 'grid_layout_str', 'option_str', 'result'))):
+    __slots__ = ()
 
 
 def Case(result: Result):
