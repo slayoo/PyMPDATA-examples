@@ -35,6 +35,7 @@ from .formulae import convert_to, si
 def plot(var, mult, label, output,
          rng=None, threshold=None, cmap=&#39;copper&#39;, rasterized=False, figsize=None):
     lines = {3: &#39;:&#39;, 6: &#39;--&#39;, 9: &#39;-&#39;, 12: &#39;-.&#39;}
+    colors = {3: &#39;crimson&#39;, 6: &#39;orange&#39;, 9: &#39;navy&#39;, 12: &#39;green&#39;}
     fctr = 50  # rebin by fctr in time dimension (https://gist.github.com/zonca/1348792)
 
     dt = (output[&#39;t&#39;][1] - output[&#39;t&#39;][0]) * fctr
@@ -89,6 +90,7 @@ def plot(var, mult, label, output,
         for line_t, line_s in lines.items():
             if last_t &lt; line_t * si.minutes &lt;= t:
                 params[&#39;ls&#39;] = line_s
+                params[&#39;color&#39;] = colors[line_t]
                 ax2.step(x, z-(dz/si.km)/2, where=&#39;pre&#39;, **params)
                 ax1.axvline(t/si.minutes, **params)
         last_t = t
@@ -154,6 +156,7 @@ def plot_3d(psi, settings, options, r_min, r_max, max_height):
 <pre><code class="python">def plot(var, mult, label, output,
          rng=None, threshold=None, cmap=&#39;copper&#39;, rasterized=False, figsize=None):
     lines = {3: &#39;:&#39;, 6: &#39;--&#39;, 9: &#39;-&#39;, 12: &#39;-.&#39;}
+    colors = {3: &#39;crimson&#39;, 6: &#39;orange&#39;, 9: &#39;navy&#39;, 12: &#39;green&#39;}
     fctr = 50  # rebin by fctr in time dimension (https://gist.github.com/zonca/1348792)
 
     dt = (output[&#39;t&#39;][1] - output[&#39;t&#39;][0]) * fctr
@@ -208,6 +211,7 @@ def plot_3d(psi, settings, options, r_min, r_max, max_height):
         for line_t, line_s in lines.items():
             if last_t &lt; line_t * si.minutes &lt;= t:
                 params[&#39;ls&#39;] = line_s
+                params[&#39;color&#39;] = colors[line_t]
                 ax2.step(x, z-(dz/si.km)/2, where=&#39;pre&#39;, **params)
                 ax1.axvline(t/si.minutes, **params)
         last_t = t</code></pre>

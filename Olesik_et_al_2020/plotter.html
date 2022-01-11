@@ -69,7 +69,7 @@ class Plotter:
             self.axs = (self.axs,)
         self.fig.tight_layout(pad=5.0)
         self.style_dict = {}
-        self.style_palette = [&#39;-&#39;,&#39;-&#39;, &#39;-&#39;, &#39;-&#39;, &#39;-.&#39;]
+        self.style_palette = [&#39;-&#39;, &#39;-&#39;, &#39;-&#39;, &#39;-&#39;, &#39;-.&#39;]
 
         self.settings.si.setup_matplotlib()
 
@@ -83,11 +83,12 @@ class Plotter:
         for i in range(len(plots)):
             self.axs[i].xaxis.set_units(self.settings.si.micrometre)
             self.axs[i].grid()
+            self.axs[i].set_xlabel(&#39;particle radius [$μm$]&#39;)
 
         if &#39;m&#39; in plots:
-            self.axs[plots.index(&#39;m&#39;)].set_title(&#39;$(dM/dr)/M$&#39;)
+            self.axs[plots.index(&#39;m&#39;)].set_ylabel(&#39;(dM/dr)/M [$μm^{-1}$]&#39;)
         if &#39;n&#39; in plots:
-            self.axs[plots.index(&#39;n&#39;)].set_title(&#39;$dN/dr$&#39;)
+            self.axs[plots.index(&#39;n&#39;)].set_ylabel(&#39;dN/dr [$cm^{-3} μm^{-1}$]&#39;)
 
     def pdf_curve(self, pdf, mnorm, color=&#39;black&#39;):
         x = self.cdfarg
@@ -240,7 +241,7 @@ class Plotter:
             self.axs = (self.axs,)
         self.fig.tight_layout(pad=5.0)
         self.style_dict = {}
-        self.style_palette = [&#39;-&#39;,&#39;-&#39;, &#39;-&#39;, &#39;-&#39;, &#39;-.&#39;]
+        self.style_palette = [&#39;-&#39;, &#39;-&#39;, &#39;-&#39;, &#39;-&#39;, &#39;-.&#39;]
 
         self.settings.si.setup_matplotlib()
 
@@ -254,11 +255,12 @@ class Plotter:
         for i in range(len(plots)):
             self.axs[i].xaxis.set_units(self.settings.si.micrometre)
             self.axs[i].grid()
+            self.axs[i].set_xlabel(&#39;particle radius [$μm$]&#39;)
 
         if &#39;m&#39; in plots:
-            self.axs[plots.index(&#39;m&#39;)].set_title(&#39;$(dM/dr)/M$&#39;)
+            self.axs[plots.index(&#39;m&#39;)].set_ylabel(&#39;(dM/dr)/M [$μm^{-1}$]&#39;)
         if &#39;n&#39; in plots:
-            self.axs[plots.index(&#39;n&#39;)].set_title(&#39;$dN/dr$&#39;)
+            self.axs[plots.index(&#39;n&#39;)].set_ylabel(&#39;dN/dr [$cm^{-3} μm^{-1}$]&#39;)
 
     def pdf_curve(self, pdf, mnorm, color=&#39;black&#39;):
         x = self.cdfarg
