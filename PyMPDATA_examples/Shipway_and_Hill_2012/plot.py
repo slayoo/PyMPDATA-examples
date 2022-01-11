@@ -7,6 +7,7 @@ from .formulae import convert_to, si
 def plot(var, mult, label, output,
          rng=None, threshold=None, cmap='copper', rasterized=False, figsize=None):
     lines = {3: ':', 6: '--', 9: '-', 12: '-.'}
+    colors = {3: 'crimson', 6: 'orange', 9: 'navy', 12: 'green'}
     fctr = 50  # rebin by fctr in time dimension (https://gist.github.com/zonca/1348792)
 
     dt = (output['t'][1] - output['t'][0]) * fctr
@@ -61,6 +62,7 @@ def plot(var, mult, label, output,
         for line_t, line_s in lines.items():
             if last_t < line_t * si.minutes <= t:
                 params['ls'] = line_s
+                params['color'] = colors[line_t]
                 ax2.step(x, z-(dz/si.km)/2, where='pre', **params)
                 ax1.axvline(t/si.minutes, **params)
         last_t = t
