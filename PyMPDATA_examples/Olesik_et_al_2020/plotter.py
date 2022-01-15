@@ -41,7 +41,7 @@ class Plotter:
             self.axs = (self.axs,)
         self.fig.tight_layout(pad=5.0)
         self.style_dict = {}
-        self.style_palette = ['-','-', '-', '-', '-.']
+        self.style_palette = ['-', '-', '-', '-', '-.']
 
         self.settings.si.setup_matplotlib()
 
@@ -55,11 +55,12 @@ class Plotter:
         for i in range(len(plots)):
             self.axs[i].xaxis.set_units(self.settings.si.micrometre)
             self.axs[i].grid()
+            self.axs[i].set_xlabel('particle radius [$μm$]')
 
         if 'm' in plots:
-            self.axs[plots.index('m')].set_title('$(dM/dr)/M$')
+            self.axs[plots.index('m')].set_ylabel('(dM/dr)/M [$μm^{-1}$]')
         if 'n' in plots:
-            self.axs[plots.index('n')].set_title('$dN/dr$')
+            self.axs[plots.index('n')].set_ylabel('dN/dr [$cm^{-3} μm^{-1}$]')
 
     def pdf_curve(self, pdf, mnorm, color='black'):
         x = self.cdfarg
