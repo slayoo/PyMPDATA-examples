@@ -81,7 +81,7 @@ def plot_3d(psi, settings, options, r_min, r_max, max_height):
 
     dz = np.rot90(psi, 2).flatten()
     rgba = [cmap((k - min_height) / (1 + max_height)) for k in dz]
-    dz[dz < .01 * max_height] = np.nan
+    dz[dz < .05 * max_height] = np.nan
     factor = .9
     ax.bar3d(
         *[arr.flatten() for arr in np.meshgrid(

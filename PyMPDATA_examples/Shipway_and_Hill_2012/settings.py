@@ -11,7 +11,7 @@ from .arakawa_c import arakawa_c
 
 @strict
 class Settings:
-    def __init__(self, dt: float, dz: float, w_1: float,
+    def __init__(self, dt: float, dz: float, rhod_w_const: float,
                  t_max: float = 15 * si.minutes, nr: int = 1,
                  r_min: float = np.nan, r_max: float = np.nan, p0: Optional[float] = None,
                  ksi_1: float = default_ksi_1.to_base_units().magnitude,
@@ -52,7 +52,7 @@ class Settings:
         self.rhod = interp1d(z_points, rhod_solution.y[0])
 
         self.t_1 = 600 * si.s
-        self.w = lambda t: w_1 * np.sin(np.pi * t / self.t_1) if t < self.t_1 else 0
+        self.rhod_w = lambda t: rhod_w_const * np.sin(np.pi * t / self.t_1) if t < self.t_1 else 0
 
         self.r_min = r_min
         self.r_max = r_max
