@@ -29,7 +29,10 @@ def test_size_distribution(grid, coord, plot=False):
     x = grid.x(np.linspace(1, 18, 100)) * r_unit
     dx_dr = coord.dx_dr
     numpdfx = x[1:] - diff(x) / 2
-    pdf_t = lambda r:  sd.pdf(r * r_unit).to(n_unit).magnitude / dx_dr(r * r_unit).magnitude
+
+    def pdf_t(r):
+        return sd.pdf(r * r_unit).to(n_unit).magnitude / dx_dr(r * r_unit).magnitude
+
     numpdfy = discretised_analytical_solution(rh=x.magnitude, pdf_t=pdf_t) * n_unit
 
     # Plot
