@@ -2,7 +2,7 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
 [![DOI](https://zenodo.org/badge/366746474.svg)](https://zenodo.org/badge/latestdoi/366746474)
 
-[![Github Actions Build Status](https://github.com/atmos-cloud-sim-uj/PyMPDATA-examples/workflows/PyMPDATA-examples/badge.svg?branch=main)](https://github.com/atmos-cloud-sim-uj/PyMPDATA-examples/actions)    
+[![Github Actions Build Status](https://github.com/atmos-cloud-sim-uj/PyMPDATA-examples/workflows/tests+pypi/badge.svg?branch=main)](https://github.com/atmos-cloud-sim-uj/PyMPDATA-examples/actions)    
 [![GitHub issues](https://img.shields.io/github/issues-pr/atmos-cloud-sim-uj/PyMPDATA-examples.svg?logo=github&logoColor=white)](https://github.com/atmos-cloud-sim-uj/PyMPDATA-examples/pulls?q=)
 [![GitHub issues](https://img.shields.io/github/issues-pr-closed/atmos-cloud-sim-uj/PyMPDATA-examples.svg?logo=github&logoColor=white)](https://github.com/atmos-cloud-sim-uj/PyMPDATA-examples/pulls?q=is:closed)    
 [![PyPI version](https://badge.fury.io/py/PyMPDATA-examples.svg)](https://pypi.org/project/PyMPDATA-examples)
