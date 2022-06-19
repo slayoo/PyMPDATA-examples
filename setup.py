@@ -31,5 +31,10 @@ setup(
     long_description_content_type="text/markdown",
     packages=find_packages(include=['PyMPDATA_examples', 'PyMPDATA_examples.*']),
     package_data={'': ['*/*/*.txt']},
-    include_package_data=True
+    include_package_data=True,
+    project_urls={
+        "Tracker": "https://github.com/atmos-cloud-sim-uj/PyMPDATA/issues",
+        "Documentation": "https://atmos-cloud-sim-uj.github.io/PyMPDATA",
+        "Source": "https://github.com/atmos-cloud-sim-uj/PyMPDATA-examples"
+    }
 )
