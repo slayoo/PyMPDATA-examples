@@ -34,7 +34,7 @@ setup(
     include_package_data=True,
     project_urls={
         "Tracker": "https://github.com/atmos-cloud-sim-uj/PyMPDATA/issues",
-        "Documentation": "https://atmos-cloud-sim-uj.github.io/PyMPDATA",
+        "Documentation": "https://atmos-cloud-sim-uj.github.io/PyMPDATA-examples",
         "Source": "https://github.com/atmos-cloud-sim-uj/PyMPDATA-examples"
     }
 )
