@@ -1,11 +1,11 @@
 import pathlib
 import numpy as np
 from PyMPDATA import Options
-from PyMPDATA_examples.Olesik_et_al_2020.settings import (
+from PyMPDATA_examples.Olesik_et_al_2022.settings import (
     Settings, default_nr, default_GC_max, default_opt_set
 )
-from PyMPDATA_examples.Olesik_et_al_2020.coordinates import x_id, x_log_of_pn
-from PyMPDATA_examples.Olesik_et_al_2020.simulation import Simulation
+from PyMPDATA_examples.Olesik_et_al_2022.coordinates import x_id, x_log_of_pn
+from PyMPDATA_examples.Olesik_et_al_2022.simulation import Simulation
 
 
 grid_layout_set = (x_log_of_pn(r0=1, base=2),)

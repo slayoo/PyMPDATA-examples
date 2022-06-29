@@ -3,7 +3,7 @@ from pystrict import strict
 from scipy.interpolate import interp1d
 from scipy.integrate import solve_ivp
 import numpy as np
-from PyMPDATA_examples.Olesik_et_al_2020.settings import ksi_1 as default_ksi_1
+from PyMPDATA_examples.Olesik_et_al_2022.settings import ksi_1 as default_ksi_1
 from . import formulae
 from .formulae import si, const
 from .arakawa_c import arakawa_c

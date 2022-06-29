@@ -3,12 +3,12 @@ from copy import deepcopy
 import numpy as np
 from joblib import Parallel, parallel_backend, delayed
 from PyMPDATA import Options
-from PyMPDATA_examples.Olesik_et_al_2020.simulation import Simulation
-from PyMPDATA_examples.Olesik_et_al_2020.equilibrium_drop_growth import PdfEvolver
+from PyMPDATA_examples.Olesik_et_al_2022.simulation import Simulation
+from PyMPDATA_examples.Olesik_et_al_2022.equilibrium_drop_growth import PdfEvolver
 from PyMPDATA_examples.utils.error_norms import L2
 from PyMPDATA_examples.utils.discretisation import discretised_analytical_solution
-from PyMPDATA_examples.Olesik_et_al_2020.coordinates import x_id, x_log_of_pn, x_p2
-from PyMPDATA_examples.Olesik_et_al_2020.settings import Settings, default_mixing_ratios_g_kg
+from PyMPDATA_examples.Olesik_et_al_2022.coordinates import x_id, x_log_of_pn, x_p2
+from PyMPDATA_examples.Olesik_et_al_2022.settings import Settings, default_mixing_ratios_g_kg
 
 
 def analysis(settings, grid_layout, psi_coord, options_dict, GC_max):
