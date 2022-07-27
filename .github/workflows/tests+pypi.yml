@@ -45,6 +45,8 @@ jobs:
           cd build
           cmake ..
           sudo make install
+          cd ../../../
+          rm -rf libmpdataxx
 
       # https://github.com/numba/numba/issues/6350#issuecomment-728174860
       - if: matrix.platform == 'ubuntu-latest'
