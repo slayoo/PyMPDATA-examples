@@ -4,7 +4,7 @@ from PyMPDATA.boundary_conditions import Constant
 
 
 class Simulation:
-    def __init__(self, settings, options, static=True):
+    def __init__(self, settings, options, static=True, n_threads=None):
         bcs = tuple(Constant(0) for _ in settings.grid)
 
         advector = VectorField(
@@ -20,11 +20,13 @@ class Simulation:
         )
 
         args = {'grid': settings.grid} if static else {'n_dims': len(settings.grid)}
+        if n_threads is not None:
+            args['n_threads'] = n_threads
         stepper = Stepper(options=options, **args)
         self.solver = Solver(stepper=stepper, advectee=advectee, advector=advector)
 
     def run(self, nt):
-        _ = self.solver.advance(nt)
+        return self.solver.advance(nt)
 
     @property
     def advectee(self):
