@@ -32,7 +32,7 @@ from PyMPDATA.boundary_conditions import Constant
 
 
 class Simulation:
-    def __init__(self, settings, options, static=True):
+    def __init__(self, settings, options, static=True, n_threads=None):
         bcs = tuple(Constant(0) for _ in settings.grid)
 
         advector = VectorField(
@@ -48,11 +48,13 @@ class Simulation:
         )
 
         args = {&#39;grid&#39;: settings.grid} if static else {&#39;n_dims&#39;: len(settings.grid)}
+        if n_threads is not None:
+            args[&#39;n_threads&#39;] = n_threads
         stepper = Stepper(options=options, **args)
         self.solver = Solver(stepper=stepper, advectee=advectee, advector=advector)
 
     def run(self, nt):
-        _ = self.solver.advance(nt)
+        return self.solver.advance(nt)
 
     @property
     def advectee(self):
@@ -70,7 +72,7 @@ class Simulation:
 <dl>
 <dt id="PyMPDATA_examples.Smolarkiewicz_1984.simulation.Simulation"><code class="flex name class">
 <span>class <span class="ident">Simulation</span></span>
-<span>(</span><span>settings, options, static=True)</span>
+<span>(</span><span>settings, options, static=True, n_threads=None)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -79,7 +81,7 @@ class Simulation:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Simulation:
-    def __init__(self, settings, options, static=True):
+    def __init__(self, settings, options, static=True, n_threads=None):
         bcs = tuple(Constant(0) for _ in settings.grid)
 
         advector = VectorField(
@@ -95,11 +97,13 @@ class Simulation:
         )
 
         args = {&#39;grid&#39;: settings.grid} if static else {&#39;n_dims&#39;: len(settings.grid)}
+        if n_threads is not None:
+            args[&#39;n_threads&#39;] = n_threads
         stepper = Stepper(options=options, **args)
         self.solver = Solver(stepper=stepper, advectee=advectee, advector=advector)
 
     def run(self, nt):
-        _ = self.solver.advance(nt)
+        return self.solver.advance(nt)
 
     @property
     def advectee(self):
@@ -132,7 +136,7 @@ def advectee(self):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def run(self, nt):
-    _ = self.solver.advance(nt)</code></pre>
+    return self.solver.advance(nt)</code></pre>
 </details>
 </dd>
 </dl>
