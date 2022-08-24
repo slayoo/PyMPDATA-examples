@@ -52,7 +52,9 @@ jobs:
       - if: matrix.platform == 'ubuntu-latest'
         run: echo NUMBA_THREADING_LAYER=omp >> $GITHUB_ENV
 
-      - run: pytest -p no:unraisableexception -We
+      - env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pytest -p no:unraisableexception -We
 
   dist:
     runs-on: ubuntu-latest
