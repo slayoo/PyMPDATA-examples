@@ -27,7 +27,7 @@ jobs:
     - name: Analysing the code with pylint
       run: |
         # TODO #299
-        pylint --disable=fixme\
+        pylint --disable=fixme --max-module-lines=200 \
                --disable=too-many-locals,too-many-branches,duplicate-code,invalid-name,missing-function-docstring,missing-module-docstring,too-many-arguments,missing-class-docstring,too-many-instance-attributes $(git ls-files '*.py')
     - name: Analysing notebook code with pyling
       run: |
