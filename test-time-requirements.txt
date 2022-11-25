@@ -6,4 +6,4 @@ Jinja2<3.0.0  # https://github.com/jupyter/nbconvert/issues/1568
 MarkupSafe<2.1.0  # https://github.com/aws/aws-sam-cli/issues/3661
 matplotlib<3.6.0
 
-PyMPDATA @ git+https://github.com/atmos-cloud-sim-uj/PyMPDATA@995f048#egg=PyMPDATA
+PyMPDATA @ git+https://github.com/atmos-cloud-sim-uj/PyMPDATA@3ffbc6a#egg=PyMPDATA
