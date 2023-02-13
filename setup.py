@@ -16,7 +16,7 @@ setup(
     use_scm_version={"local_scheme": lambda _: "", "version_scheme": "post-release"},
     setup_requires=['setuptools_scm'],
     install_requires=['PyMPDATA',
-                      'atmos_cloud_sim_uj_utils',
+                      'open-atmos-jupyter-utils',
                       'pystrict',
                       'matplotlib',
                       'ipywidgets',
@@ -25,7 +25,7 @@ setup(
                       'joblib',
                       'sympy',
                       'ghapi'],
-    author='https://github.com/orgs/atmos-cloud-sim-uj/people',
+    author='https://github.com/open-atmos/PyMPDATA/graphs/contributors',
     license="GPL-3.0",
     long_description=get_long_description(),
     long_description_content_type="text/markdown",
@@ -33,8 +33,8 @@ setup(
     package_data={'': ['*/*/*.txt']},
     include_package_data=True,
     project_urls={
-        "Tracker": "https://github.com/atmos-cloud-sim-uj/PyMPDATA/issues",
-        "Documentation": "https://atmos-cloud-sim-uj.github.io/PyMPDATA-examples",
-        "Source": "https://github.com/atmos-cloud-sim-uj/PyMPDATA-examples"
+        "Tracker": "https://github.com/open-atmos/PyMPDATA/issues",
+        "Documentation": "https://open-atmos.github.io/PyMPDATA-examples",
+        "Source": "https://github.com/open-atmos/PyMPDATA-examples"
     }
 )
