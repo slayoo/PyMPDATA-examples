@@ -1,10 +1,7 @@
-[![Copyright](https://img.shields.io/static/v1?label=Copyright&color=249fe2&message=Jagiellonian%20University&)](https://en.uj.edu.pl/)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
 [![DOI](https://zenodo.org/badge/366746474.svg)](https://zenodo.org/badge/latestdoi/366746474)
 
-[![Github Actions Build Status](https://github.com/open-atmos/PyMPDATA-examples/workflows/tests+pypi/badge.svg?branch=main)](https://github.com/open-atmos/PyMPDATA-examples/actions)    
-[![GitHub issues](https://img.shields.io/github/issues-pr/open-atmos/PyMPDATA-examples.svg?logo=github&logoColor=white)](https://github.com/open-atmos/PyMPDATA-examples/pulls?q=)
-[![GitHub issues](https://img.shields.io/github/issues-pr-closed/open-atmos/PyMPDATA-examples.svg?logo=github&logoColor=white)](https://github.com/open-atmos/PyMPDATA-examples/pulls?q=is:closed)    
+[![Github Actions Build Status](https://github.com/open-atmos/PyMPDATA-examples/workflows/tests+pypi/badge.svg?branch=main)](https://github.com/open-atmos/PyMPDATA-examples/actions)
 [![PyPI version](https://badge.fury.io/py/PyMPDATA-examples.svg)](https://pypi.org/project/PyMPDATA-examples)
 [![API docs](https://img.shields.io/badge/API_docs-pdoc3-blue.svg)](https://open-atmos.github.io/PyMPDATA-examples/)
 
