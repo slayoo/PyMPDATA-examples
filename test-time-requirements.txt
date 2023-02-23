@@ -7,4 +7,4 @@ MarkupSafe<2.1.0  # https://github.com/aws/aws-sam-cli/issues/3661
 matplotlib<3.6.0
 ipywidgets<8.0.3
 
-PyMPDATA @ git+https://github.com/atmos-cloud-sim-uj/PyMPDATA@b08340e#egg=PyMPDATA
+PyMPDATA @ git+https://github.com/open-atmos/PyMPDATA@b6e22a8#egg=PyMPDATA
