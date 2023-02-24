@@ -4,10 +4,11 @@ import numba
 from PyMPDATA.impl.enumerations import (SIGN_RIGHT,
                                         ARG_DATA, OUTER, ARG_FOCUS,
                                         META_AND_DATA_DATA, META_AND_DATA_META)
+from PyMPDATA.impl.traversals_common import make_fill_halos_loop
 
 
 @lru_cache()
-def _make_scalar(value, _, halo, __, ___, dtype, jit_flags):
+def _make_scalar(value, _, set_value, halo, __, ___, dtype, jit_flags):
     @numba.njit(**jit_flags)
     def impl(psi, ____, sign):
         if sign == SIGN_RIGHT:
@@ -29,7 +30,7 @@ def _make_scalar(value, _, halo, __, ___, dtype, jit_flags):
         @numba.njit(**jit_flags)
         def fill_halos_scalar(psi, n, sign):
             return impl(psi, n, sign)
-    return fill_halos_scalar
+    return make_fill_halos_loop(jit_flags, set_value, fill_halos_scalar)
 
 
 # pylint: disable=too-few-public-methods
@@ -39,5 +40,5 @@ class DropletActivation:
         self.dz = dz
         self.dr = dr
 
-    def make_scalar(self, _at, _halo, dtype, jit_flags):
-        return _make_scalar(self._value, _at, _halo, self.dr, self.dz, dtype, jit_flags)
+    def make_scalar(self, _at, set_value, _halo, dtype, jit_flags):
+        return _make_scalar(self._value, _at, set_value, _halo, self.dr, self.dz, dtype, jit_flags)
