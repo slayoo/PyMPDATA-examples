@@ -8,9 +8,9 @@ from PyMPDATA.impl.traversals_common import make_fill_halos_loop
 
 
 @lru_cache()
-def _make_scalar(value, _, set_value, halo, __, ___, dtype, jit_flags):
+def _make_scalar(value, set_value, halo, dtype, jit_flags):
     @numba.njit(**jit_flags)
-    def impl(psi, ____, sign):
+    def impl(psi, _, sign):
         if sign == SIGN_RIGHT:
             return 0
         z = psi[ARG_FOCUS][OUTER]
@@ -37,8 +37,6 @@ def _make_scalar(value, _, set_value, halo, __, ___, dtype, jit_flags):
 class DropletActivation:
     def __init__(self, value, dr, dz):
         self._value = value / dz / dr
-        self.dz = dz
-        self.dr = dr
 
-    def make_scalar(self, _at, set_value, _halo, dtype, jit_flags):
-        return _make_scalar(self._value, _at, set_value, _halo, self.dr, self.dz, dtype, jit_flags)
+    def make_scalar(self, indexers, halo, dtype, jit_flags):
+        return _make_scalar(self._value, indexers.set, halo, dtype, jit_flags)
