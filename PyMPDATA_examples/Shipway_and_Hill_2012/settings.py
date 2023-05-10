@@ -2,6 +2,7 @@ from typing import Optional
 from pystrict import strict
 from scipy.interpolate import interp1d
 from scipy.integrate import solve_ivp
+from scipy.misc import derivative
 import numpy as np
 from PyMPDATA_examples.Olesik_et_al_2022.settings import ksi_1 as default_ksi_1
 from . import formulae
@@ -15,7 +16,7 @@ class Settings:
                  t_max: float = 15 * si.minutes, nr: int = 1,
                  r_min: float = np.nan, r_max: float = np.nan, p0: Optional[float] = None,
                  ksi_1: float = default_ksi_1.to_base_units().magnitude,
-                 z_max: float = 3000 * si.metres):
+                 z_max: float = 3000 * si.metres, apprx_drhod_dz: bool = True):
         self.dt = dt
         self.dz = dz
 
@@ -38,7 +39,12 @@ class Settings:
         def drhod_dz(z, rhod):
             T = formulae.temperature(rhod[0], self.thd(z))
             p = formulae.pressure(rhod[0], T, self.qv(z))
-            return formulae.drho_dz(const.g, p, T, self.qv(z), const.lv)
+            drhod_dz = formulae.drho_dz(const.g, p, T, self.qv(z), const.lv)
+            if not apprx_drhod_dz:  # to resolve issue #335
+                qv = self.qv(z)
+                dqv_dz = derivative(self.qv, z)
+                drhod_dz = drhod_dz / (1 + qv) - rhod * dqv_dz / (1 + qv)
+            return drhod_dz
 
         z_points = np.arange(0, self.z_max + self.dz / 2, self.dz / 2)
         rhod_solution = solve_ivp(
