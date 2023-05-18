@@ -32,9 +32,12 @@ setup(
             "pytest",
             "nbconvert",
             "jupyter-core" + "<5.0.0" if CI else "",
-            "jsonschema" + "==3.2.0" if CI else "",  # https://github.com/jupyter/nbformat/issues/232
-            "Jinja2" + "<3.0.0" if CI else "",  # https://github.com/jupyter/nbconvert/issues/1568
-            "MarkupSafe" + "<2.1.0" if CI else "",  # https://github.com/aws/aws-sam-cli/issues/3661
+            # https://github.com/jupyter/nbformat/issues/232
+            "jsonschema" + "==3.2.0" if CI else "",
+            # https://github.com/jupyter/nbconvert/issues/1568
+            "Jinja2" + "<3.0.0" if CI else "",
+            # https://github.com/aws/aws-sam-cli/issues/3661
+            "MarkupSafe" + "<2.1.0" if CI else "",
             "matplotlib" + "<3.6.0" if CI else "",
             "ipywidgets" + "<8.0.3" if CI else "",
         ]
