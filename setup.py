@@ -1,4 +1,5 @@
 """ the magick behind ``pip install ...`` """
+import os
 from setuptools import setup, find_packages
 
 
@@ -8,6 +9,7 @@ def get_long_description():
         long_description = file.read()
     return long_description
 
+CI = "CI" in os.environ
 
 setup(
     name='PyMPDATA-examples',
@@ -25,6 +27,18 @@ setup(
                       'joblib',
                       'sympy',
                       'ghapi'],
+    extras_require={
+        "tests": [
+            "pytest",
+            "nbconvert",
+            "jupyter-core" + "<5.0.0" if CI else "",
+            "jsonschema" + "==3.2.0" if CI else "",  # https://github.com/jupyter/nbformat/issues/232
+            "Jinja2" + "<3.0.0" if CI else "",  # https://github.com/jupyter/nbconvert/issues/1568
+            "MarkupSafe" + "<2.1.0" if CI else "",  # https://github.com/aws/aws-sam-cli/issues/3661
+            "matplotlib" + "<3.6.0" if CI else "",
+            "ipywidgets" + "<8.0.3" if CI else "",
+        ]
+    },
     author='https://github.com/open-atmos/PyMPDATA/graphs/contributors',
     license="GPL-3.0",
     long_description=get_long_description(),
