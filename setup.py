@@ -51,7 +51,7 @@ setup(
     include_package_data=True,
     project_urls={
         "Tracker": "https://github.com/open-atmos/PyMPDATA/issues",
-        "Documentation": "https://open-atmos.github.io/PyMPDATA-examples",
-        "Source": "https://github.com/open-atmos/PyMPDATA-examples"
+        "Documentation": "https://open-atmos.github.io/PyMPDATA",
+        "Source": "https://github.com/open-atmos/PyMPDATA"
     }
 )
