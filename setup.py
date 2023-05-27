@@ -20,28 +20,12 @@ setup(
     install_requires=['PyMPDATA',
                       'open-atmos-jupyter-utils',
                       'pystrict',
-                      'matplotlib',
-                      'ipywidgets',
+                      "matplotlib" + "<3.6.0" if CI else "",
+                      "ipywidgets" + "<8.0.3" if CI else "",
                       'scipy',
                       'pint',
                       'joblib',
-                      'sympy',
-                      'ghapi'],
-    extras_require={
-        "tests": [
-            "pytest",
-            "nbconvert",
-            "jupyter-core" + "<5.0.0" if CI else "",
-            # https://github.com/jupyter/nbformat/issues/232
-            "jsonschema" + "==3.2.0" if CI else "",
-            # https://github.com/jupyter/nbconvert/issues/1568
-            "Jinja2" + "<3.0.0" if CI else "",
-            # https://github.com/aws/aws-sam-cli/issues/3661
-            "MarkupSafe" + "<2.1.0" if CI else "",
-            "matplotlib" + "<3.6.0" if CI else "",
-            "ipywidgets" + "<8.0.3" if CI else "",
-        ]
-    },
+                      'sympy'],
     author='https://github.com/open-atmos/PyMPDATA/graphs/contributors',
     license="GPL-3.0",
     long_description=get_long_description(),
