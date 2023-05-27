@@ -1,4 +1,5 @@
 """ the magick behind ``pip install ...`` """
+import os
 from setuptools import setup, find_packages
 
 
@@ -8,6 +9,7 @@ def get_long_description():
         long_description = file.read()
     return long_description
 
+CI = "CI" in os.environ
 
 setup(
     name='PyMPDATA-examples',
@@ -18,13 +20,12 @@ setup(
     install_requires=['PyMPDATA',
                       'open-atmos-jupyter-utils',
                       'pystrict',
-                      'matplotlib',
-                      'ipywidgets',
+                      "matplotlib" + "<3.6.0" if CI else "",
+                      "ipywidgets" + "<8.0.3" if CI else "",
                       'scipy',
                       'pint',
                       'joblib',
-                      'sympy',
-                      'ghapi'],
+                      'sympy'],
     author='https://github.com/open-atmos/PyMPDATA/graphs/contributors',
     license="GPL-3.0",
     long_description=get_long_description(),
@@ -34,7 +35,7 @@ setup(
     include_package_data=True,
     project_urls={
         "Tracker": "https://github.com/open-atmos/PyMPDATA/issues",
-        "Documentation": "https://open-atmos.github.io/PyMPDATA-examples",
-        "Source": "https://github.com/open-atmos/PyMPDATA-examples"
+        "Documentation": "https://open-atmos.github.io/PyMPDATA",
+        "Source": "https://github.com/open-atmos/PyMPDATA"
     }
 )
